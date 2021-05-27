@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace Catalog.API.Infrastructure
 {
-    public class CatalogRepository
+    public class CatalogRepository : ICatalogRepository
     {
         private readonly CatalogContext _context;
 
         public CatalogRepository(CatalogContext context)
         {
-            _context = context ?? throw new ArgumentNullException();
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task SaveChanges()
+        public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
