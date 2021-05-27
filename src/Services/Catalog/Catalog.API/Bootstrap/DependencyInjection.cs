@@ -1,4 +1,5 @@
 using Catalog.API.Infrastructure;
+using Catalog.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +11,13 @@ namespace Catalog.API.Bootsrap
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Inject db contexts
+            // Inject contexts
             string catalogDb = "ConnectionStrings:CatalogDb";
-            services.AddDbContext<CatalogContext>(opt => opt.UseSqlServer(configuration[catalogDb]));
+            services.AddDbContext<CatalogContext>(opt => opt.UseSqlServer(configuration[catalogDb]))
+
+            // Inject services
+            .AddScoped<ICatalogRepository, CatalogRepository>()
+            .AddScoped<ICatalogService, CatalogService>();
 
             return services;
         }

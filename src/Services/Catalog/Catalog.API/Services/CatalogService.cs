@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.API.Services
 {
-    public class CatalogService
+    public class CatalogService : ICatalogService
     {
         private readonly ICatalogRepository _catalogRepository;
 
