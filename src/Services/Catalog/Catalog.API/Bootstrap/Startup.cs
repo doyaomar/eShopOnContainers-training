@@ -22,20 +22,28 @@ namespace Catalog.API.Bootsrap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // Add versioning
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = ApiVersion.Default;
                 x.AssumeDefaultVersionWhenUnspecified = true;
                 x.ReportApiVersions = true;
             });
+
+            // Add automapper profile
             services.AddAutoMapper(typeof(MappingProfile));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
             });
 
             // Inject services
-            services.AddServices(Configuration);
+            services.AddServices();
+            // Inject Infra
+            services.AddInfrastructure(Configuration);
+            // Add HealtChecks
+            services.AddCustomHealhChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +65,7 @@ namespace Catalog.API.Bootsrap
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
