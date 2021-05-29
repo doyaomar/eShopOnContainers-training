@@ -9,7 +9,7 @@
     [CatalogBrandId] INT NOT NULL,
     [AvailableStock] INT NOT NULL, 
     [MaxStockThreshold] INT NOT NULL, 
-    [OnReorder] BIT NOT NULL,
+    [IsOnReorder] BIT NOT NULL,
     [RestockThreshold] INT NOT NULL
     CONSTRAINT [PK_Catalog_Id] PRIMARY KEY CLUSTERED (Id ASC),
     CONSTRAINT [FK_Catalog_CatalogType_CatalogTypeId] FOREIGN KEY ([CatalogTypeId]) 
