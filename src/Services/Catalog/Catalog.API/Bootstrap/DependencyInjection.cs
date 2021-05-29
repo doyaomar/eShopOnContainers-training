@@ -3,6 +3,7 @@ using Catalog.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Catalog.API.Bootsrap
 {
@@ -17,7 +18,7 @@ namespace Catalog.API.Bootsrap
 
             return services;
         }
-        
+
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
@@ -29,6 +30,7 @@ namespace Catalog.API.Bootsrap
         public static IServiceCollection AddCustomHealhChecks(this IServiceCollection services)
         {
             services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy())
             .AddDbContextCheck<CatalogContext>();
 
             return services;
