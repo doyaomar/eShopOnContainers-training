@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Catalog.API.Models
 {
     public class CatalogItem
@@ -11,7 +13,8 @@ namespace Catalog.API.Models
         public decimal Price { get; set; }
 
         public string PictureFileName { get; set; }
-
+        
+        [NotMapped]
         public string PictureUri { get; set; }
 
         public int CatalogTypeId { get; set; }
