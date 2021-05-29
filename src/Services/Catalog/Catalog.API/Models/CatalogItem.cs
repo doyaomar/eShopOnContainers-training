@@ -14,7 +14,6 @@ namespace Catalog.API.Models
 
         public string PictureFileName { get; set; }
         
-        [NotMapped]
         public string PictureUri { get; set; }
 
         public int CatalogTypeId { get; set; }
