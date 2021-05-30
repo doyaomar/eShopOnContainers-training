@@ -4,10 +4,10 @@ version: '3.4'
 
 services:
   catalogapi:
-    image: catalogapi
+    image: ${REGISTRY:-eshoptraining}/catalogapi:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+      dockerfile: Services\Catalog\Catalog.API\Dockerfile
     ports:
-      - 80:80
-      - 443:443
+      - 8080:80
+      - 8081:443

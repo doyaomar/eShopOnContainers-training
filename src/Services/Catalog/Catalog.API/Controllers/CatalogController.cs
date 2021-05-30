@@ -30,6 +30,7 @@ namespace Catalog.API.Controllers
 
         // GET api/v1/[controller]/products/4
         [HttpGet("products/{id:long}")]
+        [ActionName(nameof(GetProductAsync))]
         [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,7 +55,7 @@ namespace Catalog.API.Controllers
         [HttpPost("products")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
+        public async Task<ActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
         {
             if (request is null)
             {
@@ -63,9 +64,9 @@ namespace Catalog.API.Controllers
 
             var product = _mapper.Map<CatalogItem>(request);
 
-            long createdProductId = await _catalogService.CreateProductAsync(product);
+            CatalogItem createdProduct = await _catalogService.CreateProductAsync(product);
 
-            return CreatedAtAction(nameof(GetProductAsync), new { id = createdProductId }, null);
+            return CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
         }
 
         // PUT api/v1/[controller]/products/5
@@ -75,23 +76,23 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateProductAsync([FromRoute] long id, [FromBody] UpdateProductRequest request)
         {
-            if (request is null || id <= 0)
+            if (request is null || id <= 0 || !id.Equals(request.Id))
             {
                 return BadRequest();
             }
 
-            CatalogItem productToUpdate = await _catalogService.GetProductAsync(id);
+            CatalogItem productToUpdate = await _catalogService.GetProductAsync(id, true);
 
             if (productToUpdate is null)
             {
                 return NotFound();
             }
 
-            var product = _mapper.Map<CatalogItem>(request);
+            productToUpdate = _mapper.Map<CatalogItem>(request);
 
-            await _catalogService.UpdateProductAsync(product);
+            await _catalogService.UpdateProductAsync(productToUpdate);
 
-            return CreatedAtAction(nameof(GetProductAsync), new { id = productToUpdate.Id }, null);
+            return CreatedAtAction(nameof(GetProductAsync), new { id = id }, null);
         }
 
         // DELETE api/v1/[controller]/products/3
