@@ -15,9 +15,9 @@ namespace Catalog.API.Services
             _catalogRepository = catalogRepository ?? throw new ArgumentNullException(nameof(catalogRepository));
         }
 
-        public async Task<CatalogItem> GetProductAsync(long id)
+        public async Task<CatalogItem> GetProductAsync(long id, bool asNoTracking = false)
         {
-            return await _catalogRepository.GetAsync(id);
+            return await _catalogRepository.GetAsync(id, asNoTracking);
         }
 
         public async Task<IEnumerable<CatalogItem>> GetAllProductsAsync(int pageSize, int pageIndex)
@@ -30,12 +30,12 @@ namespace Catalog.API.Services
             return await _catalogRepository.GetByIdsAsync(ids);
         }
 
-        public async Task<long> CreateProductAsync(CatalogItem item)
+        public async Task<CatalogItem> CreateProductAsync(CatalogItem item)
         {
-            long createdItemId = await _catalogRepository.CreateAsync(item);
+            CatalogItem createdItem = await _catalogRepository.CreateAsync(item);
             await _catalogRepository.SaveChangesAsync();
 
-            return createdItemId;
+            return createdItem;
         }
 
         public async Task UpdateProductAsync(CatalogItem item)

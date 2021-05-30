@@ -21,9 +21,11 @@ namespace Catalog.API.Infrastructure
             await _context.SaveChangesAsync();
         }
 
-        public async Task<CatalogItem> GetAsync(long id)
+        public async Task<CatalogItem> GetAsync(long id, bool asNoTracking = false)
         {
-            return await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
+            return asNoTracking ?
+                await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id)
+                : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<IEnumerable<CatalogItem>> GetAllAsync(int pageSize, int pageIndex)
@@ -49,11 +51,11 @@ namespace Catalog.API.Infrastructure
             return await _context.CatalogItems.LongCountAsync();
         }
 
-        public async Task<long> CreateAsync(CatalogItem item)
+        public async Task<CatalogItem> CreateAsync(CatalogItem item)
         {
-            await _context.CatalogItems.AddAsync(item);
+            var createdItem = await _context.CatalogItems.AddAsync(item);
 
-            return item.Id;
+            return createdItem.Entity;
         }
 
         public void Update(CatalogItem item)
