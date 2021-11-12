@@ -36,7 +36,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] long id)
         {
-            if (id <= 0)
+            if (id < 1)
             {
                 return BadRequest();
             }
@@ -76,7 +76,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateProductAsync([FromRoute] long id, [FromBody] UpdateProductRequest request)
         {
-            if (request is null || id <= 0 || !id.Equals(request.Id))
+            if (request is null || id < 1 || !id.Equals(request.Id))
             {
                 return BadRequest();
             }
@@ -102,7 +102,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteProductAsync([FromRoute] long id)
         {
-            if (id <= 0)
+            if (id < 1)
             {
                 return BadRequest();
             }
