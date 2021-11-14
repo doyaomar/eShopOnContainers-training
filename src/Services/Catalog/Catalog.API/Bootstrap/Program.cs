@@ -1,20 +1,51 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Catalog.API.Bootsrap;
+using Catalog.API.Mappings;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
-namespace Catalog.API.Bootsrap
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Add versioning
+builder.Services.AddApiVersioning(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    options.DefaultApiVersion = ApiVersion.Default;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
+// Add automapper profile
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+// Add swagger
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog API", Version = "v1" });
+});
+// Add user services
+builder.Services.AddUserServices();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddCustomHealhChecks();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    // app.UseSwaggerUI(options => 
+    // {
+    //     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1");
+    //     options.RoutePrefix = string.Empty;
+    // });
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.MapHealthChecks("/health");
+
+app.Run();
