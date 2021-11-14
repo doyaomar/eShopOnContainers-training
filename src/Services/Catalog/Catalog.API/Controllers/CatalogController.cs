@@ -70,7 +70,7 @@ namespace Catalog.API.Controllers
 
         public async Task<IActionResult> UpdateProductAsync([FromRoute] long id, [FromBody] UpdateProductRequest request)
         {
-            if (request is null || id < 1 || !id.Equals(request.Id))
+            if (id < 1 || request is null || !id.Equals(request.Id))
             {
                 return BadRequest();
             }

@@ -31,6 +31,7 @@ namespace Catalog.UnitTests.Fakes
 
         public static UpdateProductRequest GetUpdateProductRequestFake() => new()
         {
+            Id = 1,
             Name = "name",
             CatalogBrandId = 1,
             CatalogTypeId = 1
