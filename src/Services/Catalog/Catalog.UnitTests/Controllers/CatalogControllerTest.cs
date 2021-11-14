@@ -12,6 +12,7 @@ using Catalog.UnitTests.Fakes;
 using Microsoft.AspNetCore.Mvc;
 using Catalog.API.Dtos;
 using Catalog.API.Models;
+using Catalog.API.Requests;
 
 namespace Catalog.UnitTests.Controllers
 {
@@ -31,32 +32,82 @@ namespace Catalog.UnitTests.Controllers
             _catalogController = new CatalogController(_stubLogger.Object, _stubMapper.Object, _stubCatalogService.Object);
         }
 
+        // GetProductAsync tests
         [Fact]
         public async Task GetProductAsync_WhenCalalogItemExist_ReturnsItemDto()
         {
             // Arrange
-            var mockCatalogItem = CatalogItemFake.CreateCatalogItemFake();
-            var mockCatalogItemDto = CatalogItemFake.CreateCatalogItemDtoFake();
-            _stubCatalogService.Setup(service => service.GetProductAsync(It.IsAny<long>(),It.IsAny<bool>())).ReturnsAsync(mockCatalogItem);
+            var validProductId = 1;
+            var mockCatalogItem = CatalogItemFake.GetCatalogItemFake();
+            var mockCatalogItemDto = CatalogItemFake.GetCatalogItemDtoFake();
+            _stubCatalogService.Setup(service => service.GetProductAsync(It.IsAny<long>(), It.IsAny<bool>())).ReturnsAsync(mockCatalogItem);
             _stubMapper.Setup(mapper => mapper.Map<CatalogItemDto>(It.IsAny<CatalogItem>())).Returns(mockCatalogItemDto);
 
             // Act
-            var result = await _catalogController.GetProductAsync(1) as ActionResult<CatalogItemDto>;
+            var result = await _catalogController.GetProductAsync(validProductId);
 
             // Assert
-            //result.Should().BeOfType<OkObjectResult>();            
-            result.Value.Id.Should().Be(mockCatalogItem.Id);
-            result.Value.Name.Should().Be(mockCatalogItem.Name);
+            result.Result.Should().BeOfType<OkObjectResult>();
+            ((result.Result as OkObjectResult).Value as CatalogItemDto).Id.Should().Be(mockCatalogItem.Id);
+            ((result.Result as OkObjectResult).Value as CatalogItemDto).Name.Should().Be(mockCatalogItem.Name);
         }
 
         [Fact]
         public async Task GetProductAsync_WhenIdIsNotValid_ReturnsBadRequestResult()
         {
+            // Arrange
+            var invalidProductId = 0;
+
             // Act
-            var result = await _catalogController.GetProductAsync(0) as ActionResult<CatalogItemDto>;;
+            var result = await _catalogController.GetProductAsync(invalidProductId);
 
             // Assert
             result.Result.Should().BeOfType<BadRequestResult>();
+        }
+
+        [Fact]
+        public async Task GetProductAsync_WhenProductDoesntExist_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var invalidProductId = 1;
+            _stubCatalogService.Setup(service => service.GetProductAsync(It.IsAny<long>(), It.IsAny<bool>())).ReturnsAsync((CatalogItem)null);
+
+
+            // Act
+            var result = await _catalogController.GetProductAsync(invalidProductId);
+
+            // Assert
+            result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        // CreateProductAsync tests
+        [Fact]
+        public async Task CreateProductAsync_WhenCreateRequestIsValid_ReturnsCreatedResult()
+        {
+            // Arrange
+            var mockRequest = CatalogItemFake.GetCreateProductRequestFake();
+            var mockCatalogItem = CatalogItemFake.GetCatalogItemFake();
+            _stubMapper.Setup(mapper => mapper.Map<CatalogItem>(mockRequest)).Returns(mockCatalogItem);
+            _stubCatalogService.Setup(service => service.CreateProductAsync(mockCatalogItem)).ReturnsAsync(mockCatalogItem);
+
+            // Act
+            var result = await _catalogController.CreateProductAsync(mockRequest);
+
+            // Assert
+            result.Should().BeOfType<CreatedAtActionResult>();
+        }
+
+        [Fact]
+        public async Task CreateProductAsync_WhenCreateRequestIsNull_ReturnsBadRequestResult()
+        {
+            // Arrange
+            CreateProductRequest mockRequest = null;
+
+            // Act
+            var result = await _catalogController.CreateProductAsync(mockRequest);
+
+            // Assert
+            result.Should().BeOfType<BadRequestResult>();
         }
     }
 }

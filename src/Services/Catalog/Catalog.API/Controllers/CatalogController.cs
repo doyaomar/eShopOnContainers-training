@@ -1,14 +1,9 @@
-using System;
-using System.Net;
-using System.Threading.Tasks;
 using AutoMapper;
 using Catalog.API.Dtos;
 using Catalog.API.Models;
 using Catalog.API.Requests;
 using Catalog.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Catalog.API.Controllers
 {
@@ -34,6 +29,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] long id)
         {
             if (id < 1)
@@ -43,19 +39,16 @@ namespace Catalog.API.Controllers
 
             CatalogItem product = await _catalogService.GetProductAsync(id);
 
-            if (product is null)
-            {
-                return NotFound();
-            }
-
-            return _mapper.Map<CatalogItemDto>(product);
+            return product is null ? NotFound() : Ok(_mapper.Map<CatalogItemDto>(product));
         }
 
         // POST api/v1/[controller]/products
         [HttpPost("products")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
         {
             if (request is null)
             {
@@ -63,17 +56,18 @@ namespace Catalog.API.Controllers
             }
 
             var product = _mapper.Map<CatalogItem>(request);
-
             CatalogItem createdProduct = await _catalogService.CreateProductAsync(product);
 
             return CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
         }
-
+        
         // PUT api/v1/[controller]/products/5
         [HttpPut("products/{id:long}")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> UpdateProductAsync([FromRoute] long id, [FromBody] UpdateProductRequest request)
         {
             if (request is null || id < 1 || !id.Equals(request.Id))
@@ -89,10 +83,9 @@ namespace Catalog.API.Controllers
             }
 
             productToUpdate = _mapper.Map<CatalogItem>(request);
-
             await _catalogService.UpdateProductAsync(productToUpdate);
 
-            return CreatedAtAction(nameof(GetProductAsync), new { id = id }, null);
+            return NoContent();
         }
 
         // DELETE api/v1/[controller]/products/3
@@ -100,6 +93,8 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> DeleteProductAsync([FromRoute] long id)
         {
             if (id < 1)
