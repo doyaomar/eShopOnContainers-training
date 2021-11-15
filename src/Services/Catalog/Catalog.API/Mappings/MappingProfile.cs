@@ -9,8 +9,9 @@ namespace Catalog.API.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<CatalogItem, CreateProductRequest>().ReverseMap();
-            CreateMap<CatalogItem, UpdateProductRequest>().ReverseMap();
+            // CatalogItem Mappings
+            CreateMap<CreateProductRequest, CatalogItem>().ReverseMap();
+            CreateMap<UpdateProductRequest, CatalogItem>().ReverseMap();
             CreateMap<CatalogItem, CatalogItemDto>().ReverseMap();
         }
     }
