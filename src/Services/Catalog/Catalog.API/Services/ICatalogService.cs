@@ -1,16 +1,11 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Catalog.API.Models;
 
-namespace Catalog.API.Services
+namespace Catalog.API.Services;
+
+public interface ICatalogService
 {
-    public interface ICatalogService
-    {
-        Task<CatalogItem> CreateProductAsync(CatalogItem item);
-        Task DeleteProductAsync(CatalogItem item);
-        Task<IEnumerable<CatalogItem>> GetAllProductsAsync(int pageSize, int pageIndex);
-        Task<CatalogItem> GetProductAsync(long id, bool asNoTracking = false);
-        Task<IEnumerable<CatalogItem>> GetProductsByIdsAsync(IEnumerable<long> ids);
-        Task UpdateProductAsync(CatalogItem item);
-    }
+    Task<CatalogItem> CreateProductAsync(CatalogItem item);
+    Task DeleteProductAsync(CatalogItem item);
+    Task<CatalogItem> GetProductAsync(long id, bool asNoTracking = false);
+    Task UpdateProductAsync(CatalogItem item);
 }

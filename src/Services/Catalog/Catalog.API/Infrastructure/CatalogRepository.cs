@@ -1,71 +1,43 @@
-using System;
-using System.Threading.Tasks;
 using Catalog.API.Models;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
-namespace Catalog.API.Infrastructure
+namespace Catalog.API.Infrastructure;
+
+public class CatalogRepository : ICatalogRepository
 {
-    public class CatalogRepository : ICatalogRepository
+    private readonly CatalogContext _context;
+
+    public CatalogRepository(CatalogContext context)
     {
-        private readonly CatalogContext _context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+    }
 
-        public CatalogRepository(CatalogContext context)
-        {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-        }
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+    public async Task<CatalogItem> CreateAsync(CatalogItem item)
+    {
+        var createdItem = await _context.CatalogItems.AddAsync(item);
 
-        public async Task<CatalogItem> GetAsync(long id, bool asNoTracking = false)
-        {
-            return asNoTracking ?
-                await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id)
-                : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
-        }
+        return createdItem.Entity;
+    }
 
-        public async Task<IEnumerable<CatalogItem>> GetAllAsync(int pageSize, int pageIndex)
-        {
-            return await _context
-            .CatalogItems
-            .OrderBy(c => c.Name)
-            .Skip(pageSize * pageIndex)
-            .Take(pageSize)
-            .ToListAsync();
-        }
+    public void Update(CatalogItem item)
+    {
+        _context.CatalogItems.Update(item);
+    }
 
-        public async Task<IEnumerable<CatalogItem>> GetByIdsAsync(IEnumerable<long> ids)
-        {
-            return await _context
-            .CatalogItems
-            .Where(c => ids.Contains(c.Id))
-            .ToListAsync();
-        }
+    public void Delete(CatalogItem item)
+    {
+        _context.CatalogItems.Remove(item);
+    }
 
-        public async Task<long> GetCountAsync()
-        {
-            return await _context.CatalogItems.LongCountAsync();
-        }
-
-        public async Task<CatalogItem> CreateAsync(CatalogItem item)
-        {
-            var createdItem = await _context.CatalogItems.AddAsync(item);
-
-            return createdItem.Entity;
-        }
-
-        public void Update(CatalogItem item)
-        {
-            _context.CatalogItems.Update(item);
-        }
-
-        public void Delete(CatalogItem item)
-        {
-            _context.CatalogItems.Remove(item);
-        }
+    public async Task<CatalogItem> GetAsync(long id, bool asNoTracking = false)
+    {
+        return asNoTracking ?
+            await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id)
+            : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
     }
 }
