@@ -8,9 +8,9 @@
     [CatalogTypeId] INT NOT NULL, 
     [CatalogBrandId] INT NOT NULL,
     [AvailableStock] INT NOT NULL, 
-    [MaxStockThreshold] INT NULL, 
+    [MaxStockThreshold] INT NOT NULL, 
     [IsOnReorder] BIT NOT NULL,
-    [RestockThreshold] INT NULL
+    [RestockThreshold] INT NOT NULL
     CONSTRAINT [PK_Catalog_Id] PRIMARY KEY CLUSTERED (Id ASC),
     CONSTRAINT [FK_Catalog_CatalogType_CatalogTypeId] FOREIGN KEY ([CatalogTypeId]) 
     REFERENCES [dbo].[CatalogType] ([Id]) 
