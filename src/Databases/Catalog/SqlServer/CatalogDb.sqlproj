@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="Publish\" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\CatalogType.table.sql" />
@@ -68,5 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\CatalogDb.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\CatalogDb.Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
