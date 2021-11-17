@@ -60,7 +60,9 @@ public class CatalogController : ControllerBase
         var product = _mapper.Map<CatalogItem>(request);
         CatalogItem? createdProduct = await _catalogService.CreateProductAsync(product);
 
-        return CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
+        return createdProduct is null
+        ? StatusCode(StatusCodes.Status500InternalServerError)
+        : CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
     }
 
     // PUT api/v1/[controller]/products/5

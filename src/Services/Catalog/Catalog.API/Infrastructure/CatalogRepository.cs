@@ -56,8 +56,8 @@ public class CatalogRepository : ICatalogRepository
 
     public async Task<CatalogItem?> GetAsync(long id, bool asNoTracking = false)
     {
-        return asNoTracking ?
-            await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id)
-            : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
+        return asNoTracking 
+        ? await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id) 
+        : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
     }
 }
