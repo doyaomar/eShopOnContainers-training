@@ -7,5 +7,5 @@ public interface ICatalogService
     Task<CatalogItem?> CreateProductAsync(CatalogItem item);
     Task<CatalogItem?> DeleteProductAsync(long id);
     Task<CatalogItem?> UpdateProductAsync(CatalogItem item);
-    Task<CatalogItem?> GetProductAsync(long id, bool asNoTracking = false);
+    Task<CatalogItem?> GetProductAsync(long id);
 }

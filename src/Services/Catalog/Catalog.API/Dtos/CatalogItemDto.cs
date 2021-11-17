@@ -1,31 +1,28 @@
-using Catalog.API.Models;
+namespace Catalog.API.Dtos;
 
-namespace Catalog.API.Dtos
+public class CatalogItemDto
 {
-    public class CatalogItemDto
-    {
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-        public string Description { get; set; }
+    public string Description { get; set; } = default!;
 
-        public decimal Price { get; set; }
+    public decimal Price { get; set; }
 
-        public string PictureFileName { get; set; }
-        
-        public string PictureUri { get; set; }
+    public string PictureFileName { get; set; } = default!;
 
-        public int CatalogTypeId { get; set; }
+    public string PictureUri { get; set; } = default!;
 
-        public int CatalogBrandId { get; set; }
+    public CatalogTypeDto CatalogType { get; set; } = default!;
 
-        public int AvailableStock { get; set; }
+    public CatalogBrandDto CatalogBrand { get; set; } = default!;
 
-        public int RestockThreshold { get; set; }
+    public int AvailableStock { get; set; }
 
-        public int MaxStockThreshold { get; set; }
+    public int RestockThreshold { get; set; }
 
-        public bool IsOnReorder { get; set; }
-    }
+    public int MaxStockThreshold { get; set; }
+
+    public bool IsOnReorder { get; set; }
 }

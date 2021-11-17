@@ -9,11 +9,11 @@ namespace Catalog.API.Infrastructure
         public CatalogContext(DbContextOptions<CatalogContext> context) : base(context)
         { }
 
-        public DbSet<CatalogItem> CatalogItems { get; set; }
+        public DbSet<CatalogItem> CatalogItems { get; set; } = default!;
 
-        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogBrand> CatalogBrands { get; set; } = default!;
 
-        public DbSet<CatalogType> catalogTypes { get; set; }
+        public DbSet<CatalogType> catalogTypes { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -15,6 +15,7 @@ public class CatalogRepository : ICatalogRepository
     public async Task<CatalogItem?> CreateAsync(CatalogItem item)
     {
         var createdItem = await _context.CatalogItems.AddAsync(item);
+        await _context.SaveChangesAsync();
 
         return createdItem?.Entity ?? null;
     }
@@ -26,7 +27,7 @@ public class CatalogRepository : ICatalogRepository
             return null;
         }
 
-        var catalogItem = await _context.CatalogItems.FindAsync(item.Id);
+        var catalogItem = await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(p => p.Id == item.Id);
 
         if (catalogItem is null)
         {
@@ -54,10 +55,13 @@ public class CatalogRepository : ICatalogRepository
         return item;
     }
 
-    public async Task<CatalogItem?> GetAsync(long id, bool asNoTracking = false)
+    public async Task<CatalogItem?> GetAsync(long id)
     {
-        return asNoTracking 
-        ? await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id) 
-        : await _context.CatalogItems.SingleOrDefaultAsync(c => c.Id == id);
+        return await _context.
+        CatalogItems
+        .AsNoTracking()
+        .Include(c => c.CatalogBrand)
+        .Include(c => c.CatalogType)
+        .SingleOrDefaultAsync(c => c.Id == id);
     }
 }

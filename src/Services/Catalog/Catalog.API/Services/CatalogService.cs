@@ -28,8 +28,8 @@ public class CatalogService : ICatalogService
         return await _catalogRepository.DeleteAsync(id);
     }
 
-    public async Task<CatalogItem?> GetProductAsync(long id, bool asNoTracking = false)
+    public async Task<CatalogItem?> GetProductAsync(long id)
     {
-        return await _catalogRepository.GetAsync(id, asNoTracking);
+        return await _catalogRepository.GetAsync(id);
     }
 }
