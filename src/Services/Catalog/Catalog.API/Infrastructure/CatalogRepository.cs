@@ -1,5 +1,6 @@
 using Catalog.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Catalog.API.Infrastructure;
 
@@ -14,10 +15,10 @@ public class CatalogRepository : ICatalogRepository
 
     public async Task<CatalogItem?> CreateAsync(CatalogItem item)
     {
-        var createdItem = await _context.CatalogItems.AddAsync(item);
+        EntityEntry<CatalogItem>? entityEntry = await _context.CatalogItems.AddAsync(item);
         await _context.SaveChangesAsync();
 
-        return createdItem?.Entity ?? null;
+        return entityEntry?.Entity ?? null;
     }
 
     public async Task<CatalogItem?> UpdateAsync(CatalogItem item)
@@ -27,9 +28,9 @@ public class CatalogRepository : ICatalogRepository
             return null;
         }
 
-        var catalogItem = await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(p => p.Id == item.Id);
+        CatalogItem? existingItem = await _context.CatalogItems.AsNoTracking().SingleOrDefaultAsync(p => p.Id == item.Id);
 
-        if (catalogItem is null)
+        if (existingItem is null)
         {
             return null;
         }
@@ -42,17 +43,17 @@ public class CatalogRepository : ICatalogRepository
 
     public async Task<CatalogItem?> DeleteAsync(long id)
     {
-        var item = await _context.CatalogItems.FindAsync(id);
+        CatalogItem? itemToDelete = await _context.CatalogItems.FindAsync(id);
 
-        if (item is null)
+        if (itemToDelete is null)
         {
             return null;
         }
 
-        _context.CatalogItems.Remove(item);
+        _context.CatalogItems.Remove(itemToDelete);
         await _context.SaveChangesAsync();
 
-        return item;
+        return itemToDelete;
     }
 
     public async Task<CatalogItem?> GetAsync(long id)
