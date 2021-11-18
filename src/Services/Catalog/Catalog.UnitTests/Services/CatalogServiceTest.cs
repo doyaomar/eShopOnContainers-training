@@ -28,17 +28,16 @@ public class CatalogServiceTest
     {
         // Arrange
         var validProductIdStub = 1;
-        var asNoTrackingStub = false;
         var validCatalogItemMock = CatalogItemFake.GetCatalogItemFake();
-        _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub, asNoTrackingStub)).ReturnsAsync(validCatalogItemMock);
+        _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub)).ReturnsAsync(validCatalogItemMock);
 
         // Act
-        var result = await _catalogService.GetProductAsync(validProductIdStub, asNoTrackingStub);
+        var result = await _catalogService.GetProductAsync(validProductIdStub);
 
         // Assert
         result.Should().NotBeNull();
-        result.Id.Should().Be(validCatalogItemMock.Id);
-        result.Name.Should().Be(validCatalogItemMock.Name);
+        result!.Id.Should().Be(validCatalogItemMock.Id);
+        result!.Name.Should().Be(validCatalogItemMock.Name);
     }
 
     [Fact]
@@ -46,12 +45,11 @@ public class CatalogServiceTest
     {
         // Arrange
         var validProductIdStub = 1;
-        var asNoTrackingStub = false;
-        CatalogItem invalidCatalogItemstub = null;
-        _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub, asNoTrackingStub)).ReturnsAsync(invalidCatalogItemstub);
+        CatalogItem invalidCatalogItemstub = null!;
+        _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub)).ReturnsAsync(invalidCatalogItemstub);
 
         // Act
-        var result = await _catalogService.GetProductAsync(validProductIdStub, asNoTrackingStub);
+        var result = await _catalogService.GetProductAsync(validProductIdStub);
 
         // Assert
         result.Should().BeNull();
@@ -71,7 +69,7 @@ public class CatalogServiceTest
 
         // Assert
         result.Should().NotBeNull();
-        result.Id.Should().Be(validCatalogItemMock.Id);
+        result!.Id.Should().Be(validCatalogItemMock.Id);
         result.Name.Should().Be(validCatalogItemMock.Name);
     }
 
@@ -82,26 +80,31 @@ public class CatalogServiceTest
     {
         // Arrange
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
+        _catalogRepositoryStub.Setup(repo => repo.UpdateAsync(validCatalogItemStub)).ReturnsAsync(validCatalogItemStub);
+
 
         // Act
-        await _catalogService.UpdateProductAsync(validCatalogItemStub);
+        var result = await _catalogService.UpdateProductAsync(validCatalogItemStub);
 
         // Assert
-        _catalogRepositoryStub.Verify(repo => repo.SaveChangesAsync(), Times.Once);
+        result.Should().NotBeNull();
     }
 
     // DeleteProductAsync Tests
-    
+
     [Fact]
     public void DeleteProductAsync()
     {
         // Arrange
+        var validProductIdStub = 1;
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
+        _catalogRepositoryStub.Setup(repo => repo.DeleteAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
+
 
         // Act
-        _catalogService.DeleteProductAsync(validCatalogItemStub);
+        var result = _catalogService.DeleteProductAsync(validProductIdStub);
 
         // Assert
-        _catalogRepositoryStub.Verify(repo => repo.SaveChangesAsync(), Times.Once);
+        result.Should().NotBeNull();
     }
 }

@@ -10,8 +10,16 @@ namespace Catalog.UnitTests.Fakes
         {
             Id = 1,
             Name = "name",
-            CatalogBrandId = 1,
-            CatalogTypeId = 1
+            CatalogBrand = new CatalogBrandDto
+            {
+                Id = 1,
+                Name = "catalogBrandName"
+            },
+            CatalogType = new CatalogTypeDto
+            {
+                Id = 1,
+                Name = "catalogTypeName"
+            }
         };
 
         public static CatalogItem GetCatalogItemFake() => new()
