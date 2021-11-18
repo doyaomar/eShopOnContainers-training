@@ -1,6 +1,6 @@
-namespace Catalog.API.Models;
+namespace Catalog.API.Dtos;
 
-public class CatalogBrand
+public class CatalogTypeDto
 {
     public int Id { get; set; }
 

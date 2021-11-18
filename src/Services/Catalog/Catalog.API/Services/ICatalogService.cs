@@ -4,8 +4,8 @@ namespace Catalog.API.Services;
 
 public interface ICatalogService
 {
-    Task<CatalogItem> CreateProductAsync(CatalogItem item);
-    Task DeleteProductAsync(CatalogItem item);
-    Task<CatalogItem> GetProductAsync(long id, bool asNoTracking = false);
-    Task UpdateProductAsync(CatalogItem item);
+    Task<CatalogItem?> CreateProductAsync(CatalogItem item);
+    Task<CatalogItem?> DeleteProductAsync(long id);
+    Task<CatalogItem?> UpdateProductAsync(CatalogItem item);
+    Task<CatalogItem?> GetProductAsync(long id);
 }

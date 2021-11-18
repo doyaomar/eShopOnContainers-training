@@ -37,9 +37,11 @@ public class CatalogController : ControllerBase
             return BadRequest();
         }
 
-        CatalogItem product = await _catalogService.GetProductAsync(id);
+        CatalogItem? product = await _catalogService.GetProductAsync(id);
 
-        return product is null ? NotFound() : Ok(_mapper.Map<CatalogItemDto>(product));
+        return product is null
+        ? NotFound()
+        : Ok(_mapper.Map<CatalogItemDto>(product));
     }
 
     // POST api/v1/[controller]/products
@@ -56,9 +58,11 @@ public class CatalogController : ControllerBase
         }
 
         var product = _mapper.Map<CatalogItem>(request);
-        CatalogItem createdProduct = await _catalogService.CreateProductAsync(product);
+        CatalogItem? createdProduct = await _catalogService.CreateProductAsync(product);
 
-        return CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
+        return createdProduct is null
+        ? StatusCode(StatusCodes.Status500InternalServerError)
+        : CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
     }
 
     // PUT api/v1/[controller]/products/5
@@ -75,17 +79,12 @@ public class CatalogController : ControllerBase
             return BadRequest();
         }
 
-        CatalogItem productToUpdate = await _catalogService.GetProductAsync(id, true);
+        var productToUpdate = _mapper.Map<CatalogItem>(request);
+        CatalogItem? updatedProduct = await _catalogService.UpdateProductAsync(productToUpdate);
 
-        if (productToUpdate is null)
-        {
-            return NotFound();
-        }
-
-        productToUpdate = _mapper.Map<CatalogItem>(request);
-        await _catalogService.UpdateProductAsync(productToUpdate);
-
-        return NoContent();
+        return updatedProduct is null
+        ? NotFound()
+        : NoContent();
     }
 
     // DELETE api/v1/[controller]/products/3
@@ -102,15 +101,10 @@ public class CatalogController : ControllerBase
             return BadRequest();
         }
 
-        CatalogItem productToDelete = await _catalogService.GetProductAsync(id);
+        CatalogItem? deletedProduct = await _catalogService.DeleteProductAsync(id);
 
-        if (productToDelete is null)
-        {
-            return NotFound();
-        }
-
-        await _catalogService.DeleteProductAsync(productToDelete);
-
-        return NoContent();
+        return deletedProduct is null
+        ? NotFound()
+        : NoContent();
     }
 }

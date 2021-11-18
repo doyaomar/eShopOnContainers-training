@@ -20,7 +20,7 @@ public static class ServiceCollectionExtenions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-        .AddDbContext<CatalogContext>(opt => opt.UseSqlServer(configuration["ConnectionStrings:CatalogDb"]));
+        .AddDbContext<CatalogContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("CatalogDb")));
 
         return services;
     }

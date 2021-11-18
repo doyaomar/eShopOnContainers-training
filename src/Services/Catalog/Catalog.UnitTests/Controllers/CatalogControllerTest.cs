@@ -38,16 +38,16 @@ public class CatalogControllerTest
         var validProductIdStub = 1;
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         var validCatalogItemDtoMock = CatalogItemFake.GetCatalogItemDtoFake();
-        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub, It.IsAny<bool>())).ReturnsAsync(validCatalogItemStub);
-        _mapperStub.Setup(mapper => mapper.Map<CatalogItemDto>(It.IsAny<CatalogItem>())).Returns(validCatalogItemDtoMock);
+        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
+        _mapperStub.Setup(mapper => mapper.Map<CatalogItemDto>(validCatalogItemStub)).Returns(validCatalogItemDtoMock);
 
         // Act
         var result = await _catalogController.GetProductAsync(validProductIdStub);
 
         // Assert
         result.Result.Should().BeOfType<OkObjectResult>();
-        ((result.Result as OkObjectResult).Value as CatalogItemDto).Id.Should().Be(validCatalogItemDtoMock.Id);
-        ((result.Result as OkObjectResult).Value as CatalogItemDto).Name.Should().Be(validCatalogItemDtoMock.Name);
+        ((result.Result as OkObjectResult)!.Value as CatalogItemDto)!.Id.Should().Be(validCatalogItemDtoMock.Id);
+        ((result.Result as OkObjectResult)!.Value as CatalogItemDto)!.Name.Should().Be(validCatalogItemDtoMock.Name);
     }
 
     [Fact]
@@ -68,8 +68,8 @@ public class CatalogControllerTest
     {
         // Arrange
         var invalidProductIdStub = 1;
-        CatalogItem invalidCatalogItemStub = null;
-        _catalogServiceStub.Setup(service => service.GetProductAsync(It.IsAny<long>(), It.IsAny<bool>())).ReturnsAsync(invalidCatalogItemStub);
+        CatalogItem invalidCatalogItemStub = null!;
+        _catalogServiceStub.Setup(service => service.GetProductAsync(invalidProductIdStub)).ReturnsAsync(invalidCatalogItemStub);
 
 
         // Act
@@ -101,10 +101,10 @@ public class CatalogControllerTest
     public async Task CreateProductAsync_WhenCreateRequestIsNull_ReturnsBadRequestResult()
     {
         // Arrange
-        CreateProductRequest invalidRequestStub = null;
+        CreateProductRequest invalidRequestStub = null!;
 
         // Act
-        var result = await _catalogController.CreateProductAsync(invalidRequestStub);
+        var result = await _catalogController.CreateProductAsync(invalidRequestStub!);
 
         // Assert
         result.Should().BeOfType<BadRequestResult>();
@@ -120,8 +120,7 @@ public class CatalogControllerTest
         var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(validCatalogItemStub);
-        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub, It.IsAny<bool>())).ReturnsAsync(validCatalogItemStub);
-        _catalogServiceStub.Setup(service => service.UpdateProductAsync(validCatalogItemStub));
+        _catalogServiceStub.Setup(service => service.UpdateProductAsync(validCatalogItemStub)).ReturnsAsync(validCatalogItemStub);
 
         // Act
         var result = await _catalogController.UpdateProductAsync(validProductIdStub, validRequestStub);
@@ -138,7 +137,8 @@ public class CatalogControllerTest
         var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(validCatalogItemStub);
-        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub, It.IsAny<bool>())).ReturnsAsync((CatalogItem)null);
+        _catalogServiceStub.Setup(service => service.UpdateProductAsync(validCatalogItemStub)).ReturnsAsync((CatalogItem)null!);
+
 
         // Act
         var result = await _catalogController.UpdateProductAsync(validProductIdStub, validRequestStub);
@@ -183,8 +183,7 @@ public class CatalogControllerTest
         // Arrange
         var validProductIdStub = 1;
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
-        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub, It.IsAny<bool>())).ReturnsAsync(validCatalogItemStub);
-        _catalogServiceStub.Setup(service => service.DeleteProductAsync(validCatalogItemStub));
+        _catalogServiceStub.Setup(service => service.DeleteProductAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
 
         // Act
         var result = await _catalogController.DeleteProductAsync(validProductIdStub);
@@ -198,8 +197,9 @@ public class CatalogControllerTest
     {
         // Arrange
         var validProductIdStub = 1;
-        CatalogItem invalidCatalogItemStub = null;
-        _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub, It.IsAny<bool>())).ReturnsAsync(invalidCatalogItemStub);
+        CatalogItem invalidCatalogItemStub = null!;
+        _catalogServiceStub.Setup(service => service.DeleteProductAsync(validProductIdStub)).ReturnsAsync(invalidCatalogItemStub);
+
 
         // Act
         var result = await _catalogController.DeleteProductAsync(validProductIdStub);

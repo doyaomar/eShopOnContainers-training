@@ -12,28 +12,24 @@ public class CatalogService : ICatalogService
         _catalogRepository = catalogRepository ?? throw new ArgumentNullException(nameof(catalogRepository));
     }
 
-    public async Task<CatalogItem> CreateProductAsync(CatalogItem item)
+    public async Task<CatalogItem?> CreateProductAsync(CatalogItem item)
     {
-        CatalogItem createdItem = await _catalogRepository.CreateAsync(item);
-        await _catalogRepository.SaveChangesAsync();
-
-        return createdItem;
+        return await _catalogRepository.CreateAsync(item);
     }
 
-    public async Task UpdateProductAsync(CatalogItem item)
+    public async Task<CatalogItem?> UpdateProductAsync(CatalogItem item)
     {
-        _catalogRepository.Update(item);
-        await _catalogRepository.SaveChangesAsync();
+        return await _catalogRepository.UpdateAsync(item);
     }
 
-    public async Task DeleteProductAsync(CatalogItem item)
+
+    public async Task<CatalogItem?> DeleteProductAsync(long id)
     {
-        _catalogRepository.Delete(item);
-        await _catalogRepository.SaveChangesAsync();
+        return await _catalogRepository.DeleteAsync(id);
     }
 
-    public async Task<CatalogItem> GetProductAsync(long id, bool asNoTracking = false)
+    public async Task<CatalogItem?> GetProductAsync(long id)
     {
-        return await _catalogRepository.GetAsync(id, asNoTracking);
+        return await _catalogRepository.GetAsync(id);
     }
 }

@@ -1,23 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C1F8AF2B-3722-4EB6-92C4-81875BB8F02A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{004C1A05-23B9-4B99-8FE1-5E1548FC0054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{004C1A05-23B9-4B99-8FE1-5E1548FC0054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.UnitTests", "Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj", "{AA224169-1553-4F51-8E8B-27F605D4B514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.UnitTests", "Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj", "{AA224169-1553-4F51-8E8B-27F605D4B514}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{8C32379B-9658-4399-86CB-2562FF87BEE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5D29423D-620F-4EDC-90EB-7E59ABB17942}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatalogDb", "Databases\Catalog\SqlServer\CatalogDb.sqlproj", "{FAD8FC07-02A1-48E4-849F-367AFC989A0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{004C1A05-23B9-4B99-8FE1-5E1548FC0054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -28,10 +31,24 @@ Global
 		{AA224169-1553-4F51-8E8B-27F605D4B514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA224169-1553-4F51-8E8B-27F605D4B514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA224169-1553-4F51-8E8B-27F605D4B514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174} = {C1F8AF2B-3722-4EB6-92C4-81875BB8F02A}
 		{004C1A05-23B9-4B99-8FE1-5E1548FC0054} = {2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}
-		{AA224169-1553-4F51-8E8B-27F605D4B514} = {2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}
+		{AA224169-1553-4F51-8E8B-27F605D4B514} = {5D29423D-620F-4EDC-90EB-7E59ABB17942}
+		{5D29423D-620F-4EDC-90EB-7E59ABB17942} = {2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}
+		{FAD8FC07-02A1-48E4-849F-367AFC989A0C} = {8C32379B-9658-4399-86CB-2562FF87BEE9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F53278DA-B10F-42F0-A882-27BEBE8B0B40}
 	EndGlobalSection
 EndGlobal

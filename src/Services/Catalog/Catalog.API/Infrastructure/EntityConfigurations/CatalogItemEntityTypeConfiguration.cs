@@ -12,8 +12,6 @@ namespace Catalog.API.Infrastructure.EntityConfigurations
 
             builder.HasKey(ci => ci.Id);
 
-            builder.Ignore(ci => ci.PictureUri);
-
             builder.HasOne(ci => ci.CatalogBrand)
                 .WithMany()
                 .HasForeignKey(ci => ci.CatalogBrandId);
