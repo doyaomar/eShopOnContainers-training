@@ -80,7 +80,7 @@ public class CatalogController : ControllerBase
         }
 
         var productToUpdate = _mapper.Map<CatalogItem>(request);
-        var updatedProduct = await _catalogService.UpdateProductAsync(productToUpdate);
+        CatalogItem? updatedProduct = await _catalogService.UpdateProductAsync(productToUpdate);
 
         return updatedProduct is null
         ? NotFound()
@@ -101,7 +101,7 @@ public class CatalogController : ControllerBase
             return BadRequest();
         }
 
-        var deletedProduct = await _catalogService.DeleteProductAsync(id);
+        CatalogItem? deletedProduct = await _catalogService.DeleteProductAsync(id);
 
         return deletedProduct is null
         ? NotFound()
