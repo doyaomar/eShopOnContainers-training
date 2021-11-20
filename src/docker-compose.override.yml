@@ -4,13 +4,6 @@ version: '3.4'
 
 services:
   catalogapi:
-    image: ${REGISTRY:-eshoptraining}/catalogapi:${PLATFORM:-linux}-${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Services\Catalog\Catalog.API\Dockerfile
-    ports:
-      - 8080:80
-      - 8081:443
     environment:
       - ConnectionStrings__CatalogDb=Server=sqldata;Initial Catalog=CatalogDb;User Id=sa;Password=Pass@word
       - ASPNETCORE_ENVIRONMENT=Development
@@ -18,14 +11,14 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/Catalog.API.pfx
+    ports:
+      - 8080:80
+      - 8081:443
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
       - ~/.aspnet/https:/https:ro
-    depends_on:
-      - sqldata
 
   sqldata:
-    image: mcr.microsoft.com/mssql/server:latest
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
