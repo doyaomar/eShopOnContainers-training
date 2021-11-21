@@ -2,10 +2,13 @@ using Catalog.API.Models;
 
 namespace Catalog.API.Infrastructure;
 
-public interface ICatalogRepository
+public interface ICatalogDbContext
 {
     Task<CatalogItem?> CreateAsync(CatalogItem item);
-    Task<CatalogItem?> DeleteAsync(long id);
+
+    Task<CatalogItem?> DeleteAsync(Guid id);
+    
     Task<CatalogItem?> UpdateAsync(CatalogItem item);
-    Task<CatalogItem?> GetAsync(long id);
+    
+    Task<CatalogItem?> GetAsync(Guid id);
 }

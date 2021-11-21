@@ -1,4 +1,4 @@
-using Catalog.API.Models;
+using Catalog.API.Dtos;
 
 namespace Catalog.API.Requests
 {
@@ -10,11 +10,11 @@ namespace Catalog.API.Requests
 
         public decimal Price { get; set; }
 
-        public string PictureFileName { get; set; } = default!;        
+        public string PictureFileName { get; set; } = default!;
 
-        public int CatalogTypeId { get; set; }
+        public CatalogTypeDto CatalogType { get; set; } = default!;
 
-        public int CatalogBrandId { get; set; }
+        public CatalogBrandDto CatalogBrand { get; set; } = default!;
 
         public int AvailableStock { get; set; }
 

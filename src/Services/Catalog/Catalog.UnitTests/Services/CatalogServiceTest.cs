@@ -11,12 +11,12 @@ namespace Catalog.UnitTests.Services;
 
 public class CatalogServiceTest
 {
-    private readonly Mock<ICatalogRepository> _catalogRepositoryStub;
+    private readonly Mock<ICatalogDbContext> _catalogRepositoryStub;
     private readonly ICatalogService _catalogService;
 
     public CatalogServiceTest()
     {
-        _catalogRepositoryStub = new Mock<ICatalogRepository>();
+        _catalogRepositoryStub = new Mock<ICatalogDbContext>();
 
         _catalogService = new CatalogService(_catalogRepositoryStub.Object);
     }
