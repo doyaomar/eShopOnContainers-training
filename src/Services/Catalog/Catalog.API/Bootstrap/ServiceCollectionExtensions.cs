@@ -1,12 +1,9 @@
 using Catalog.API.Infrastructure;
+using Catalog.API.Infrastructure.Serialization;
 using Catalog.API.Infrastructure.Settings;
 using Catalog.API.SeedWork;
 using Catalog.API.Services;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace Catalog.API.Bootsrap;
 
@@ -29,7 +26,7 @@ public static class ServiceCollectionExtenions
         services
         .Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
         // Add mongo mappings
-        AddMongoDbMappingRules();
+        MongoDbSerialization.AddSerializationRules();
 
         return services;
     }
@@ -46,16 +43,5 @@ public static class ServiceCollectionExtenions
                     null);
 
         return services;
-    }
-
-    public static void AddMongoDbMappingRules()
-    {
-        ConventionRegistry.Register("CamelCase", new ConventionPack { new CamelCaseElementNameConvention() }, _ => true);
-        ConventionRegistry.Register("IgnoreIfNull", new ConventionPack { new IgnoreIfNullConvention(true) }, _ => true);
-        ConventionRegistry.Register("EnumToString", new ConventionPack { new EnumRepresentationConvention(BsonType.String) }, _ => true);
-
-        BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(BsonType.String));
-        BsonSerializer.RegisterSerializer(typeof(int), new Int32Serializer(BsonType.Double));
-        BsonSerializer.RegisterSerializer(typeof(decimal), new DecimalSerializer(BsonType.Double));
     }
 }
