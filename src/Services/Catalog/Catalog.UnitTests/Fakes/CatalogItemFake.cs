@@ -1,3 +1,4 @@
+using System;
 using Catalog.API.Dtos;
 using Catalog.API.Models;
 using Catalog.API.Requests;
@@ -6,9 +7,9 @@ namespace Catalog.UnitTests.Fakes
 {
     public static class CatalogItemFake
     {
-        public static CatalogItemDto GetCatalogItemDtoFake() => new()
+        public static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
         {
-            Id = 1,
+            Id = id,
             Name = "name",
             CatalogBrand = new CatalogBrandDto
             {
@@ -22,27 +23,56 @@ namespace Catalog.UnitTests.Fakes
             }
         };
 
-        public static CatalogItem GetCatalogItemFake() => new()
+        public static CatalogItem GetCatalogItemFake()
         {
-            Id = 1,
-            Name = "name",
-            CatalogBrandId = 1,
-            CatalogTypeId = 1
-        };
+            var item = new CatalogItem
+            {
+                Name = "name",
+                CatalogBrand = new CatalogBrand
+                {
+                    Id = 1,
+                    Name = "catalogBrandName"
+                },
+                CatalogType = new CatalogType
+                {
+                    Id = 1,
+                    Name = "catalogTypeName"
+                }
+            };
+            item.SetId(Guid.NewGuid());
+
+            return item;
+        }
 
         public static CreateProductRequest GetCreateProductRequestFake() => new()
         {
             Name = "name",
-            CatalogBrandId = 1,
-            CatalogTypeId = 1
+            CatalogBrand = new CatalogBrandDto
+            {
+                Id = 1,
+                Name = "catalogBrandName"
+            },
+            CatalogType = new CatalogTypeDto
+            {
+                Id = 1,
+                Name = "catalogTypeName"
+            }
         };
 
-        public static UpdateProductRequest GetUpdateProductRequestFake() => new()
+        public static UpdateProductRequest GetUpdateProductRequestFake(Guid id) => new()
         {
-            Id = 1,
+            Id = id,
             Name = "name",
-            CatalogBrandId = 1,
-            CatalogTypeId = 1
+            CatalogBrand = new CatalogBrandDto
+            {
+                Id = 1,
+                Name = "catalogBrandName"
+            },
+            CatalogType = new CatalogTypeDto
+            {
+                Id = 1,
+                Name = "catalogTypeName"
+            }
         };
     }
 }

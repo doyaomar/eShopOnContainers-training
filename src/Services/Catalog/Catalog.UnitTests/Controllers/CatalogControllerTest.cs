@@ -10,7 +10,7 @@ using Catalog.UnitTests.Fakes;
 using Microsoft.AspNetCore.Mvc;
 using Catalog.API.Dtos;
 using Catalog.API.Models;
-using Catalog.API.Requests;
+using System;
 
 namespace Catalog.UnitTests.Controllers;
 
@@ -25,7 +25,6 @@ public class CatalogControllerTest
         Mock<ILogger<CatalogController>> _loggerStub = new();
         _catalogServiceStub = new Mock<ICatalogService>();
         _mapperStub = new Mock<IMapper>();
-
         _catalogController = new CatalogController(_loggerStub.Object, _mapperStub.Object, _catalogServiceStub.Object);
     }
 
@@ -35,9 +34,9 @@ public class CatalogControllerTest
     public async Task GetProductAsync_WhenProductExists_ReturnsItemDto()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
-        var validCatalogItemDtoMock = CatalogItemFake.GetCatalogItemDtoFake();
+        var validCatalogItemDtoMock = CatalogItemFake.GetCatalogItemDtoFake(validProductIdStub);
         _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
         _mapperStub.Setup(mapper => mapper.Map<CatalogItemDto>(validCatalogItemStub)).Returns(validCatalogItemDtoMock);
 
@@ -54,7 +53,7 @@ public class CatalogControllerTest
     public async Task GetProductAsync_WhenIdIsNotValid_ReturnsBadRequestResult()
     {
         // Arrange
-        var invalidProductIdStub = 0;
+        var invalidProductIdStub = Guid.Empty;
 
         // Act
         var result = await _catalogController.GetProductAsync(invalidProductIdStub);
@@ -67,7 +66,7 @@ public class CatalogControllerTest
     public async Task GetProductAsync_WhenProductDoesntExist_ReturnsNotFoundResult()
     {
         // Arrange
-        var invalidProductIdStub = 1;
+        var invalidProductIdStub = Guid.NewGuid();
         CatalogItem invalidCatalogItemStub = null!;
         _catalogServiceStub.Setup(service => service.GetProductAsync(invalidProductIdStub)).ReturnsAsync(invalidCatalogItemStub);
 
@@ -97,27 +96,14 @@ public class CatalogControllerTest
         result.Should().BeOfType<CreatedAtActionResult>();
     }
 
-    [Fact]
-    public async Task CreateProductAsync_WhenCreateRequestIsNull_ReturnsBadRequestResult()
-    {
-        // Arrange
-        CreateProductRequest invalidRequestStub = null!;
-
-        // Act
-        var result = await _catalogController.CreateProductAsync(invalidRequestStub!);
-
-        // Assert
-        result.Should().BeOfType<BadRequestResult>();
-    }
-
     // UpdateProductAsync Tests
 
     [Fact]
     public async Task UpdateProductAsync_WhenUpdateRequestIsValidAndProductExists_ReturnsNoContentResult()
     {
         // Arrange
-        var validProductIdStub = 1;
-        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
+        var validProductIdStub = Guid.NewGuid(); ;
+        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake(validProductIdStub);
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(validCatalogItemStub);
         _catalogServiceStub.Setup(service => service.UpdateProductAsync(validCatalogItemStub)).ReturnsAsync(validCatalogItemStub);
@@ -133,8 +119,8 @@ public class CatalogControllerTest
     public async Task UpdateProductAsync_WhenProductDoesntExist_ReturnsNotFountResult()
     {
         // Arrange
-        var validProductIdStub = 1;
-        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
+        var validProductIdStub = Guid.NewGuid(); ;
+        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake(validProductIdStub);
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(validCatalogItemStub);
         _catalogServiceStub.Setup(service => service.UpdateProductAsync(validCatalogItemStub)).ReturnsAsync((CatalogItem)null!);
@@ -151,8 +137,8 @@ public class CatalogControllerTest
     public async Task UpdateProductAsync_WhenIdIsNotValid_ReturnsBadRequestResult()
     {
         // Arrange
-        var invalidProductIdStub = 0;
-        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
+        var invalidProductIdStub = Guid.Empty;
+        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake(invalidProductIdStub);
 
         // Act
         var result = await _catalogController.UpdateProductAsync(invalidProductIdStub, validRequestStub);
@@ -165,8 +151,8 @@ public class CatalogControllerTest
     public async Task UpdateProductAsync_WhenIdIsDifferentThanRequest_ReturnsBadRequestResult()
     {
         // Arrange
-        var invalidProductIdStub = 2;
-        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake();
+        var invalidProductIdStub = Guid.NewGuid();
+        var validRequestStub = CatalogItemFake.GetUpdateProductRequestFake(Guid.NewGuid());
 
         // Act
         var result = await _catalogController.UpdateProductAsync(invalidProductIdStub, validRequestStub);
@@ -181,7 +167,7 @@ public class CatalogControllerTest
     public async Task DeleteProductAsync_WhenIdIsValidAndProductExists_ReturnsNoContentResult()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _catalogServiceStub.Setup(service => service.DeleteProductAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
 
@@ -196,7 +182,7 @@ public class CatalogControllerTest
     public async Task DeleteProductAsync_WhenProductDoesntExist_ReturnsNotFountResult()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         CatalogItem invalidCatalogItemStub = null!;
         _catalogServiceStub.Setup(service => service.DeleteProductAsync(validProductIdStub)).ReturnsAsync(invalidCatalogItemStub);
 
@@ -212,7 +198,7 @@ public class CatalogControllerTest
     public async Task DeleteProductAsync_WhenIdIsNotValid_ReturnsBadRequestResult()
     {
         // Arrange
-        var invalidProductIdStub = 0;
+        var invalidProductIdStub = Guid.Empty;
 
         // Act
         var result = await _catalogController.DeleteProductAsync(invalidProductIdStub);

@@ -6,19 +6,22 @@ using Catalog.API.Services;
 using Catalog.UnitTests.Fakes;
 using FluentAssertions;
 using Catalog.API.Models;
+using Catalog.API.SeedWork;
+using System;
 
 namespace Catalog.UnitTests.Services;
 
 public class CatalogServiceTest
 {
     private readonly Mock<ICatalogDbContext> _catalogRepositoryStub;
+    private readonly Mock<IGuidProvider> _guidProviderStub;
     private readonly ICatalogService _catalogService;
 
     public CatalogServiceTest()
     {
         _catalogRepositoryStub = new Mock<ICatalogDbContext>();
-
-        _catalogService = new CatalogService(_catalogRepositoryStub.Object);
+        _guidProviderStub = new Mock<IGuidProvider>();
+        _catalogService = new CatalogService(_catalogRepositoryStub.Object, _guidProviderStub.Object);
     }
 
     // GetProductAsync Tests
@@ -27,7 +30,7 @@ public class CatalogServiceTest
     public async Task GetProductAsync_WhenProductExists_ThenReturnsProduct()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         var validCatalogItemMock = CatalogItemFake.GetCatalogItemFake();
         _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub)).ReturnsAsync(validCatalogItemMock);
 
@@ -44,7 +47,7 @@ public class CatalogServiceTest
     public async Task GetProductAsync_WhenProductDoesntExist_ThenReturnsNull()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         CatalogItem invalidCatalogItemstub = null!;
         _catalogRepositoryStub.Setup(repo => repo.GetAsync(validProductIdStub)).ReturnsAsync(invalidCatalogItemstub);
 
@@ -96,7 +99,7 @@ public class CatalogServiceTest
     public void DeleteProductAsync()
     {
         // Arrange
-        var validProductIdStub = 1;
+        var validProductIdStub = Guid.NewGuid();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
         _catalogRepositoryStub.Setup(repo => repo.DeleteAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
 
