@@ -1,5 +1,6 @@
 using Catalog.API.Infrastructure;
 using Catalog.API.Infrastructure.Settings;
+using Catalog.API.SeedWork;
 using Catalog.API.Services;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Bson;
@@ -16,7 +17,8 @@ public static class ServiceCollectionExtenions
     {
         services
         .AddSingleton<ICatalogDbContext, CatalogDbContext>()
-        .AddScoped<ICatalogService, CatalogService>();
+        .AddScoped<ICatalogService, CatalogService>()
+        .AddScoped<IGuidProvider, GuidProvider>();
 
         return services;
     }
