@@ -31,11 +31,11 @@ public class CatalogDbContext : ICatalogDbContext
             return null;
         }
 
-        return await _catalogItemCollection.FindOneAndReplaceAsync(x => x.Id.Equals(item.Id), item);
+        return await _catalogItemCollection.FindOneAndReplaceAsync(x => x.Id == item.Id, item);
     }
 
-    public async Task<CatalogItem?> DeleteAsync(Guid id) => await _catalogItemCollection.FindOneAndDeleteAsync(x => x.Id.Equals(id));
+    public async Task<CatalogItem?> DeleteAsync(Guid id) => await _catalogItemCollection.FindOneAndDeleteAsync(x => x.Id == id);
 
-    public async Task<CatalogItem?> GetAsync(Guid id) => await _catalogItemCollection.Find(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+    public async Task<CatalogItem?> GetAsync(Guid id) => await _catalogItemCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
 }
