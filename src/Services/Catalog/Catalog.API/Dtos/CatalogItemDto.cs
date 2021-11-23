@@ -2,7 +2,7 @@ namespace Catalog.API.Dtos;
 
 public class CatalogItemDto
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; } = default!;
 

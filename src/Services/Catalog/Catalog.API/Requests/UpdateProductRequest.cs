@@ -1,8 +1,10 @@
+using Catalog.API.Dtos;
+
 namespace Catalog.API.Requests
 {
     public class UpdateProductRequest
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; } = default!;
 
@@ -12,9 +14,9 @@ namespace Catalog.API.Requests
 
         public string PictureFileName { get; set; } = default!;
 
-        public int CatalogTypeId { get; set; }
+        public CatalogTypeDto CatalogType { get; set; } = default!;
 
-        public int CatalogBrandId { get; set; }
+        public CatalogBrandDto CatalogBrand { get; set; } = default!;
 
         public int AvailableStock { get; set; }
 

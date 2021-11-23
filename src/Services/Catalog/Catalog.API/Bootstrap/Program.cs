@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen(options =>
 // Add user services
 builder.Services.AddUserServices();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddCustomHealhChecks();
+builder.Services.AddCustomHealhChecks(builder.Configuration);
 
 var app = builder.Build();
 

@@ -1,9 +1,8 @@
-namespace Catalog.API.Models
-{
-        public class CatalogType
-    {
-        public int Id { get; set; }
+namespace Catalog.API.Models;
 
-        public string Name { get; set; } = default!;
-    }
+public class CatalogType
+{
+    public Guid Id { get; init; }
+
+    public string Name { get; init; } = default!;
 }

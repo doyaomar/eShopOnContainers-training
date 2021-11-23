@@ -23,16 +23,16 @@ public class CatalogController : ControllerBase
         _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
     }
 
-    // GET api/v1/[controller]/products/4
-    [HttpGet("products/{id:long}")]
+    // GET api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpGet("products/{id:Guid}")]
     [ActionName(nameof(GetProductAsync))]
     [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] long id)
+    public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] Guid id)
     {
-        if (id < 1)
+        if (id.Equals(Guid.Empty))
         {
             return BadRequest();
         }
@@ -52,11 +52,6 @@ public class CatalogController : ControllerBase
 
     public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
     {
-        if (request is null)
-        {
-            return BadRequest();
-        }
-
         var product = _mapper.Map<CatalogItem>(request);
         CatalogItem? createdProduct = await _catalogService.CreateProductAsync(product);
 
@@ -65,16 +60,16 @@ public class CatalogController : ControllerBase
         : CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
     }
 
-    // PUT api/v1/[controller]/products/5
-    [HttpPut("products/{id:long}")]
+    // PUT api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpPut("products/{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-    public async Task<IActionResult> UpdateProductAsync([FromRoute] long id, [FromBody] UpdateProductRequest request)
+    public async Task<IActionResult> UpdateProductAsync([FromRoute] Guid id, [FromBody] UpdateProductRequest request)
     {
-        if (id < 1 || request is null || !id.Equals(request.Id))
+        if (id.Equals(Guid.Empty) || request is null || !id.Equals(request.Id))
         {
             return BadRequest();
         }
@@ -87,16 +82,16 @@ public class CatalogController : ControllerBase
         : NoContent();
     }
 
-    // DELETE api/v1/[controller]/products/3
-    [HttpDelete("products/{id:long}")]
+    // DELETE api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpDelete("products/{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-    public async Task<IActionResult> DeleteProductAsync([FromRoute] long id)
+    public async Task<IActionResult> DeleteProductAsync([FromRoute] Guid id)
     {
-        if (id < 1)
+        if (id.Equals(Guid.Empty))
         {
             return BadRequest();
         }

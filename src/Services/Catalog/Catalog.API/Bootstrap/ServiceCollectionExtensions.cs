@@ -1,6 +1,8 @@
 using Catalog.API.Infrastructure;
+using Catalog.API.Infrastructure.Serialization;
+using Catalog.API.Infrastructure.Settings;
+using Catalog.API.SeedWork;
 using Catalog.API.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Catalog.API.Bootsrap;
@@ -11,25 +13,34 @@ public static class ServiceCollectionExtenions
     public static IServiceCollection AddUserServices(this IServiceCollection services)
     {
         services
-        .AddScoped<ICatalogRepository, CatalogRepository>()
-        .AddScoped<ICatalogService, CatalogService>();
+        .AddSingleton<ICatalogDbContext, CatalogDbContext>()
+        .AddScoped<ICatalogService, CatalogService>()
+        .AddScoped<IGuidProvider, GuidProvider>();
 
         return services;
     }
 
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // Add configurations
         services
-        .AddDbContext<CatalogContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("CatalogDb")));
+        .Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
+        // Add mongo mappings
+        MongoDbSerialization.AddSerializationRules();
 
         return services;
     }
 
-    public static IServiceCollection AddCustomHealhChecks(this IServiceCollection services)
+    public static IServiceCollection AddCustomHealhChecks(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHealthChecks()
         .AddCheck("self", () => HealthCheckResult.Healthy())
-        .AddDbContextCheck<CatalogContext>();
+        .AddMongoDb(configuration.GetSection("CatalogDbSettings:ConnectionString").Value,
+                    configuration.GetSection("CatalogDbSettings:DatabaseName").Value,
+                    null,
+                    null,
+                    null,
+                    null);
 
         return services;
     }

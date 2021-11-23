@@ -2,29 +2,30 @@ namespace Catalog.API.Models;
 
 public class CatalogItem
 {
-    public long Id { get; set; }
+    public Guid Id { get; private set; }
 
-    public string Name { get; set; } = default!;
+    public string Name { get; init; } = default!;
 
-    public string Description { get; set; } = default!;
+    public string Description { get; init; } = default!;
 
-    public decimal Price { get; set; }
+    public decimal Price { get; init; }
 
-    public string PictureFileName { get; set; } = default!;
+    public string PictureFileName { get; init; } = default!;
 
-    public int CatalogTypeId { get; set; }
+    public CatalogType? CatalogType { get; init; }
 
-    public CatalogType? CatalogType { get; set; }
+    public CatalogBrand? CatalogBrand { get; init; }
 
-    public int CatalogBrandId { get; set; }
+    public int AvailableStock { get; init; }
 
-    public CatalogBrand? CatalogBrand { get; set; }
+    public int RestockThreshold { get; init; }
 
-    public int AvailableStock { get; set; }
+    public int MaxStockThreshold { get; init; }
 
-    public int RestockThreshold { get; set; }
+    public bool IsOnReorder { get; init; }
 
-    public int MaxStockThreshold { get; set; }
-
-    public bool IsOnReorder { get; set; }
+    public void SetId(Guid id)
+    {
+        Id = id;
+    }
 }
