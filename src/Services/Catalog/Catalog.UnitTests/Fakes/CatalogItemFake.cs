@@ -13,12 +13,12 @@ namespace Catalog.UnitTests.Fakes
             Name = "name",
             CatalogBrand = new CatalogBrandDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogBrandName"
             },
             CatalogType = new CatalogTypeDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogTypeName"
             }
         };
@@ -30,12 +30,12 @@ namespace Catalog.UnitTests.Fakes
                 Name = "name",
                 CatalogBrand = new CatalogBrand
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "catalogBrandName"
                 },
                 CatalogType = new CatalogType
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "catalogTypeName"
                 }
             };
@@ -49,12 +49,12 @@ namespace Catalog.UnitTests.Fakes
             Name = "name",
             CatalogBrand = new CatalogBrandDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogBrandName"
             },
             CatalogType = new CatalogTypeDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogTypeName"
             }
         };
@@ -65,12 +65,12 @@ namespace Catalog.UnitTests.Fakes
             Name = "name",
             CatalogBrand = new CatalogBrandDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogBrandName"
             },
             CatalogType = new CatalogTypeDto
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Name = "catalogTypeName"
             }
         };

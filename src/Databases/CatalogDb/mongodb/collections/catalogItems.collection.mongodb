@@ -1,0 +1,270 @@
+use('CatalogDb');
+
+db.catalogItems.insertMany([
+    {
+        "_id": UUID("6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a"),
+        "name": ".NET Black & White Mug",
+        "description": ".NET Black & White Mug",
+        "price": Decimal128("8.5"),
+        "pictureFileName": "2.png",
+        "catalogType": {
+            "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
+            "name": "Mug"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 89,
+        "maxStockThreshold": 3,
+        "isOnReorder": true,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("8781d5ba-071b-4ab7-b6f6-1bc732594b31"),
+        "name": "Modern .NET Black & White Mug",
+        "description": "Modern .NET Black & White Mug",
+        "price": Decimal128("8.5"),
+        "pictureFileName": "13.png",
+        "catalogType": {
+            "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
+            "name": "Mug"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 89,
+        "maxStockThreshold": 3,
+        "isOnReorder": true,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("db02c55c-ea48-419e-86c6-d370f318836a"),
+        "name": ".NET Bot Black Hoodie",
+        "description": ".NET Bot Black Hoodie, and more",
+        "price": Decimal128("19.5"),
+        "pictureFileName": "1.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 100,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("6bca9cf2-25dc-447d-bf8e-fb4323ae865d"),
+        "name": ".NET Foundation T-shirt",
+        "description": ".NET Foundation T-shirt",
+        "price": Decimal128("12"),
+        "pictureFileName": "4.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 120,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("de840c29-78d0-4c63-a1c6-108adfe26fa7"),
+        "name": ".NET Blue Hoodie",
+        "description": ".NET Blue Hoodie",
+        "price": Decimal128("12"),
+        "pictureFileName": "6.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 17,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("92ae4058-6728-4f28-89ee-e9a4d58e9812"),
+        "name": ".NET Foundation Pin",
+        "description": ".NET Foundation Pin",
+        "price": Decimal128("12"),
+        "pictureFileName": "10.png",
+        "catalogType": {
+            "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
+            "name": "Pin"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 11,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("a5dbe612-4e58-4019-a5dd-2b2b3f38394d"),
+        "name": "Cup<T> Pin",
+        "description": "Cup<T> Pin",
+        "price": Decimal128("8.5"),
+        "pictureFileName": "11.png",
+        "catalogType": {
+            "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
+            "name": "Pin"
+        },
+        "catalogBrand": {
+            "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+            "name": ".NET"
+        },
+        "availableStock": 3,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("46202c09-3dd5-4928-a728-f43ac4d3ee32"),
+        "name": "Cup<T> White Mug",
+        "description": "Cup<T> White Mug",
+        "price": Decimal128("12"),
+        "pictureFileName": "9.png",
+        "catalogType": {
+            "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
+            "name": "Mug"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 76,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("3e44cdcb-02c3-4112-a89b-f69e9b343680"),
+        "name": "Modern Cup<T> White Mug",
+        "description": "Modern Cup<T> White Mug",
+        "price": Decimal128("12"),
+        "pictureFileName": "14.png",
+        "catalogType": {
+            "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
+            "name": "Mug"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 76,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("e7b0d68d-e70b-4105-83db-9a1a663d1891"),
+        "name": "Prism White T-Shirt",
+        "description": "Prism White T-Shirt",
+        "price": Decimal128("12"),
+        "pictureFileName": "3.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 56,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("6f6fc428-63ca-458d-a4c7-4fab7e906b90"),
+        "name": "Roslyn Red T-Shirt",
+        "description": "Roslyn Red T-Shirt",
+        "price": Decimal128("12"),
+        "pictureFileName": "7.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 8,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("ce92ecf5-15ec-403e-b379-75ee5509e9d1"),
+        "name": "Kudu Purple Hoodie",
+        "description": "Kudu Purple Hoodie",
+        "price": Decimal128("8.5"),
+        "pictureFileName": "8.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 34,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("73a16dde-2987-438a-a7e7-4c5d3fe9fe67"),
+        "name": "Prism White TShirt",
+        "description": "Prism White TShirt",
+        "price": Decimal128("12"),
+        "pictureFileName": "12.png",
+        "catalogType": {
+            "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+            "name": "T-Shirt"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 0,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    },
+    {
+        "_id": UUID("1119bf13-851f-47a1-a759-44d3fec805b6"),
+        "name": "Roslyn Red Pin",
+        "description": "Roslyn Red Pin",
+        "price": Decimal128("8.5"),
+        "pictureFileName": "5.png",
+        "catalogType": {
+            "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
+            "name": "Pin"
+        },
+        "catalogBrand": {
+            "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+            "name": "Other"
+        },
+        "availableStock": 55,
+        "maxStockThreshold": 3,
+        "isOnReorder": false,
+        "restockThreshold": 5
+    }
+]);

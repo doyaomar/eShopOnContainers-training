@@ -1,0 +1,16 @@
+use('CatalogDb');
+
+db.catalogTypes.insertMany([
+    {
+        "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
+        "name": "Mug"
+    },
+    {
+        "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
+        "name": "T-Shirt"
+    },
+    {
+        "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
+        "name": "Pin"
+    }
+]);

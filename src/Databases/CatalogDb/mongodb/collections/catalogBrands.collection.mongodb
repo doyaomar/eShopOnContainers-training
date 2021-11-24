@@ -1,0 +1,12 @@
+use('CatalogDb');
+
+db.catalogBrands.insertMany([
+    {
+        "_id": UUID("5f9516ec-1533-4b7b-adf3-876d8bd5c085"),
+        "name": ".NET"
+    },
+    {
+        "_id": UUID("96c7905b-7a9b-4b7e-b479-6b307ab0d5fa"),
+        "name": "Other"
+    }
+]);
