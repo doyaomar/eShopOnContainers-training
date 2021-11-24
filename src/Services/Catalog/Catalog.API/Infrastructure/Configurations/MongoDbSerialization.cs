@@ -16,7 +16,6 @@ public static class MongoDbSerialization
         BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3; // obsolete: will be removed in later release of mongo driver
         #pragma warning restore CS0618
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-        BsonSerializer.RegisterSerializer(new Int32Serializer(BsonType.Double));
-        BsonSerializer.RegisterSerializer(new DecimalSerializer(BsonType.Double));
+        BsonSerializer.RegisterSerializer(new DecimalSerializer(BsonType.Decimal128));
     }
 }
