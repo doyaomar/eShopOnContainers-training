@@ -1,14 +1,3 @@
-using System.Threading.Tasks;
-using Xunit;
-using Moq;
-using Catalog.API.Infrastructure;
-using Catalog.API.Services;
-using Catalog.UnitTests.Fakes;
-using FluentAssertions;
-using Catalog.API.Models;
-using Catalog.API.SeedWork;
-using System;
-
 namespace Catalog.UnitTests.Services;
 
 public class CatalogServiceTest

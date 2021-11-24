@@ -1,8 +1,3 @@
-using Catalog.API.Infrastructure.Settings;
-using Catalog.API.Models;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
-
 namespace Catalog.API.Infrastructure;
 
 public class CatalogDbContext : ICatalogDbContext

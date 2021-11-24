@@ -1,17 +1,3 @@
-using Xunit;
-using Catalog.API.Controllers;
-using Catalog.API.Services;
-using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Moq;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Catalog.UnitTests.Fakes;
-using Microsoft.AspNetCore.Mvc;
-using Catalog.API.Dtos;
-using Catalog.API.Models;
-using System;
-
 namespace Catalog.UnitTests.Controllers;
 
 public class CatalogControllerTest
