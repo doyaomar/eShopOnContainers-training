@@ -1,7 +1,3 @@
-using Catalog.API.Infrastructure;
-using Catalog.API.Models;
-using Catalog.API.SeedWork;
-
 namespace Catalog.API.Services;
 
 public class CatalogService : ICatalogService

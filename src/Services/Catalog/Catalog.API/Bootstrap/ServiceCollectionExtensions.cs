@@ -1,10 +1,3 @@
-using Catalog.API.Infrastructure;
-using Catalog.API.Infrastructure.Serialization;
-using Catalog.API.Infrastructure.Settings;
-using Catalog.API.SeedWork;
-using Catalog.API.Services;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-
 namespace Catalog.API.Bootsrap;
 
 public static class ServiceCollectionExtenions
