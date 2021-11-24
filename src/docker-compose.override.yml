@@ -5,7 +5,7 @@ version: '3.4'
 services:
   catalogapi:
     environment:
-      - ConnectionStrings__CatalogDb=Server=sqldata;Initial Catalog=CatalogDb;User Id=sa;Password=Pass@word
+      - CatalogDbSettings__ConnectionString=mongodb://rootUser:rootPassword2@mongodb
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORT=8081
       - ASPNETCORE_URLS=https://+:443;http://+:80
@@ -18,9 +18,11 @@ services:
       - ~/.vsdbg:/remote_debugger:rw
       - ~/.aspnet/https:/https:ro
 
-  sqldata:
+  mongodb:
     environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
+      - MONGO_INITDB_ROOT_USERNAME=rootUser
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassword2
     ports:
-      - "5434:1433"
+      - "27017:27017"
+    volumes:
+      - ~/.mongo:/data/db  

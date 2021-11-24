@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: Services\Catalog\Catalog.API\Dockerfile
     depends_on:
-      - sqldata  
+      - mongodb  
 
-  sqldata:
-    image: mcr.microsoft.com/mssql/server:latest
+  mongodb:
+    image: mongo:5.0.4
