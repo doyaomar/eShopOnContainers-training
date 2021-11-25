@@ -2,7 +2,7 @@ namespace Catalog.UnitTests.Fakes;
 
 public static class CatalogItemFake
 {
-    public static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
+    public static CatalogItemViewModel GetCatalogItemViewModelFake(Guid id) => new()
     {
         Id = id,
         Name = "name",
@@ -25,12 +25,10 @@ public static class CatalogItemFake
             Name = "name",
             CatalogBrand = new CatalogBrand
             {
-                Id = Guid.NewGuid(),
                 Name = "catalogBrandName"
             },
             CatalogType = new CatalogType
             {
-                Id = Guid.NewGuid(),
                 Name = "catalogTypeName"
             }
         };
@@ -44,12 +42,10 @@ public static class CatalogItemFake
         Name = "name",
         CatalogBrand = new CatalogBrandDto
         {
-            Id = Guid.NewGuid(),
             Name = "catalogBrandName"
         },
         CatalogType = new CatalogTypeDto
         {
-            Id = Guid.NewGuid(),
             Name = "catalogTypeName"
         }
     };

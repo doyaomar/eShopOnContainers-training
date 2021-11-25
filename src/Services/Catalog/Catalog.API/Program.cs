@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Add versioning
 builder.Services.AddApiVersioning(options =>
 {
@@ -10,17 +11,16 @@ builder.Services.AddApiVersioning(options =>
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
 });
-// Add automapper profile
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Add swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog API", Version = "v1" });
 });
-// Add user services
-builder.Services.AddUserServices();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddCustomHealhChecks(builder.Configuration);
+
+// Add app services
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationHealhtChecks(builder.Configuration);
 
 var app = builder.Build();
 
@@ -28,11 +28,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    // app.UseSwaggerUI(options => 
-    // {
-    //     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1");
-    //     options.RoutePrefix = string.Empty;
-    // });
 }
 
 app.UseHttpsRedirection();

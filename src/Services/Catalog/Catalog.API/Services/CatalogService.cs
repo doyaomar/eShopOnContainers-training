@@ -2,26 +2,22 @@ namespace Catalog.API.Services;
 
 public class CatalogService : ICatalogService
 {
-    private readonly ICatalogDbContext _catalogDbContext;
+    private readonly ICatalogRepository _repository;
 
-    private readonly IGuidProvider _guidProvider;
+    private readonly IGuidService _guidProvider;
 
-    public CatalogService(ICatalogDbContext catalogDbContext, IGuidProvider guidProvider)
+    public CatalogService(ICatalogRepository catalogRepository, IGuidService guidProvider)
     {
-        _catalogDbContext = catalogDbContext ?? throw new ArgumentNullException(nameof(catalogDbContext));
+        _repository = catalogRepository ?? throw new ArgumentNullException(nameof(catalogRepository));
         _guidProvider = guidProvider ?? throw new ArgumentNullException(nameof(guidProvider));
     }
 
-    public async Task<CatalogItem?> CreateProductAsync(CatalogItem item)
-    {
-        item.SetId(_guidProvider.GetNewGuid());
+    public async Task<CatalogItem> CreateProductAsync(CatalogItem item)
+    => await _repository.CreateAsync(item.SetId(_guidProvider.GetNewGuid()));
 
-        return await _catalogDbContext.CreateAsync(item);
-    }
+    public async Task<CatalogItem?> UpdateProductAsync(CatalogItem item) => await _repository.UpdateAsync(item);
 
-    public async Task<CatalogItem?> UpdateProductAsync(CatalogItem item) => await _catalogDbContext.UpdateAsync(item);
+    public async Task<CatalogItem?> DeleteProductAsync(Guid id) => await _repository.DeleteAsync(id);
 
-    public async Task<CatalogItem?> DeleteProductAsync(Guid id) => await _catalogDbContext.DeleteAsync(id);
-
-    public async Task<CatalogItem?> GetProductAsync(Guid id) => await _catalogDbContext.GetAsync(id);
+    public async Task<CatalogItem?> GetProductAsync(Guid id) => await _repository.GetAsync(id);
 }

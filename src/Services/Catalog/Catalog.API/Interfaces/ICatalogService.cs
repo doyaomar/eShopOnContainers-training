@@ -1,8 +1,8 @@
-namespace Catalog.API.Services;
+namespace Catalog.API.Interfaces;
 
 public interface ICatalogService
 {
-    Task<CatalogItem?> CreateProductAsync(CatalogItem item);
+    Task<CatalogItem> CreateProductAsync(CatalogItem item);
 
     Task<CatalogItem?> DeleteProductAsync(Guid id);
 

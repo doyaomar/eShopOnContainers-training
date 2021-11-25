@@ -22,17 +22,17 @@ public class CatalogControllerTest
         // Arrange
         var validProductIdStub = Guid.NewGuid();
         var validCatalogItemStub = CatalogItemFake.GetCatalogItemFake();
-        var validCatalogItemDtoMock = CatalogItemFake.GetCatalogItemDtoFake(validProductIdStub);
+        var validCatalogItemDtoMock = CatalogItemFake.GetCatalogItemViewModelFake(validProductIdStub);
         _catalogServiceStub.Setup(service => service.GetProductAsync(validProductIdStub)).ReturnsAsync(validCatalogItemStub);
-        _mapperStub.Setup(mapper => mapper.Map<CatalogItemDto>(validCatalogItemStub)).Returns(validCatalogItemDtoMock);
+        _mapperStub.Setup(mapper => mapper.Map<CatalogItemViewModel>(validCatalogItemStub)).Returns(validCatalogItemDtoMock);
 
         // Act
         var result = await _catalogController.GetProductAsync(validProductIdStub);
 
         // Assert
         result.Result.Should().BeOfType<OkObjectResult>();
-        ((result.Result as OkObjectResult)!.Value as CatalogItemDto)!.Id.Should().Be(validCatalogItemDtoMock.Id);
-        ((result.Result as OkObjectResult)!.Value as CatalogItemDto)!.Name.Should().Be(validCatalogItemDtoMock.Name);
+        ((result.Result as OkObjectResult)!.Value as CatalogItemViewModel)!.Id.Should().Be(validCatalogItemDtoMock.Id);
+        ((result.Result as OkObjectResult)!.Value as CatalogItemViewModel)!.Name.Should().Be(validCatalogItemDtoMock.Name);
     }
 
     [Fact]

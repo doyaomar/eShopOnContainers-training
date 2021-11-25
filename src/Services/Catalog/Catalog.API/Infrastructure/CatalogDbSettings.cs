@@ -1,9 +1,7 @@
-namespace Catalog.API.Infrastructure.Settings;
+namespace Catalog.API.Infrastructure;
 
 public class CatalogDbSettings
 {
-    public string ConnectionString { get; set; } = default!;
-
     public string DatabaseName { get; set; } = default!;
 
     public string CatalogItemsCollectionName { get; set; } = default!;

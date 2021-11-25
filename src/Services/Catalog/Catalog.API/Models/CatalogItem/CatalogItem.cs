@@ -24,8 +24,10 @@ public class CatalogItem
 
     public bool IsOnReorder { get; init; }
 
-    public void SetId(Guid id)
+    public CatalogItem SetId(Guid id)
     {
         Id = id;
+
+        return this;
     }
 }

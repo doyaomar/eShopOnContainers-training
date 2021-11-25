@@ -19,11 +19,11 @@ public class CatalogController : ControllerBase
     // GET api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
     [HttpGet("products/{id:Guid}")]
     [ActionName(nameof(GetProductAsync))]
-    [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CatalogItemViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] Guid id)
+    public async Task<ActionResult<CatalogItemViewModel>> GetProductAsync([FromRoute] Guid id)
     {
         if (id.Equals(Guid.Empty))
         {
@@ -34,7 +34,7 @@ public class CatalogController : ControllerBase
 
         return product is null
         ? NotFound()
-        : Ok(_mapper.Map<CatalogItemDto>(product));
+        : Ok(_mapper.Map<CatalogItemViewModel>(product));
     }
 
     // POST api/v1/[controller]/products
@@ -46,11 +46,9 @@ public class CatalogController : ControllerBase
     public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductRequest request)
     {
         var product = _mapper.Map<CatalogItem>(request);
-        CatalogItem? createdProduct = await _catalogService.CreateProductAsync(product);
+        CatalogItem createdProduct = await _catalogService.CreateProductAsync(product);
 
-        return createdProduct is null
-        ? StatusCode(StatusCodes.Status500InternalServerError)
-        : CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
+        return CreatedAtAction(nameof(GetProductAsync), new { id = createdProduct.Id }, null);
     }
 
     // PUT api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6

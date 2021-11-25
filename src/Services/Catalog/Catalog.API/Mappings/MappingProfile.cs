@@ -9,7 +9,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateProductRequest, CatalogItem>();
 
         // CatalogItemDto Mappings
-        CreateMap<CatalogItem, CatalogItemDto>();
+        CreateMap<CatalogItem, CatalogItemViewModel>();
         CreateMap<CatalogType, CatalogTypeDto>().ReverseMap();
         CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
     }

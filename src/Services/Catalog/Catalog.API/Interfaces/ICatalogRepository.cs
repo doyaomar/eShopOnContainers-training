@@ -1,8 +1,8 @@
-namespace Catalog.API.Infrastructure;
+namespace Catalog.API.Interfaces;
 
-public interface ICatalogDbContext
+public interface ICatalogRepository
 {
-    Task<CatalogItem?> CreateAsync(CatalogItem item);
+    Task<CatalogItem> CreateAsync(CatalogItem item);
 
     Task<CatalogItem?> DeleteAsync(Guid id);
 

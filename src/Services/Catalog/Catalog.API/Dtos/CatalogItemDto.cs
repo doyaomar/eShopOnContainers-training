@@ -2,27 +2,23 @@ namespace Catalog.API.Dtos;
 
 public class CatalogItemDto
 {
-    public Guid Id { get; set; }
+    public string Name { get; init; } = default!;
 
-    public string Name { get; set; } = default!;
+    public string Description { get; init; } = default!;
 
-    public string Description { get; set; } = default!;
+    public decimal Price { get; init; }
 
-    public decimal Price { get; set; }
+    public string PictureFileName { get; init; } = default!;
 
-    public string PictureFileName { get; set; } = default!;
+    public CatalogTypeDto CatalogType { get; init; } = default!;
 
-    public string PictureUri { get; set; } = default!;
+    public CatalogBrandDto CatalogBrand { get; init; } = default!;
 
-    public CatalogTypeDto CatalogType { get; set; } = default!;
+    public int AvailableStock { get; init; }
 
-    public CatalogBrandDto CatalogBrand { get; set; } = default!;
+    public int RestockThreshold { get; init; }
 
-    public int AvailableStock { get; set; }
+    public int MaxStockThreshold { get; init; }
 
-    public int RestockThreshold { get; set; }
-
-    public int MaxStockThreshold { get; set; }
-
-    public bool IsOnReorder { get; set; }
+    public bool IsOnReorder { get; init; }
 }

@@ -2,14 +2,14 @@ namespace Catalog.UnitTests.Services;
 
 public class CatalogServiceTest
 {
-    private readonly Mock<ICatalogDbContext> _catalogRepositoryStub;
-    private readonly Mock<IGuidProvider> _guidProviderStub;
+    private readonly Mock<ICatalogRepository> _catalogRepositoryStub;
+    private readonly Mock<IGuidService> _guidProviderStub;
     private readonly ICatalogService _catalogService;
 
     public CatalogServiceTest()
     {
-        _catalogRepositoryStub = new Mock<ICatalogDbContext>();
-        _guidProviderStub = new Mock<IGuidProvider>();
+        _catalogRepositoryStub = new Mock<ICatalogRepository>();
+        _guidProviderStub = new Mock<IGuidService>();
         _catalogService = new CatalogService(_catalogRepositoryStub.Object, _guidProviderStub.Object);
     }
 
