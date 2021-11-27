@@ -1,4 +1,4 @@
-namespace Catalog.API.Infrastructure.Data;
+namespace Catalog.API.Data;
 
 public class CatalogDbContext
 {

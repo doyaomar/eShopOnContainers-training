@@ -1,6 +1,6 @@
 namespace Catalog.API.Models;
 
-public class CatalogItem
+public class CatalogItem : IEntity
 {
     public Guid Id { get; private set; }
 

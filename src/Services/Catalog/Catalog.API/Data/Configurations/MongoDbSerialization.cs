@@ -1,4 +1,4 @@
-namespace Catalog.API.Infrastructure.Data.Configurations;
+namespace Catalog.API.Data.Configurations;
 
 public static class MongoDbSerialization
 {
