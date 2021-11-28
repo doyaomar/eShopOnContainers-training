@@ -8,8 +8,7 @@ public static class ServicesConfiguration
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         services
-        .AddScoped<ICatalogService, CatalogService>()
-        .AddScoped<IGuidService, GuidService>()
+        .AddScoped<GuidService>()
         .AddScoped<CatalogDbContext>()
         .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(catalogDbConnectionString)));
 
@@ -18,6 +17,8 @@ public static class ServicesConfiguration
         MongoDbSerialization.AddSerializationRules();
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         return services;
     }

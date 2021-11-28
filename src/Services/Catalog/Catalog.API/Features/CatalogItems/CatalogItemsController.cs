@@ -64,12 +64,10 @@ public class CatalogItemsController : ControllerBase
         {
             return BadRequest();
         }
-        
+
         var Updated = await _mediator.Send(request);
 
-        return Updated
-        ? NoContent()
-        : NotFound();
+        return Updated ? NoContent() : NotFound();
     }
 
     // // DELETE api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6

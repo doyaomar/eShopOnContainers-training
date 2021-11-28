@@ -1,5 +1,3 @@
-using Catalog.API.Infrastructure.Services;
-
 namespace Catalog.API.Features.CatalogItems;
 
 public class Create
@@ -39,7 +37,6 @@ public class Create
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _guidService = guidService ?? throw new ArgumentNullException(nameof(guidService));
-
         }
 
         public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)

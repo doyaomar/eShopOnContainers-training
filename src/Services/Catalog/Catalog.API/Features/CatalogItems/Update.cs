@@ -14,9 +14,9 @@ public class Update
 
         public string PictureFileName { get; init; } = default!;
 
-        public CatalogType? CatalogType { get; init; }
+        public CatalogType CatalogType { get; init; } = default!;
 
-        public CatalogBrand? CatalogBrand { get; init; }
+        public CatalogBrand CatalogBrand { get; init; } = default!;
 
         public int AvailableStock { get; init; }
 
