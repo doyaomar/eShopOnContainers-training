@@ -16,6 +16,7 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog API", Version = "v1" });
+    options.CustomSchemaIds(type => type.FullName);
 });
 
 // Add app services

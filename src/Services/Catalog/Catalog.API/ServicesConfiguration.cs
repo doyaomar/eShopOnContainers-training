@@ -18,7 +18,9 @@ public static class ServicesConfiguration
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
+        services.AddMediatR(Assembly.GetExecutingAssembly());
 
         return services;
     }

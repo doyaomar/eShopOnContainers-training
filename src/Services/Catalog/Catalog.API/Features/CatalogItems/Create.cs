@@ -4,7 +4,6 @@ public class Create
 {
     public class Command : IRequest<Guid>
     {
-
         public string Name { get; init; } = default!;
 
         public string Description { get; init; } = default!;
@@ -13,9 +12,9 @@ public class Create
 
         public string PictureFileName { get; init; } = default!;
 
-        public CatalogType? CatalogType { get; init; }
+        public CatalogTypeDto CatalogType { get; init; } = default!;
 
-        public CatalogBrand? CatalogBrand { get; init; }
+        public CatalogBrandDto CatalogBrand { get; init; } = default!;
 
         public int AvailableStock { get; init; }
 

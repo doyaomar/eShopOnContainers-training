@@ -1,14 +1,16 @@
-namespace Catalog.API.Dtos;
+namespace Catalog.API.Features.CatalogItems.Dtos;
 
 public class CatalogItemDto
 {
+    public Guid Id { get; set; }
+    
     public string Name { get; init; } = default!;
 
     public string Description { get; init; } = default!;
 
     public decimal Price { get; init; }
 
-    public string PictureFileName { get; init; } = default!;
+    public string PictureUri { get; set; } = default!;
 
     public CatalogTypeDto CatalogType { get; init; } = default!;
 

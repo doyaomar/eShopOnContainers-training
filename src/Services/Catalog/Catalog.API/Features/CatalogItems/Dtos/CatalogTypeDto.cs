@@ -1,6 +1,6 @@
-namespace Catalog.API.Dtos;
+namespace Catalog.API.Features.CatalogItems.Dtos;
 
-public class CatalogBrandDto
+public class CatalogTypeDto
 {
     public Guid Id { get; init; }
 

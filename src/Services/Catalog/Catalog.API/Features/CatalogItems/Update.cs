@@ -14,9 +14,9 @@ public class Update
 
         public string PictureFileName { get; init; } = default!;
 
-        public CatalogType CatalogType { get; init; } = default!;
+        public CatalogTypeDto CatalogType { get; init; } = default!;
 
-        public CatalogBrand CatalogBrand { get; init; } = default!;
+        public CatalogBrandDto CatalogBrand { get; init; } = default!;
 
         public int AvailableStock { get; init; }
 
@@ -46,7 +46,8 @@ public class Update
             }
 
             var item = _mapper.Map<CatalogItem>(request);
-            CatalogItem updateItem = await _context.CatalogItems
+            CatalogItem updateItem = await _context
+            .CatalogItems
             .FindOneAndReplaceAsync(x => x.Id == request.Id, item, null, cancellationToken);
 
             return updateItem is not null;

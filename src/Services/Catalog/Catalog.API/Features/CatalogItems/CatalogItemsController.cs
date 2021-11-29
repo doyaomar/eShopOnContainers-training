@@ -4,7 +4,7 @@ namespace Catalog.API.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[Controller]")]
+[Route("api/v{version:apiVersion}/catalog")]
 public class CatalogItemsController : ControllerBase
 {
     private readonly ILogger<CatalogItemsController> _logger;
@@ -16,48 +16,24 @@ public class CatalogItemsController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    // // GET api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
-    // [HttpGet("products/{id:Guid}")]
-    // [ActionName(nameof(GetProductAsync))]
-    // [ProducesResponseType(typeof(CatalogItemViewModel), StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    // public async Task<ActionResult<CatalogItemViewModel>> GetProductAsync([FromRoute] Guid id)
-    // {
-    //     if (id.Equals(Guid.Empty))
-    //     {
-    //         return BadRequest();
-    //     }
-
-    //     CatalogItem? product = await _catalogService.GetProductAsync(id);
-
-    //     return product is null
-    //     ? NotFound()
-    //     : Ok(_mapper.Map<CatalogItemViewModel>(product));
-    // }
-
-    // POST api/v1/[controller]/products
-    [HttpPost("products")]
+    // POST api/v1/[controller]/items
+    [HttpPost("items")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
     public async Task<IActionResult> CreateProductAsync([FromBody] Create.Command request)
     {
         Guid id = await _mediator.Send(request);
 
-        return CreatedAtAction("", id, null);
-        // return CreatedAtAction(nameof(GetProductAsync), id, null);
+        return CreatedAtAction(nameof(GetProductAsync), new { id = id }, null);
     }
 
-    // PUT api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
-    [HttpPut("products/{id:Guid}")]
+    // PUT api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpPut("items/{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
     public async Task<IActionResult> UpdateProductAsync([FromRoute] Guid id, [FromBody] Update.Command request)
     {
         if (id.Equals(Guid.Empty) || request is null || !id.Equals(request.Id))
@@ -65,29 +41,35 @@ public class CatalogItemsController : ControllerBase
             return BadRequest();
         }
 
-        var Updated = await _mediator.Send(request);
+        bool Updated = await _mediator.Send(request);
 
         return Updated ? NoContent() : NotFound();
     }
 
-    // // DELETE api/v1/[controller]/products/3fa85f64-5717-4562-b3fc-2c963f66afa6
-    // [HttpDelete("products/{id:Guid}")]
-    // [ProducesResponseType(StatusCodes.Status204NoContent)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    // DELETE api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpDelete("items/{id:Guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeleteProductAsync([FromRoute] Delete.Command request)
+    {
+        bool deleted = await _mediator.Send(request);
 
-    // public async Task<IActionResult> DeleteProductAsync([FromRoute] Guid id)
-    // {
-    //     if (id.Equals(Guid.Empty))
-    //     {
-    //         return BadRequest();
-    //     }
+        return deleted ? NoContent() : NotFound();
+    }
 
-    //     CatalogItem? deletedProduct = await _catalogService.DeleteProductAsync(id);
+    // GET api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
+    [HttpGet("items/{id:Guid}")]
+    [ActionName(nameof(GetProductAsync))]
+    [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] GetById.Query request, CancellationToken cancellationToken)
+    {
+        CatalogItemDto? item = await _mediator.Send(request, cancellationToken);
 
-    //     return deletedProduct is null
-    //     ? NotFound()
-    //     : NoContent();
-    // }
+        return item is null ? NotFound() : Ok(item);
+    }
 }
