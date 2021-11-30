@@ -1,4 +1,4 @@
-namespace Catalog.API;
+namespace Catalog.API.Infrastructure;
 
 public static class ServicesConfiguration
 {

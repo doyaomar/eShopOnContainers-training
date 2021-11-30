@@ -1,6 +1,5 @@
 global using System.Reflection;
 global using AutoMapper;
-global using Catalog.API;
 global using Catalog.API.Data;
 global using Catalog.API.Data.Configurations;
 global using Catalog.API.Features.CatalogItems.Dtos;
