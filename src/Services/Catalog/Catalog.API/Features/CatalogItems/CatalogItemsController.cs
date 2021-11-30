@@ -21,11 +21,11 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateProductAsync([FromBody] Create.Command request)
+    public async Task<IActionResult> CreateCatalogItemAsync([FromBody] Create.Command request)
     {
         Guid id = await _mediator.Send(request);
 
-        return CreatedAtAction(nameof(GetProductAsync), new { id = id }, null);
+        return CreatedAtAction(nameof(GetCatalogItemAsync), new { id = id }, null);
     }
 
     // PUT api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -34,9 +34,9 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateProductAsync([FromRoute] Guid id, [FromBody] Update.Command request)
+    public async Task<IActionResult> UpdateCatalogItemAsync([FromRoute] Guid id, [FromBody] Update.Command request)
     {
-        if (id.Equals(Guid.Empty) || request is null || !id.Equals(request.Id))
+        if (id.Equals(Guid.Empty) || !id.Equals(request.Id))
         {
             return BadRequest();
         }
@@ -52,7 +52,7 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeleteProductAsync([FromRoute] Delete.Command request)
+    public async Task<IActionResult> DeleteCatalogItemAsync([FromRoute] Delete.Command request)
     {
         bool deleted = await _mediator.Send(request);
 
@@ -61,12 +61,12 @@ public class CatalogItemsController : ControllerBase
 
     // GET api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
     [HttpGet("items/{id:Guid}")]
-    [ActionName(nameof(GetProductAsync))]
+    [ActionName(nameof(GetCatalogItemAsync))]
     [ProducesResponseType(typeof(CatalogItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CatalogItemDto>> GetProductAsync([FromRoute] GetById.Query request, CancellationToken cancellationToken)
+    public async Task<ActionResult<CatalogItemDto>> GetCatalogItemAsync([FromRoute] GetById.Query request, CancellationToken cancellationToken)
     {
         CatalogItemDto? item = await _mediator.Send(request, cancellationToken);
 

@@ -9,7 +9,7 @@ public static class ServicesConfiguration
     {
         services
         .AddScoped<GuidService>()
-        .AddScoped<CatalogDbContext>()
+        .AddScoped<ICatalogDbContext, CatalogDbContext>()
         .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(catalogDbConnectionString)));
 
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));

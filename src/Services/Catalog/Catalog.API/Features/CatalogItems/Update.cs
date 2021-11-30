@@ -29,28 +29,22 @@ public class Update
 
     public class Handler : IRequestHandler<Command, bool>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
 
-        public Handler(CatalogDbContext context, IMapper mapper)
+        public Handler(ICatalogDbContext context, IMapper mapper)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _db = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request is null)
-            {
-                return false; // replace by exception ??
-            }
-
+            _ = request ?? throw new ArgumentNullException(nameof(request));
             var item = _mapper.Map<CatalogItem>(request);
-            CatalogItem updateItem = await _context
-            .CatalogItems
-            .FindOneAndReplaceAsync(x => x.Id == request.Id, item, null, cancellationToken);
+            CatalogItem updatedItem = await _db.CatalogItems.FindOneAndReplaceAsync(x => x.Id == request.Id, item, null, cancellationToken);
 
-            return updateItem is not null;
+            return updatedItem is not null;
         }
     }
 }

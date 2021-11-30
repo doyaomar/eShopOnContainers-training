@@ -27,13 +27,13 @@ public class Create
 
     public class Handler : IRequestHandler<Command, Guid>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
         private readonly GuidService _guidService;
 
-        public Handler(CatalogDbContext context, IMapper mapper, GuidService guidService)
+        public Handler(ICatalogDbContext context, IMapper mapper, GuidService guidService)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _db = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _guidService = guidService ?? throw new ArgumentNullException(nameof(guidService));
         }
@@ -42,7 +42,7 @@ public class Create
         {
             var item = _mapper.Map<CatalogItem>(request);
             item.SetId(_guidService.GetNewGuid());
-            await _context.CatalogItems.InsertOneAsync(item, null, cancellationToken);
+            await _db.CatalogItems.InsertOneAsync(item, null, cancellationToken);
 
             return item.Id;
         }

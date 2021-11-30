@@ -1,6 +1,6 @@
 namespace Catalog.API.Data;
 
-public class CatalogDbContext
+public class CatalogDbContext : ICatalogDbContext
 {
     public IMongoCollection<CatalogItem> CatalogItems { get; }
     public IMongoCollection<CatalogBrand> CatalogBrands { get; }

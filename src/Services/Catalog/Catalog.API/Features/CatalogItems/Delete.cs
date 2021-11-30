@@ -6,19 +6,15 @@ public class Delete
 
     public class Handler : IRequestHandler<Command, bool>
     {
-        private readonly CatalogDbContext _context;
+        private readonly ICatalogDbContext _db;
 
-        public Handler(CatalogDbContext context)
-        => _context = context ?? throw new ArgumentNullException(nameof(context));
+        public Handler(ICatalogDbContext context)
+        => _db = context ?? throw new ArgumentNullException(nameof(context));
 
         public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request is null)
-            {
-                return false; // replace by exception ??
-            }
-
-            CatalogItem deletedItem = await _context
+            _ = request ?? throw new ArgumentNullException(nameof(request));
+            CatalogItem deletedItem = await _db
             .CatalogItems
             .FindOneAndDeleteAsync(x => x.Id == request.id, null, cancellationToken);
 
