@@ -8,7 +8,7 @@ public static class ServicesConfiguration
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         services
-        .AddScoped<GuidService>()
+        .AddScoped<IGuidService, GuidService>()
         .AddScoped<ICatalogDbContext, CatalogDbContext>()
         .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(catalogDbConnectionString)));
 
