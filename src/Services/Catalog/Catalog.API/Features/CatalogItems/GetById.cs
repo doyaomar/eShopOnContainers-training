@@ -19,8 +19,7 @@ public class GetById
         public async Task<CatalogItemDto?> Handle(Query request, CancellationToken cancellationToken)
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
-            var cursor = await _db.CatalogItems.FindAsync(x => x.Id == request.id, null, cancellationToken);
-            var item = await cursor.FirstOrDefaultAsync();
+            var item = await _db.FindAsync(request.id, cancellationToken);
 
             return _mapper.Map<CatalogItemDto>(item);
         }
