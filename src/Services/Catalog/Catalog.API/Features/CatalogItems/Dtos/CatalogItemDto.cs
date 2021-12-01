@@ -1,18 +1,20 @@
-namespace Catalog.API.Models;
+namespace Catalog.API.Features.CatalogItems.Dtos;
 
-public class CatalogItem : Entity<Guid>
+public class CatalogItemDto
 {
+    public Guid Id { get; set; }
+    
     public string Name { get; init; } = default!;
 
     public string Description { get; init; } = default!;
 
     public decimal Price { get; init; }
 
-    public string PictureFileName { get; init; } = default!;
+    public string PictureUri { get; set; } = default!;
 
-    public CatalogType CatalogType { get; init; } = default!;
+    public CatalogTypeDto CatalogType { get; init; } = default!;
 
-    public CatalogBrand CatalogBrand { get; init; } = default!;
+    public CatalogBrandDto CatalogBrand { get; init; } = default!;
 
     public int AvailableStock { get; init; }
 

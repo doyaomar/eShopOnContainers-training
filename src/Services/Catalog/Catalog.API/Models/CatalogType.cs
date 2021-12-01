@@ -1,8 +1,6 @@
 namespace Catalog.API.Models;
 
-public class CatalogType
+public class CatalogType : Entity<Guid>
 {
-    public Guid Id { get; init; }
-
     public string Name { get; init; } = default!;
 }
