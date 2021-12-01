@@ -36,7 +36,7 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateCatalogItemAsync([FromRoute] Guid id, [FromBody] Update.Command request)
     {
-        if (id.Equals(Guid.Empty) || !id.Equals(request.Id))
+        if (id.Equals(Guid.Empty) || !id.Equals(request?.Id))
         {
             return BadRequest();
         }

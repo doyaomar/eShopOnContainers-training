@@ -1,4 +1,4 @@
-namespace Catalog.API.Infrastructure.Services;
+namespace Catalog.API.Interfaces;
 
 public interface IGuidService
 {

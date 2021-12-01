@@ -1,4 +1,4 @@
-namespace Catalog.API.Data;
+namespace Catalog.API.Interfaces;
 
 public interface ICatalogDbContext
 {

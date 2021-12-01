@@ -5,6 +5,7 @@ global using Catalog.API.Data.Configurations;
 global using Catalog.API.Features.CatalogItems.Dtos;
 global using Catalog.API.Infrastructure;
 global using Catalog.API.Infrastructure.Services;
+global using Catalog.API.Interfaces;
 global using Catalog.API.Models;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;

@@ -1,9 +1,7 @@
 namespace Catalog.API.Models;
 
-public class CatalogItem : IEntity
+public class CatalogItem : Entity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; init; } = default!;
 
     public string Description { get; init; } = default!;
@@ -23,11 +21,4 @@ public class CatalogItem : IEntity
     public int MaxStockThreshold { get; init; }
 
     public bool IsOnReorder { get; init; }
-
-    public CatalogItem SetId(Guid id)
-    {
-        Id = id;
-
-        return this;
-    }
 }
