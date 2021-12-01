@@ -29,9 +29,9 @@ public class Create
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
-        private readonly GuidService _guidService;
+        private readonly IGuidService _guidService;
 
-        public Handler(ICatalogDbContext context, IMapper mapper, GuidService guidService)
+        public Handler(ICatalogDbContext context, IMapper mapper, IGuidService guidService)
         {
             _db = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

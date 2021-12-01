@@ -48,4 +48,25 @@ public static class CatalogItemFakes
             Name = "catalogTypeName"
         }
     };
+
+    public static CatalogItem GetCatalogItemFake(Guid? id = null)
+    {
+        var item = new CatalogItem
+        {
+            Name = "name",
+            CatalogBrand = new CatalogBrand
+            {
+                Name = "catalogBrandName"
+            },
+            CatalogType = new CatalogType
+            {
+                Name = "catalogTypeName"
+            }
+        };
+
+        if (id is not null)
+            item.SetId(Guid.NewGuid());
+
+        return item;
+    }
 }

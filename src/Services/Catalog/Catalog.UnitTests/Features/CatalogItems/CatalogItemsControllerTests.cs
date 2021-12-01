@@ -7,9 +7,9 @@ public class CatalogItemsControllerTests
 
     public CatalogItemsControllerTests()
     {
-        _mediatorStub = new Mock<IMediator>();
+        _mediatorStub = new();
         Mock<ILogger<CatalogItemsController>> logger = new();
-        _catalogItemsController = new CatalogItemsController(logger.Object, _mediatorStub.Object);
+        _catalogItemsController = new(logger.Object, _mediatorStub.Object);
     }
 
     // CreateProductAsync Tests
