@@ -16,7 +16,7 @@ public class CreateTests
     }
 
     [Fact]
-    public async Task Handle_When_Then()
+    public async Task Handle_WhenRequestIsValid_ThenReturnsNewId()
     {
         var validRequestStub = CatalogItemFakes.GetCreateCommandFake();
         var validProductIdMock = Guid.NewGuid();

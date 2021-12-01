@@ -1,4 +1,5 @@
 global using System;
+global using System.Linq.Expressions;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using AutoMapper;
@@ -13,5 +14,6 @@ global using FluentAssertions;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Logging;
+global using MongoDB.Driver;
 global using Moq;
 global using Xunit;
