@@ -3,7 +3,9 @@ namespace Catalog.API.Data;
 public class CatalogDbContext : ICatalogDbContext
 {
     public IMongoCollection<CatalogItem> CatalogItems { get; }
+
     public IMongoCollection<CatalogBrand> CatalogBrands { get; }
+
     public IMongoCollection<CatalogType> CatalogTypes { get; }
 
     public CatalogDbContext(IMongoClient mongoClient, IOptions<CatalogDbSettings> settings)
@@ -21,6 +23,13 @@ public class CatalogDbContext : ICatalogDbContext
         await CatalogItems.InsertOneAsync(item, null, cancellationToken);
 
         return item.Id;
+    }
+
+    public async Task<CatalogItem?> FindOneAndReplaceAsync(CatalogItem item, CancellationToken cancellationToken = default)
+    {
+        _ = item ?? throw new ArgumentNullException(nameof(item));
+
+        return await CatalogItems.FindOneAndReplaceAsync(x => x.Id == item.Id, item, null, cancellationToken);
     }
 
     public async Task<CatalogItem?> FindOneAndDeleteAsync(Guid id, CancellationToken cancellationToken = default)

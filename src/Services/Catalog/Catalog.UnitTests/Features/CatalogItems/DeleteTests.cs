@@ -38,12 +38,12 @@ public class DeleteTests
     }
 
     [Fact]
-    public void Handle_WhenRequestIsNull_ThenThrowsException()
+    public async Task Handle_WhenRequestIsNull_ThenThrowsException()
     {
         Delete.Command invalidRequestStub = null!;
 
         Func<Task> actual = async () => await _handler.Handle(invalidRequestStub, CancellationToken.None);
 
-        actual.Should().ThrowAsync<ArgumentNullException>();
+        await actual.Should().ThrowAsync<ArgumentNullException>();
     }
 }

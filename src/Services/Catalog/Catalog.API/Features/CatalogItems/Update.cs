@@ -40,9 +40,8 @@ public class Update
 
         public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
         {
-            _ = request ?? throw new ArgumentNullException(nameof(request));
             var item = _mapper.Map<CatalogItem>(request);
-            CatalogItem updatedItem = await _db.CatalogItems.FindOneAndReplaceAsync(x => x.Id == request.Id, item, null, cancellationToken);
+            CatalogItem? updatedItem = await _db.FindOneAndReplaceAsync(item, cancellationToken);
 
             return updatedItem is not null;
         }

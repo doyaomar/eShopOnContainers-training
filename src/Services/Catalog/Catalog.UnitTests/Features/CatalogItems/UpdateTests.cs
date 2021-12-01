@@ -16,15 +16,11 @@ public class UpdateTests
     public async Task Handle_WhenRequestIsValidAndProductExists_ThenReturnsTrue()
     {
         Update.Command validRequestStub = new();
-        var validCancellationTokenStub = CancellationToken.None;
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(catalogItemStub);
-        _dbStub.Setup(db => db.CatalogItems.FindOneAndReplaceAsync(It.IsAny<Expression<Func<CatalogItem, bool>>>(),
-                                                                  catalogItemStub,
-                                                                  null,
-                                                                  validCancellationTokenStub)).ReturnsAsync(catalogItemStub);
+        _dbStub.Setup(db => db.FindOneAndReplaceAsync(catalogItemStub, CancellationToken.None)).ReturnsAsync(catalogItemStub);
 
-        var actual = await _handler.Handle(validRequestStub, validCancellationTokenStub);
+        var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().BeTrue();
     }
@@ -32,27 +28,12 @@ public class UpdateTests
     public async Task Handle_WhenRequestIsValidAndProductDoesntExist_ThenReturnsFalse()
     {
         Update.Command validRequestStub = new();
-        var validCancellationTokenStub = CancellationToken.None;
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(catalogItemStub);
-        _dbStub.Setup(db => db.CatalogItems.FindOneAndReplaceAsync(It.IsAny<Expression<Func<CatalogItem, bool>>>(),
-                                                                  catalogItemStub,
-                                                                  null,
-                                                                  validCancellationTokenStub)).ReturnsAsync((CatalogItem)null!);
+        _dbStub.Setup(db => db.FindOneAndReplaceAsync(catalogItemStub, CancellationToken.None)).ReturnsAsync((CatalogItem)null!);
 
-        var actual = await _handler.Handle(validRequestStub, validCancellationTokenStub);
+        var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void Handle_WhenRequestIsNull_ThenThrowsException()
-    {
-        Update.Command invalidRequestStub = null!;
-        var validCancellationTokenStub = CancellationToken.None;
-
-        Func<Task> actual = async () => await _handler.Handle(invalidRequestStub, validCancellationTokenStub);
-
-        actual.Should().ThrowAsync<ArgumentNullException>();
     }
 }

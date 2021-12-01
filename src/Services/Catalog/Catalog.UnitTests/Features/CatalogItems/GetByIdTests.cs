@@ -46,12 +46,12 @@ public class GetByIdTests
     }
 
     [Fact]
-    public void Handle_WhenQueryIsNull_ThenThrowsException()
+    public async Task Handle_WhenQueryIsNull_ThenThrowsException()
     {
         GetById.Query invalidRequestStub = null!;
 
         Func<Task> actual = async () => await _handler.Handle(invalidRequestStub, CancellationToken.None);
 
-        actual.Should().ThrowAsync<ArgumentNullException>();
+        await actual.Should().ThrowAsync<ArgumentNullException>();
     }
 }
