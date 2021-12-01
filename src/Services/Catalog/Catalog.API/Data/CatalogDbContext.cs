@@ -16,6 +16,14 @@ public class CatalogDbContext : ICatalogDbContext
         CatalogTypes = db.GetCollection<CatalogType>(catalogDbSettings.CatalogTypesCollectionName);
     }
 
+    public async Task<Guid> InsertOneAsync(CatalogItem item, CancellationToken cancellationToken = default)
+    {
+        await CatalogItems.InsertOneAsync(item, null, cancellationToken);
+
+        return item.Id;
+    }
+
     public async Task<CatalogItem?> FindAsync(Guid id, CancellationToken cancellationToken = default)
     => await CatalogItems.Find(x => x.Id == id).SingleOrDefaultAsync(cancellationToken);
+
 }

@@ -20,13 +20,12 @@ public class CreateTests
     {
         var validRequestStub = CatalogItemFakes.GetCreateCommandFake();
         var validProductIdMock = Guid.NewGuid();
-        var validCancellationTokenStub = CancellationToken.None;
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
         _mapperStub.Setup(mapper => mapper.Map<CatalogItem>(validRequestStub)).Returns(catalogItemStub);
         _guidServiceStub.Setup(svc => svc.GetNewGuid()).Returns(validProductIdMock);
-        _dbStub.Setup(db => db.CatalogItems.InsertOneAsync(catalogItemStub, null, validCancellationTokenStub));
+        _dbStub.Setup(db => db.InsertOneAsync(catalogItemStub, CancellationToken.None)).ReturnsAsync(validProductIdMock);
 
-        var actual = await _handler.Handle(validRequestStub, validCancellationTokenStub);
+        var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().Be(validProductIdMock);
     }

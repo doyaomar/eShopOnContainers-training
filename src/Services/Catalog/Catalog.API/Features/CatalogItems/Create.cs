@@ -42,9 +42,8 @@ public class Create
         {
             var item = _mapper.Map<CatalogItem>(request);
             item.SetId(_guidService.GetNewGuid());
-            await _db.CatalogItems.InsertOneAsync(item, null, cancellationToken);
 
-            return item.Id;
+            return await _db.InsertOneAsync(item, cancellationToken);
         }
     }
 }
