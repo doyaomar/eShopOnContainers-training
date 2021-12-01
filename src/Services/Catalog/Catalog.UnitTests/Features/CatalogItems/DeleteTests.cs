@@ -15,13 +15,11 @@ public class DeleteTests
     {
         var validProductIdMock = Guid.NewGuid();
         Delete.Command validRequestStub = new(validProductIdMock);
-        var validCancellationTokenStub = CancellationToken.None;
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
-        _dbStub.Setup(db => db.CatalogItems.FindOneAndDeleteAsync(It.IsAny<Expression<Func<CatalogItem, bool>>>(),
-                                                                  null,
-                                                                  validCancellationTokenStub)).ReturnsAsync(catalogItemStub);
+        _dbStub.Setup(db => db.FindOneAndDeleteAsync(validProductIdMock, CancellationToken.None))
+            .ReturnsAsync(catalogItemStub);
 
-        var actual = await _handler.Handle(validRequestStub, validCancellationTokenStub);
+        var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().BeTrue();
     }
@@ -30,13 +28,11 @@ public class DeleteTests
     {
         var validProductIdMock = Guid.NewGuid();
         Delete.Command validRequestStub = new(validProductIdMock);
-        var validCancellationTokenStub = CancellationToken.None;
         CatalogItem catalogItemStub = null!;
-        _dbStub.Setup(db => db.CatalogItems.FindOneAndDeleteAsync(It.IsAny<Expression<Func<CatalogItem, bool>>>(),
-                                                                  null,
-                                                                  validCancellationTokenStub)).ReturnsAsync(catalogItemStub);
+        _dbStub.Setup(db => db.FindOneAndDeleteAsync(validProductIdMock, CancellationToken.None))
+            .ReturnsAsync(catalogItemStub);
 
-        var actual = await _handler.Handle(validRequestStub, validCancellationTokenStub);
+        var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().BeFalse();
     }
@@ -45,9 +41,8 @@ public class DeleteTests
     public void Handle_WhenRequestIsNull_ThenThrowsException()
     {
         Delete.Command invalidRequestStub = null!;
-        var validCancellationTokenStub = CancellationToken.None;
 
-        Func<Task> actual = async () => await _handler.Handle(invalidRequestStub, validCancellationTokenStub);
+        Func<Task> actual = async () => await _handler.Handle(invalidRequestStub, CancellationToken.None);
 
         actual.Should().ThrowAsync<ArgumentNullException>();
     }

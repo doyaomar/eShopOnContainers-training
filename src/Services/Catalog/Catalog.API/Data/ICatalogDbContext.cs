@@ -7,4 +7,5 @@ public interface ICatalogDbContext
     IMongoCollection<CatalogType> CatalogTypes { get; }
     Task<Guid> InsertOneAsync(CatalogItem item, CancellationToken cancellationToken = default);
     Task<CatalogItem?> FindAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CatalogItem?> FindOneAndDeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

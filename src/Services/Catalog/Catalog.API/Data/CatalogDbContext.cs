@@ -23,7 +23,9 @@ public class CatalogDbContext : ICatalogDbContext
         return item.Id;
     }
 
+    public async Task<CatalogItem?> FindOneAndDeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    => await CatalogItems.FindOneAndDeleteAsync(x => x.Id == id, null, cancellationToken);
+
     public async Task<CatalogItem?> FindAsync(Guid id, CancellationToken cancellationToken = default)
     => await CatalogItems.Find(x => x.Id == id).SingleOrDefaultAsync(cancellationToken);
-
 }

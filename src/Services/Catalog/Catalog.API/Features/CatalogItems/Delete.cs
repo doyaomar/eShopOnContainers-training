@@ -14,9 +14,7 @@ public class Delete
         public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
-            CatalogItem deletedItem = await _db
-            .CatalogItems
-            .FindOneAndDeleteAsync(x => x.Id == request.id, null, cancellationToken);
+            CatalogItem? deletedItem = await _db.FindOneAndDeleteAsync(request.id, cancellationToken);
 
             return deletedItem is not null;
         }
