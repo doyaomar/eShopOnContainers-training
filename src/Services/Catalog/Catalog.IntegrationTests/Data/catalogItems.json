@@ -1,0 +1,360 @@
+{
+    "_id": {
+        "$binary": {
+            "base64": "bxHBzEL/S/yQTSxcfltUag==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET Black & White Mug",
+    "description": ".NET Black & White Mug",
+    "price": {
+        "$numberDecimal": "8.5"
+    },
+    "pictureFileName": "2.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "HK1WUYJzS7WONqpqvxvNRg==",
+                "subType": "04"
+            }
+        },
+        "name": "Mug"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 89,
+    "maxStockThreshold": 3,
+    "isOnReorder": true,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "h4HVugcbSre29hvHMllLMQ==",
+            "subType": "04"
+        }
+    },
+    "name": "Modern .NET Black & White Mug",
+    "description": "Modern .NET Black & White Mug",
+    "price": {
+        "$numberDecimal": "8.5"
+    },
+    "pictureFileName": "13.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "HK1WUYJzS7WONqpqvxvNRg==",
+                "subType": "04"
+            }
+        },
+        "name": "Mug"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 89,
+    "maxStockThreshold": 3,
+    "isOnReorder": true,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "2wLFXOpIQZ6GxtNw8xiDag==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET Bot Black Hoodie",
+    "description": ".NET Bot Black Hoodie, and more",
+    "price": {
+        "$numberDecimal": "19.5"
+    },
+    "pictureFileName": "1.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "b2p+44HfT8KLAe2svQOiXA==",
+                "subType": "04"
+            }
+        },
+        "name": "T-Shirt"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 100,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "a8qc8iXcRH2/jvtDI66GXQ==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET Foundation T-shirt",
+    "description": ".NET Foundation T-shirt",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "4.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "b2p+44HfT8KLAe2svQOiXA==",
+                "subType": "04"
+            }
+        },
+        "name": "T-Shirt"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 120,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "3oQMKXjQTGOhxhCK3+Jvpw==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET Blue Hoodie",
+    "description": ".NET Blue Hoodie",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "6.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "b2p+44HfT8KLAe2svQOiXA==",
+                "subType": "04"
+            }
+        },
+        "name": "T-Shirt"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 17,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "kq5AWGcoTyiJ7umk1Y6YEg==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET Foundation Pin",
+    "description": ".NET Foundation Pin",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "10.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "MkiLCf38T6Cv/NrufQF4GA==",
+                "subType": "04"
+            }
+        },
+        "name": "Pin"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 11,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "pdvmEk5YQBml3SsrPzg5TQ==",
+            "subType": "04"
+        }
+    },
+    "name": "Cup<T> Pin",
+    "description": "Cup<T> Pin",
+    "price": {
+        "$numberDecimal": "8.5"
+    },
+    "pictureFileName": "11.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "MkiLCf38T6Cv/NrufQF4GA==",
+                "subType": "04"
+            }
+        },
+        "name": "Pin"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+                "subType": "04"
+            }
+        },
+        "name": ".NET"
+    },
+    "availableStock": 3,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "RiAsCT3VSSinKPQ6xNPuMg==",
+            "subType": "04"
+        }
+    },
+    "name": "Cup<T> White Mug",
+    "description": "Cup<T> White Mug",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "9.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "HK1WUYJzS7WONqpqvxvNRg==",
+                "subType": "04"
+            }
+        },
+        "name": "Mug"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "lseQW3qbS360eWswerDV+g==",
+                "subType": "04"
+            }
+        },
+        "name": "Other"
+    },
+    "availableStock": 76,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "PkTNywLDQRKom/aemzQ2gA==",
+            "subType": "04"
+        }
+    },
+    "name": "Modern Cup<T> White Mug",
+    "description": "Modern Cup<T> White Mug",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "14.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "HK1WUYJzS7WONqpqvxvNRg==",
+                "subType": "04"
+            }
+        },
+        "name": "Mug"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "lseQW3qbS360eWswerDV+g==",
+                "subType": "04"
+            }
+        },
+        "name": "Other"
+    },
+    "availableStock": 76,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}
+  {
+    "_id": {
+        "$binary": {
+            "base64": "57DWjecLQQWD25oaZj0YkQ==",
+            "subType": "04"
+        }
+    },
+    "name": "Prism White T-Shirt",
+    "description": "Prism White T-Shirt",
+    "price": {
+        "$numberDecimal": "12"
+    },
+    "pictureFileName": "3.png",
+    "catalogType": {
+        "_id": {
+            "$binary": {
+                "base64": "b2p+44HfT8KLAe2svQOiXA==",
+                "subType": "04"
+            }
+        },
+        "name": "T-Shirt"
+    },
+    "catalogBrand": {
+        "_id": {
+            "$binary": {
+                "base64": "lseQW3qbS360eWswerDV+g==",
+                "subType": "04"
+            }
+        },
+        "name": "Other"
+    },
+    "availableStock": 56,
+    "maxStockThreshold": 3,
+    "isOnReorder": false,
+    "restockThreshold": 5
+}

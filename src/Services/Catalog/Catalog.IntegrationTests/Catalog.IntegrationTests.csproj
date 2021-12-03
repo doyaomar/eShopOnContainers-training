@@ -27,4 +27,10 @@
     <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup> 
+    <None Update="Data\*"> 
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory> 
+    </None> 
+  </ItemGroup>
+  
 </Project>
