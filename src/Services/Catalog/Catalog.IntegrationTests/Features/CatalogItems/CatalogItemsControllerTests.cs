@@ -14,7 +14,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
     // GetCatalogItemAsync Tests
 
     [Fact]
-    public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductExists_ThenReturnsOkResult()
+    public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductExists_ThenReturnsOkStatusCode()
     {
         var url = "api/v1/catalog/items/6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a";
 
@@ -25,7 +25,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
     }
 
     [Fact]
-    public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductExists_ThenReturnsNotFoundResult()
+    public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductExists_ThenReturnsNotFoundStatusCode()
     {
         var url = "api/v1/catalog/items/04637f10-c262-4a8a-8e27-5acca985e04f";
 
@@ -38,7 +38,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
     // DeleteCatalogItemAsync Tests
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNoContentResult()
+    public async Task DeleteCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNoContentStatusCode()
     {
         var url = "api/v1/catalog/items/6bca9cf2-25dc-447d-bf8e-fb4323ae865d";
 
@@ -49,11 +49,116 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
     }
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNotFoundResult()
+    public async Task DeleteCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNotFoundStatusCode()
     {
         var url = "api/v1/catalog/items/04637f10-c262-4a8a-8e27-5acca985e04f";
 
         var actual = await _client.DeleteAsync(url);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    // CreateCatalogItemAsync Tests
+
+    [Fact]
+    public async Task CreateCatalogItemAsync_WhenCommandIsValid_ThenReturnsCreatedStatusCode()
+    {
+        var url = "api/v1/catalog/items";
+        var command = new
+        {
+            name = "name",
+            description = "description",
+            price = 10,
+            pictureFileName = "fileName",
+            catalogBrand = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogBrandName"
+            },
+            catalogType = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogTypeName"
+            },
+            availableStock = 23,
+            restockThreshold = 30,
+            maxStockThreshold = 30,
+            isOnReorder = false
+        };
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+        var actual = await _client.PostAsync(url, content);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.Created);
+    }
+
+    // UpdateCatalogItemAsync Tests
+
+    [Fact]
+    public async Task UpdateCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNoContentStatusCode()
+    {
+        var url = "api/v1/catalog/items/3e44cdcb-02c3-4112-a89b-f69e9b343680";
+        var command = new
+        {
+            id = "3e44cdcb-02c3-4112-a89b-f69e9b343680",
+            name = "name",
+            description = "description",
+            price = 10,
+            pictureFileName = "fileName",
+            catalogBrand = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogBrandName"
+            },
+            catalogType = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogTypeName"
+            },
+            availableStock = 23,
+            restockThreshold = 30,
+            maxStockThreshold = 30,
+            isOnReorder = false
+        };
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+        var actual = await _client.PutAsync(url, content);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task UpdateCatalogItemAsync_WhenCommandIsValidAndProductExists_ThenReturnsNotFoundStatusCode()
+    {
+        var url = "api/v1/catalog/items/04637f10-c262-4a8a-8e27-5acca985e04f";
+        var command = new
+        {
+            id = "04637f10-c262-4a8a-8e27-5acca985e04f",
+            name = "name",
+            description = "description",
+            price = 10,
+            pictureFileName = "fileName",
+            catalogBrand = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogBrandName"
+            },
+            catalogType = new
+            {
+                id = Guid.NewGuid(),
+                name = "catalogTypeName"
+            },
+            availableStock = 23,
+            restockThreshold = 30,
+            maxStockThreshold = 30,
+            isOnReorder = false
+        };
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+        var actual = await _client.PutAsync(url, content);
 
         actual.Should().NotBeNull();
         actual.StatusCode.Should().Be(HttpStatusCode.NotFound);

@@ -8,6 +8,7 @@ public class WebApplicationFactory : WebApplicationFactory<Program>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         _runner = MongoDbRunner.Start();
+        Debug.WriteLine($"MongoDbRunner.ConnectionString ::: {_runner.ConnectionString}");
         _runner.Import("CatalogDb", "catalogItems", @"Data\catalogItems.json", false);
 
         builder
