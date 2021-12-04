@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5D29423D
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatalogDb", "Databases\Catalog\SqlServer\CatalogDb.sqlproj", "{FAD8FC07-02A1-48E4-849F-367AFC989A0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.IntegrationTests", "Services\Catalog\Catalog.IntegrationTests\Catalog.IntegrationTests.csproj", "{0410074B-291F-4206-A23D-1A049EB7B53D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FAD8FC07-02A1-48E4-849F-367AFC989A0C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0410074B-291F-4206-A23D-1A049EB7B53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0410074B-291F-4206-A23D-1A049EB7B53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0410074B-291F-4206-A23D-1A049EB7B53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0410074B-291F-4206-A23D-1A049EB7B53D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{AA224169-1553-4F51-8E8B-27F605D4B514} = {5D29423D-620F-4EDC-90EB-7E59ABB17942}
 		{5D29423D-620F-4EDC-90EB-7E59ABB17942} = {2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}
 		{FAD8FC07-02A1-48E4-849F-367AFC989A0C} = {8C32379B-9658-4399-86CB-2562FF87BEE9}
+		{0410074B-291F-4206-A23D-1A049EB7B53D} = {2B3AAD8F-D08B-4B3B-AC91-B33BD0EB5174}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F53278DA-B10F-42F0-A882-27BEBE8B0B40}
