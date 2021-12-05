@@ -1,19 +1,22 @@
-name: catalogapi-build-and-test
+name: catalogapi build and test
 
 on:
   push:
     branches: [ main, dev ]
     paths:
-    - src/Services/Catalog/**/*.cs
-    - src/Services/Catalog/**/*.csproj
+    - src/Services/Catalog/**
+    - .github/workflows/catalog-api.yml
   pull_request:
     branches: [ main ]
     paths:
-    - src/Services/Catalog/**/*.cs
-    - src/Services/Catalog/**/*.csproj
+    - src/Services/Catalog/**
+    - .github/workflows/catalog-api.yml
 
 jobs:
-  build:
+  build-and-test:
+    defaults:
+      run:
+        working-directory: src
 
     runs-on: ubuntu-latest
 
@@ -23,9 +26,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
