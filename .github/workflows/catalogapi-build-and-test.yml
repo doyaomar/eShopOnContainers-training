@@ -4,13 +4,13 @@ on:
   push:
     branches: [ main, dev ]
     paths:
-    - '**.cs'
-    - '**.csproj'
+    - src/Services/Catalog/**/*.cs
+    - src/Services/Catalog/**/*.csproj
   pull_request:
     branches: [ main ]
     paths:
-    - '**.cs'
-    - '**.csproj'
+    - src/Services/Catalog/**/*.cs
+    - src/Services/Catalog/**/*.csproj
 
 jobs:
   build:
