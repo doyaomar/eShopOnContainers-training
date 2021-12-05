@@ -2,9 +2,15 @@ name: catalogapi build and test
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [main, dev]
+    paths:
+      - src/Services/Catalog/**
+      - .github/workflows/catalogapi-build-and-test.yml
   pull_request:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - src/Services/Catalog/**
+      - .github/workflows/catalogapi-build-and-test.yml
 
 jobs:
   build-and-test:
@@ -12,20 +18,24 @@ jobs:
       run:
         working-directory: src
 
-    runs-on: ubuntu-latest
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.x
-        
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
