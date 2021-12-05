@@ -9,7 +9,8 @@ public class WebApplicationFactory : WebApplicationFactory<Program>
     {
         _runner = MongoDbRunner.Start();
         Debug.WriteLine($"MongoDbRunner.ConnectionString ::: {_runner.ConnectionString}");
-        _runner.Import("CatalogDb", "catalogItems", @"Data\catalogItems.json", false);
+        string[] paths = { "Data", "catalogItems.json" };
+        _runner.Import("CatalogDb", "catalogItems", Path.Combine(paths), true);
 
         builder
         .ConfigureTestServices(services =>
