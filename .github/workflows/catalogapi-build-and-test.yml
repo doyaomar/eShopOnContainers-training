@@ -4,17 +4,13 @@ on:
   push:
     branches: [ main, dev ]
     paths:
-    - 'src\Services\Catalog\**.cs'
-    - 'src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj'
-    - 'src\Services\Catalog\Catalog.IntegrationTests\Catalog.IntegrationTests.csproj'
-    - 'src\Services\Catalog\Catalog.API\Catalog.API.csproj'
+    - '**.cs'
+    - '**.csproj'
   pull_request:
     branches: [ main ]
     paths:
-    - 'src\Services\Catalog\**.cs'
-    - 'src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj'
-    - 'src\Services\Catalog\Catalog.IntegrationTests\Catalog.IntegrationTests.csproj'
-    - 'src\Services\Catalog\Catalog.API\Catalog.API.csproj'
+    - '**.cs'
+    - '**.csproj'
 
 jobs:
   build:
