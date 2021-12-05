@@ -26,5 +26,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
   </ItemGroup>
+
+  <ItemGroup> 
+    <Content Include="Data\**"> 
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
   
 </Project>
