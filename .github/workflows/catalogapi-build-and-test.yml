@@ -3,14 +3,8 @@ name: catalogapi build and test
 on:
   push:
     branches: [ main, dev ]
-    paths:
-    - src/Services/Catalog/**
-    - .github/workflows/catalog-api.yml
   pull_request:
     branches: [ main ]
-    paths:
-    - src/Services/Catalog/**
-    - .github/workflows/catalog-api.yml
 
 jobs:
   build-and-test:
