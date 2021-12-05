@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup> 
-    <None Update="Data\*"> 
+    <None Include="Data\*"> 
       <CopyToOutputDirectory>Always</CopyToOutputDirectory> 
     </None> 
   </ItemGroup>
