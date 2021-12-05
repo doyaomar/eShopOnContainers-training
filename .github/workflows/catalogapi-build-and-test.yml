@@ -4,13 +4,15 @@ on:
   push:
     branches: [ main, dev ]
     paths:
-    - src/Services/Catalog/**
-    - .github/workflows/catalogapi-build-and-test.yml
+    - src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj
+    - src\Services\Catalog\Catalog.IntegrationTests\Catalog.IntegrationTests.csproj
+    - src\Services\Catalog\Catalog.API\Catalog.API.csproj
   pull_request:
     branches: [ main ]
     paths:
-    - src/Services/Catalog/**
-    - .github/workflows/catalogapi-build-and-test.yml
+    - src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj
+    - src\Services\Catalog\Catalog.IntegrationTests\Catalog.IntegrationTests.csproj
+    - src\Services\Catalog\Catalog.API\Catalog.API.csproj
 
 jobs:
   build:
