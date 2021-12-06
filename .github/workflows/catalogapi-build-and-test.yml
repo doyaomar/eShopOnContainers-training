@@ -16,7 +16,7 @@ jobs:
   build-and-test:
     defaults:
       run:
-        working-directory: src
+        working-directory: src/Services/Catalog
 
     name: build-and-test-${{matrix.os}}
     runs-on: ${{ matrix.os }}
@@ -26,10 +26,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.x
+
+      - name: Create sln
+        run: dotnet new sln -n catalog
+
+      - name: Add projects to sln
+        run: dotnet sln catalog.sln add Catalog.API\Catalog.API.csproj Catalog.UnitTests\Catalog.UnitTests.csproj Catalog.IntegrationTests\Catalog.IntegrationTests.csproj
 
       - name: Restore dependencies
         run: dotnet restore
