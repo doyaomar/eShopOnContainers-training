@@ -1,11 +1,14 @@
 name: CatalogApi Build and Test
 
 on:
+  workflow_dispatch:
+
   push:
     branches: [main, dev]
     paths:
       - src/Services/Catalog/**
       - .github/workflows/catalogapi-build-and-test.yml
+
   pull_request:
     branches: [main]
     paths:
