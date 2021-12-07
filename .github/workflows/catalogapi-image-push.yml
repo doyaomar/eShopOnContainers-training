@@ -30,6 +30,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: src/Services/Catalog/Catalog.API/Dockerfile
+          file: Services/Catalog/Catalog.API/Dockerfile
           push: true
           tags: odoya/catalog-api:linux-latest
