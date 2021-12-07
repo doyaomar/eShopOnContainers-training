@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
 
   workflow_run:
+    tags:
+      - "v*.*.*"
     workflows: ["CatalogApi Build and Test"]
     branches: [main]
     types: [completed]
@@ -15,6 +17,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: odoya/catalog-api
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -35,4 +53,4 @@ jobs:
           context: ./src
           file: src/Services/Catalog/Catalog.API/Dockerfile
           push: true
-          tags: odoya/catalog-api:linux-latest
+          tags: ${{ steps.meta.outputs.tags }}
