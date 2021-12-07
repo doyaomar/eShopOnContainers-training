@@ -1,4 +1,4 @@
-name: catalogapi build and test
+name: CatalogApi Build and Test
 
 on:
   push:

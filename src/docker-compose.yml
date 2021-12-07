@@ -3,13 +3,13 @@
 version: '3.4'
 
 services:
-  catalogapi:
-    image: ${REGISTRY:-eshoptraining}/catalogapi:${PLATFORM:-linux}-${TAG:-latest}
+  catalog-api:
+    image: ${REGISTRY:-odoya}/catalog-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
       dockerfile: Services\Catalog\Catalog.API\Dockerfile
     depends_on:
-      - mongodb  
+      - mongo  
 
-  mongodb:
+  mongo:
     image: mongo:5.0.4
