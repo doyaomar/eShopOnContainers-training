@@ -2,15 +2,11 @@ name: CatalogApi Build and Push Image
 
 on:
   workflow_dispatch:
-    tags:
-      - "v*.*.*"
 
   workflow_run:
     workflows: ["CatalogApi Build and Test"]
     branches: [main]
     types: [completed]
-    tags:
-      - "v*.*.*"
 
 jobs:
   docker:
