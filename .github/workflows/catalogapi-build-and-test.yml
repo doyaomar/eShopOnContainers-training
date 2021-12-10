@@ -71,7 +71,6 @@ jobs:
           images: odoya/catalog-api
           flavor: |
             latest=true
-            prefix=linux-,onlatest=true
           tags: |
             ${{ steps.bump.outputs.new_tag }}
 
