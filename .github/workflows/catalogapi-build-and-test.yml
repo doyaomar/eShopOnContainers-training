@@ -38,8 +38,9 @@ jobs:
           dotnet-version: 6.x
 
       - name: Create sln
-        run: dotnet new sln -n catalog
-      - run: dotnet sln catalog.sln add Catalog.API/Catalog.API.csproj Catalog.UnitTests/Catalog.UnitTests.csproj Catalog.IntegrationTests/Catalog.IntegrationTests.csproj
+        run: |
+          dotnet new sln -n catalog
+          dotnet sln catalog.sln add Catalog.API/Catalog.API.csproj Catalog.UnitTests/Catalog.UnitTests.csproj Catalog.IntegrationTests/Catalog.IntegrationTests.csproj
 
       - name: Restore dependencies
         run: dotnet restore
@@ -70,9 +71,9 @@ jobs:
           images: odoya/catalog-api
           flavor: |
             latest=true
-            prefix=linux
+            prefix=linux-,onlatest=true
           tags: |
-            {{ steps.bump.outputs.new_tag }}
+            ${{ steps.bump.outputs.new_tag }}
 
       - name: Login to DockerHub
         if: github.event_name != 'pull_request' || github.event_name == 'workflow_dispatch'
