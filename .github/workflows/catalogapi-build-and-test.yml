@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [main, dev]
+    branches: [main]
     paths:
       - src/Services/Catalog/**
       - .github/workflows/catalogapi-build-and-test.yml
@@ -17,6 +17,7 @@ on:
 
 jobs:
   build-and-test:
+    if: github.event_name == 'pull_request'
     defaults:
       run:
         working-directory: src/Services/Catalog
@@ -38,9 +39,7 @@ jobs:
 
       - name: Create sln
         run: dotnet new sln -n catalog
-
-      - name: Add projects to sln
-        run: dotnet sln catalog.sln add Catalog.API/Catalog.API.csproj Catalog.UnitTests/Catalog.UnitTests.csproj Catalog.IntegrationTests/Catalog.IntegrationTests.csproj
+      - run: dotnet sln catalog.sln add Catalog.API/Catalog.API.csproj Catalog.UnitTests/Catalog.UnitTests.csproj Catalog.IntegrationTests/Catalog.IntegrationTests.csproj
 
       - name: Restore dependencies
         run: dotnet restore
@@ -50,3 +49,42 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --verbosity normal
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        if: github.event_name != 'pull_request'
+        id: bump
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: odoya/catalog-api
+          flavor: |
+            latest=true
+            prefix=linux
+          tags: |
+            {{ steps.bump.outputs.new_tag }}
+
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request' || github.event_name == 'workflow_dispatch'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src
+          file: src/Services/Catalog/Catalog.API/Dockerfile
+          push: ${{ github.event_name != 'pull_request' || github.event_name == 'workflow_dispatch'}}
+          tags: ${{ steps.meta.outputs.tags }}
