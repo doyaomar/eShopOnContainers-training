@@ -13,6 +13,7 @@ public class CatalogDbContext : ICatalogDbContext
         var catalogDbSettings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
         _ = mongoClient ?? throw new ArgumentNullException(nameof(mongoClient));
         var db = mongoClient.GetDatabase(catalogDbSettings.DatabaseName);
+
         CatalogItems = db.GetCollection<CatalogItem>(catalogDbSettings.CatalogItemsCollectionName);
         CatalogBrands = db.GetCollection<CatalogBrand>(catalogDbSettings.CatalogBrandsCollectionName);
         CatalogTypes = db.GetCollection<CatalogType>(catalogDbSettings.CatalogTypesCollectionName);
@@ -37,4 +38,10 @@ public class CatalogDbContext : ICatalogDbContext
 
     public async Task<CatalogItem?> FindAsync(Guid id, CancellationToken cancellationToken = default)
     => await CatalogItems.Find(x => x.Id == id).SingleOrDefaultAsync(cancellationToken);
+
+    public async Task<IReadOnlyCollection<CatalogItem>> FindAllAsync(IEnumerable<Guid> ids, int page, int size, CancellationToken cancellationToken = default)
+    => await CatalogItems.Find(x => ids.Contains(x.Id))
+        .Skip(page)
+        .Limit(size)
+        .ToListAsync(cancellationToken);
 }
