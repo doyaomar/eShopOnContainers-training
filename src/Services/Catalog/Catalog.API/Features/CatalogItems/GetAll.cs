@@ -2,19 +2,15 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class GetAll
 {
-    public class Query : IPagination, IRequest<IReadOnlyCollection<CatalogItemDto>>
+    public class Query : Pagination, IRequest<PaginatedDto<CatalogItemDto>>
     {
-        private const int DEFAULT_PAGE_SIZE = 10;
-
         /// <summary>
         /// string of guids sepratated by ';'
         /// </summary>
         public string Ids { get; set; } = default!;
-        public int PageIndex { get; set; } = default;
-        public int PageSize { get; set; } = DEFAULT_PAGE_SIZE;
     }
 
-    public class Handler : IRequestHandler<GetAll.Query, IReadOnlyCollection<CatalogItemDto>>
+    public class Handler : IRequestHandler<GetAll.Query, PaginatedDto<CatalogItemDto>>
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
@@ -25,15 +21,16 @@ public class GetAll
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IReadOnlyCollection<CatalogItemDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<PaginatedDto<CatalogItemDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
-
             IEnumerable<Guid> ids = request.Ids.ToGuidList();
+            (IReadOnlyCollection<CatalogItem> Items, long Count) paginatedItems = await _db.FindAllAsync(ids, request.PageIndex, request.PageSize, cancellationToken);
 
-            var items = await _db.FindAllAsync(ids, request.PageIndex, request.PageSize, cancellationToken);
-
-            throw new NotImplementedException();
+            return new PaginatedDto<CatalogItemDto>(_mapper.Map<IReadOnlyCollection<CatalogItemDto>>(paginatedItems.Items),
+                                                    paginatedItems.Count,
+                                                    request.PageIndex,
+                                                    request.PageSize);
         }
     }
 }

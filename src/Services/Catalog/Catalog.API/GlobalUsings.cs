@@ -1,3 +1,4 @@
+global using System.Linq.Expressions;
 global using System.Reflection;
 global using AutoMapper;
 global using Catalog.API.Data;

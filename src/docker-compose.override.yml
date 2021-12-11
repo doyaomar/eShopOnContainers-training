@@ -5,7 +5,7 @@ version: '3.4'
 services:
   catalog-api:
     environment:
-      - ConnectionStrings__CatalogDb=mongodb://rootUser:rootPassword2@mongodb
+      - ConnectionStrings__CatalogDb=mongodb://rootUser:rootPassword2@mongo
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORT=8081
       - ASPNETCORE_URLS=https://+:443;http://+:80
@@ -25,4 +25,4 @@ services:
     ports:
       - "27027:27017"
     volumes:
-      - ~/.mongo:/data/db  
+      - ~/.mongo:/data/db

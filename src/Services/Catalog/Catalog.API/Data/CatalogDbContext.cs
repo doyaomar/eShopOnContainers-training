@@ -39,9 +39,16 @@ public class CatalogDbContext : ICatalogDbContext
     public async Task<CatalogItem?> FindAsync(Guid id, CancellationToken cancellationToken = default)
     => await CatalogItems.Find(x => x.Id == id).SingleOrDefaultAsync(cancellationToken);
 
-    public async Task<IReadOnlyCollection<CatalogItem>> FindAllAsync(IEnumerable<Guid> ids, int page, int size, CancellationToken cancellationToken = default)
-    => await CatalogItems.Find(x => ids.Contains(x.Id))
-        .Skip(page)
-        .Limit(size)
-        .ToListAsync(cancellationToken);
+    public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindAllAsync(IEnumerable<Guid> ids, int page, int size, CancellationToken cancellationToken = default)
+    {
+        Expression<Func<CatalogItem, bool>> filter = ids.Any() ? x => ids.Contains(x.Id) : _ => true;
+        var items = CatalogItems.Find(filter)
+                                .SortByDescending(x => x.Name)
+                                .Skip(page * size)
+                                .Limit(size)
+                                .ToListAsync(cancellationToken);
+        var count = CatalogItems.CountDocumentsAsync(x => ids.Contains(x.Id), null, cancellationToken);
+
+        return (await items, await count);
+    }
 }
