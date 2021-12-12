@@ -72,4 +72,13 @@ public class CatalogItemsController : ControllerBase
 
         return item is null ? NotFound() : Ok(item);
     }
+
+    // GET api/v1/[controller]/items?Ids=6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a%3B8781d5ba-071b-4ab7-b6f6-1bc732594b31&PageIndex=0&PageSize=10
+    [HttpGet("items")]
+    [ActionName(nameof(GetCatalogItemsAsync))]
+    [ProducesResponseType(typeof(PaginatedDto<CatalogItemDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsAsync([FromQuery] GetAll.Query request, CancellationToken cancellationToken)
+    => Ok(await _mediator.Send(request, cancellationToken));
 }

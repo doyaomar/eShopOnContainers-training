@@ -163,4 +163,22 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         actual.Should().NotBeNull();
         actual.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
+
+    // GetCatalogItemsAsync Tests
+
+    [Fact]
+    public async Task GetCatalogItemsAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkStatusCode()
+    {
+        var url =
+        "api/v1/catalog/items?Ids=6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a;46202c09-3dd5-4928-a728-f43ac4d3ee32&PageIndex=0&PageSize=5";
+
+        var actual = await _client.GetAsync(url);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringContent = await actual.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        paginatedItems!.Count.Should().Be(2);
+    }
 }

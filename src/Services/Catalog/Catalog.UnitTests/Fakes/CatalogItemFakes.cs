@@ -49,6 +49,12 @@ public static class CatalogItemFakes
         }
     };
 
+    public static List<CatalogItemDto> GetCatalogItemDtosFake(Guid id1, Guid id2) => new()
+    {
+        CatalogItemFakes.GetCatalogItemDtoFake(id1),
+        CatalogItemFakes.GetCatalogItemDtoFake(id2)
+    };
+
     public static CatalogItem GetCatalogItemFake(Guid? id = null)
     {
         var item = new CatalogItem
@@ -69,4 +75,14 @@ public static class CatalogItemFakes
 
         return item;
     }
+
+    public static GetAll.Query GetGetAllQueryFake(Guid firstIdStub, Guid secondIdStub) => new()
+    {
+        Ids = $"{firstIdStub};{secondIdStub}",
+        PageIndex = 0,
+        PageSize = 8
+    };
+
+    public static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
+    => new PaginatedDto<T>(items, 2, 0, 8);
 }

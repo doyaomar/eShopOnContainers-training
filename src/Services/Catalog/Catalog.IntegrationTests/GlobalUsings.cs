@@ -6,6 +6,7 @@ global using System.Net.Http;
 global using System.Text;
 global using System.Text.Json;
 global using System.Threading.Tasks;
+global using Catalog.API.Features.CatalogItems.Dtos;
 global using FluentAssertions;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Mvc.Testing;
