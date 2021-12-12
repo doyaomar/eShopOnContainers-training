@@ -7,7 +7,7 @@ public class GetAll
         /// <summary>
         /// string of guids sepratated by ';'
         /// </summary>
-        public string Ids { get; set; } = default!;
+        public string Ids { get; set; } = string.Empty;
     }
 
     public class Handler : IRequestHandler<GetAll.Query, PaginatedDto<CatalogItemDto>>

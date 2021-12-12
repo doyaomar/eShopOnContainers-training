@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.CatalogItems.Dtos;
+namespace Catalog.API.Models;
 
 public abstract class Pagination
 {

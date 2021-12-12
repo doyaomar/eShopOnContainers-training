@@ -78,10 +78,7 @@ public class CatalogItemsController : ControllerBase
     [ActionName(nameof(GetCatalogItemsAsync))]
     [ProducesResponseType(typeof(PaginatedDto<CatalogItemDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsAsync([FromQuery] GetAll.Query request, CancellationToken cancellationToken)
-    {
-        return Ok(await _mediator.Send(request, cancellationToken));
-    }
+    => Ok(await _mediator.Send(request, cancellationToken));
 }

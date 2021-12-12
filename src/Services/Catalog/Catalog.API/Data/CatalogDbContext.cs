@@ -47,7 +47,7 @@ public class CatalogDbContext : ICatalogDbContext
                                 .Skip(page * size)
                                 .Limit(size)
                                 .ToListAsync(cancellationToken);
-        var count = CatalogItems.CountDocumentsAsync(x => ids.Contains(x.Id), null, cancellationToken);
+        var count = CatalogItems.CountDocumentsAsync(filter, null, cancellationToken);
 
         return (await items, await count);
     }
