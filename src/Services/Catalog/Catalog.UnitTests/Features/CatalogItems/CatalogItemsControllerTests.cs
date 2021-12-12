@@ -128,7 +128,7 @@ public class CatalogItemsControllerTests
     // GetCatalogItemsAsync Tests
 
     [Fact]
-    public async Task GetCatalogItemsAsync_WhenQueryIsValid_ThenReturnsPaginatedDto()
+    public async Task GetCatalogItemsAsync_WhenQueryIsValidAndProductsExist_ThenReturnsPaginatedDto()
     {
         var firstIdStub = Guid.NewGuid();
         var secondIdStub = Guid.NewGuid();
