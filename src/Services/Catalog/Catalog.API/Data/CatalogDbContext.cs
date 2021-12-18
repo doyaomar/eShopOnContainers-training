@@ -42,6 +42,19 @@ public class CatalogDbContext : ICatalogDbContext
     public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindAllAsync(IEnumerable<Guid> ids, int page, int size, CancellationToken cancellationToken = default)
     {
         Expression<Func<CatalogItem, bool>> filter = ids.Any() ? x => ids.Contains(x.Id) : _ => true;
+
+        return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
+    }
+
+    public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindByTypeAndBrandAsync(Guid typeId, Guid? brandId, int page, int size, CancellationToken cancellationToken = default)
+    {
+        Expression<Func<CatalogItem, bool>> filter = brandId is null ? x => x.CatalogType.Id == typeId : x => x.CatalogType.Id == typeId && x.CatalogBrand.Id == brandId;
+
+        return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
+    }
+
+    private async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindCatalogItemsAsync(int page, int size, Expression<Func<CatalogItem, bool>> filter, CancellationToken cancellationToken)
+    {
         var items = CatalogItems.Find(filter)
                                 .SortByDescending(x => x.Name)
                                 .Skip(page * size)

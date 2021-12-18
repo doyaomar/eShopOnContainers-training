@@ -76,13 +76,13 @@ public static class CatalogItemFakes
         return item;
     }
 
-    public static GetAll.Query GetGetAllQueryFake(Guid firstIdStub, Guid secondIdStub) => new()
+    public static GetAll.Query GetGetAllQueryFake(Guid firstId, Guid secondId) => new()
     {
-        Ids = $"{firstIdStub};{secondIdStub}",
+        Ids = $"{firstId};{secondId}",
         PageIndex = 0,
         PageSize = 8
     };
 
     public static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
-    => new PaginatedDto<T>(items, 2, 0, 8);
+    => new PaginatedDto<T>(items) { Count = 2, PageIndex = 0, PageSize = 8 };
 }
