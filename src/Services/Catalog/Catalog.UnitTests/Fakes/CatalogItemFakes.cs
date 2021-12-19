@@ -1,8 +1,8 @@
 namespace Catalog.UnitTests.Fakes;
 
-public static class CatalogItemFakes
+internal static class CatalogItemFakes
 {
-    public static Create.Command GetCreateCommandFake() => new()
+    internal static Create.Command GetCreateCommandFake() => new()
     {
         Name = "name",
         CatalogBrand = new CatalogBrandDto
@@ -17,23 +17,7 @@ public static class CatalogItemFakes
         }
     };
 
-    public static Update.Command GetUpdateCommandFake(Guid id) => new()
-    {
-        Id = id,
-        Name = "name",
-        CatalogBrand = new CatalogBrandDto
-        {
-            Id = Guid.NewGuid(),
-            Name = "catalogBrandName"
-        },
-        CatalogType = new CatalogTypeDto
-        {
-            Id = Guid.NewGuid(),
-            Name = "catalogTypeName"
-        }
-    };
-
-    public static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
+    internal static Update.Command GetUpdateCommandFake(Guid id) => new()
     {
         Id = id,
         Name = "name",
@@ -49,13 +33,39 @@ public static class CatalogItemFakes
         }
     };
 
-    public static List<CatalogItemDto> GetCatalogItemDtosFake(Guid id1, Guid id2) => new()
+    internal static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
+    {
+        Id = id,
+        Name = "name",
+        CatalogBrand = new CatalogBrandDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogBrandName"
+        },
+        CatalogType = new CatalogTypeDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogTypeName"
+        }
+    };
+
+    internal static List<CatalogItemDto> GetCatalogItemDtosFake(Guid id1, Guid id2) => new()
     {
         CatalogItemFakes.GetCatalogItemDtoFake(id1),
         CatalogItemFakes.GetCatalogItemDtoFake(id2)
     };
 
-    public static CatalogItem GetCatalogItemFake(Guid? id = null)
+    internal static IEnumerable<T> GetCatalogItemsFake<T>(List<Guid> ids)
+    {
+        if (typeof(T) == typeof(CatalogItemDto))
+        {
+            return (IEnumerable<T>)ids.Select(id => CatalogItemFakes.GetCatalogItemDtoFake(id));
+        }
+
+        return (IEnumerable<T>)ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id));
+    }
+
+    internal static CatalogItem GetCatalogItemFake(Guid? id = null)
     {
         var item = new CatalogItem
         {
@@ -76,13 +86,21 @@ public static class CatalogItemFakes
         return item;
     }
 
-    public static GetAll.Query GetGetAllQueryFake(Guid firstId, Guid secondId) => new()
+    internal static GetAll.Query GetGetAllQueryFake(Guid firstId, Guid secondId) => new()
     {
         Ids = $"{firstId};{secondId}",
         PageIndex = 0,
         PageSize = 8
     };
 
-    public static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
+    internal static GetByTypeAndBrand.Query GetByTypeAndBrandFake(Guid typeId, Guid brandId) => new()
+    {
+        CatalogTypeId = typeId,
+        CatalogBrandId = brandId,
+        PageIndex = 0,
+        PageSize = 8
+    };
+
+    internal static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
     => new PaginatedDto<T>(items) { Count = 2, PageIndex = 0, PageSize = 8 };
 }
