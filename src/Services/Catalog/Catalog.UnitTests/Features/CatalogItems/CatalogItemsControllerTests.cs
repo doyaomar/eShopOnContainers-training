@@ -130,10 +130,9 @@ public class CatalogItemsControllerTests
     [Fact]
     public async Task GetCatalogItemsAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkObjectResult()
     {
-        var firstIdStub = Guid.NewGuid();
-        var secondIdStub = Guid.NewGuid();
-        var validQueryStub = CatalogItemFakes.GetGetAllQueryFake(firstIdStub, secondIdStub);
-        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(firstIdStub, secondIdStub);
+        var idsStub = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
+        var validQueryStub = CatalogItemFakes.GetGetAllQueryFake(string.Join(';', idsStub));
+        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(idsStub);
         var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
         _mediatorStub.Setup(mediator => mediator.Send(validQueryStub, CancellationToken.None)).ReturnsAsync(paginatedDtoStub);
 
@@ -151,8 +150,8 @@ public class CatalogItemsControllerTests
     {
         var typeIdStub = Guid.NewGuid();
         var brandIdStub = Guid.NewGuid();
-        var validQueryStub = CatalogItemFakes.GetByTypeAndBrandFake(typeIdStub, brandIdStub);
-        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(typeIdStub, brandIdStub);
+        var validQueryStub = CatalogItemFakes.GetByTypeAndBrandFake(Guid.NewGuid(), Guid.NewGuid());
+        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
         var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
         _mediatorStub.Setup(mediator => mediator.Send(validQueryStub, CancellationToken.None)).ReturnsAsync(paginatedDtoStub);
 

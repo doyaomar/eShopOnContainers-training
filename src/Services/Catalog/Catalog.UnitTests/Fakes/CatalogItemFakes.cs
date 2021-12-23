@@ -49,21 +49,11 @@ internal static class CatalogItemFakes
         }
     };
 
-    internal static List<CatalogItemDto> GetCatalogItemDtosFake(Guid id1, Guid id2) => new()
-    {
-        CatalogItemFakes.GetCatalogItemDtoFake(id1),
-        CatalogItemFakes.GetCatalogItemDtoFake(id2)
-    };
+    internal static List<CatalogItem> GetCatalogItemsFake(List<Guid> ids)
+    => ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id)).ToList();
 
-    internal static IEnumerable<T> GetCatalogItemsFake<T>(List<Guid> ids)
-    {
-        if (typeof(T) == typeof(CatalogItemDto))
-        {
-            return (IEnumerable<T>)ids.Select(id => CatalogItemFakes.GetCatalogItemDtoFake(id));
-        }
-
-        return (IEnumerable<T>)ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id));
-    }
+    internal static List<CatalogItemDto> GetCatalogItemDtosFake(List<Guid> ids)
+    => ids.Select(id => CatalogItemFakes.GetCatalogItemDtoFake(id)).ToList();
 
     internal static CatalogItem GetCatalogItemFake(Guid? id = null)
     {
@@ -86,9 +76,9 @@ internal static class CatalogItemFakes
         return item;
     }
 
-    internal static GetAll.Query GetGetAllQueryFake(Guid firstId, Guid secondId) => new()
+    internal static GetAll.Query GetGetAllQueryFake(string ids) => new()
     {
-        Ids = $"{firstId};{secondId}",
+        Ids = ids,
         PageIndex = 0,
         PageSize = 8
     };
@@ -101,6 +91,6 @@ internal static class CatalogItemFakes
         PageSize = 8
     };
 
-    internal static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
+    internal static PaginatedDto<T> GetPaginatedDtoFake<T>(IReadOnlyCollection<T> items)
     => new PaginatedDto<T>(items) { Count = 2, PageIndex = 0, PageSize = 8 };
 }

@@ -13,23 +13,25 @@ public class GetAllTests
         _handler = new(_dbStub.Object, _mapperStub.Object);
     }
 
-//     [Fact]
-//     public async Task Handle_WhenQueryIsValid_ThenReturnsPaginatedDto()
-//     {
-//         var firstIdStub = Guid.NewGuid();
-//         var secondIdStub = Guid.NewGuid();
-//         var t = string.Join()
-//         var validQueryStub = CatalogItemFakes.GetGetAllQueryFake(firstIdStub, secondIdStub);
-//         var itemsMock = CatalogItemFakes.GetCatalogItemsFake<CatalogItem>();
-//         var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
-//         var t = ()
-//         _dbStub.Setup(db => db.FindAllAsync(It.IsAny<IEnumerable<Guid>>(),It.IsAny<int>(),It.IsAny<int>(), CancellationToken.None));
-//         _mapperStub.Setup(mapper => mapper.Map<CatalogItemDto>(catalogItemStub)).Returns(catalogItemDtoMock);
+    [Fact]
+    public async Task Handle_WhenQueryIsValid_ThenReturnsPaginatedDto()
+    {
+        var idsStub = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
+        var validQueryStub = CatalogItemFakes.GetGetAllQueryFake(string.Join(';', idsStub));
+        var itemsStub = CatalogItemFakes.GetCatalogItemsFake(idsStub);
+        var itemsDtoMock = CatalogItemFakes.GetCatalogItemDtosFake(idsStub);
+        _dbStub.Setup(db => db.FindAllAsync(
+            It.IsAny<IEnumerable<Guid>>(),
+            It.IsAny<int>(),
+            It.IsAny<int>(),
+            CancellationToken.None)).ReturnsAsync((itemsStub, 2));
+        _mapperStub.Setup(mapper => mapper.Map<IReadOnlyCollection<CatalogItemDto>>(itemsStub)).Returns(itemsDtoMock);
 
-//         var actual = await _handler.Handle(validQueryStub, CancellationToken.None);
+        var actual = await _handler.Handle(validQueryStub, CancellationToken.None);
 
-//         actual.Should().NotBeNull();
-//         actual!.Id.Should().Be(catalogItemDtoMock.Id);
-//         actual!.Name.Should().Be(catalogItemDtoMock.Name);
-//     }
+        actual.Should().NotBeNull();
+        actual.Count.Should().Be(2);
+        actual.Items.Should().NotBeNullOrEmpty();
+        actual.Items.Should().Equal(itemsDtoMock);
+    }
 }
