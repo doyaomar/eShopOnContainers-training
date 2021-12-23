@@ -11,4 +11,15 @@ public static class CatalogItemsExtensions
 
     internal static IEnumerable<string> ToStringList(this string ids)
     => ids?.Split(SEPARATOR) ?? Enumerable.Empty<string>();
+
+    internal static PaginatedDto<CatalogItemDto> ToPaginatedDto(
+        this IMapper mapper,
+        (IReadOnlyCollection<CatalogItem> Items, long Count) paginatedItems,
+        int pageIndex,
+        int pageSize) => new PaginatedDto<CatalogItemDto>(mapper.Map<IReadOnlyCollection<CatalogItemDto>>(paginatedItems.Items))
+        {
+            Count = paginatedItems.Count,
+            PageIndex = pageIndex,
+            PageSize = pageSize
+        };
 }

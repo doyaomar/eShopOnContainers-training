@@ -1,8 +1,8 @@
 namespace Catalog.UnitTests.Fakes;
 
-public static class CatalogItemFakes
+internal static class CatalogItemFakes
 {
-    public static Create.Command GetCreateCommandFake() => new()
+    internal static Create.Command GetCreateCommandFake() => new()
     {
         Name = "name",
         CatalogBrand = new CatalogBrandDto
@@ -17,7 +17,7 @@ public static class CatalogItemFakes
         }
     };
 
-    public static Update.Command GetUpdateCommandFake(Guid id) => new()
+    internal static Update.Command GetUpdateCommandFake(Guid id) => new()
     {
         Id = id,
         Name = "name",
@@ -33,7 +33,7 @@ public static class CatalogItemFakes
         }
     };
 
-    public static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
+    internal static CatalogItemDto GetCatalogItemDtoFake(Guid id) => new()
     {
         Id = id,
         Name = "name",
@@ -49,13 +49,13 @@ public static class CatalogItemFakes
         }
     };
 
-    public static List<CatalogItemDto> GetCatalogItemDtosFake(Guid id1, Guid id2) => new()
-    {
-        CatalogItemFakes.GetCatalogItemDtoFake(id1),
-        CatalogItemFakes.GetCatalogItemDtoFake(id2)
-    };
+    internal static List<CatalogItem> GetCatalogItemsFake(List<Guid> ids)
+    => ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id)).ToList();
 
-    public static CatalogItem GetCatalogItemFake(Guid? id = null)
+    internal static List<CatalogItemDto> GetCatalogItemDtosFake(List<Guid> ids)
+    => ids.Select(id => CatalogItemFakes.GetCatalogItemDtoFake(id)).ToList();
+
+    internal static CatalogItem GetCatalogItemFake(Guid? id = null)
     {
         var item = new CatalogItem
         {
@@ -76,13 +76,21 @@ public static class CatalogItemFakes
         return item;
     }
 
-    public static GetAll.Query GetGetAllQueryFake(Guid firstIdStub, Guid secondIdStub) => new()
+    internal static GetAll.Query GetGetAllQueryFake(string ids) => new()
     {
-        Ids = $"{firstIdStub};{secondIdStub}",
+        Ids = ids,
         PageIndex = 0,
         PageSize = 8
     };
 
-    public static PaginatedDto<T> GetPaginatedDtoFake<T>(List<T> items)
-    => new PaginatedDto<T>(items, 2, 0, 8);
+    internal static GetByTypeAndBrand.Query GetByTypeAndBrandFake(Guid typeId, Guid brandId) => new()
+    {
+        CatalogTypeId = typeId,
+        CatalogBrandId = brandId,
+        PageIndex = 0,
+        PageSize = 8
+    };
+
+    internal static PaginatedDto<T> GetPaginatedDtoFake<T>(IReadOnlyCollection<T> items)
+    => new PaginatedDto<T>(items) { Count = 2, PageIndex = 0, PageSize = 8 };
 }

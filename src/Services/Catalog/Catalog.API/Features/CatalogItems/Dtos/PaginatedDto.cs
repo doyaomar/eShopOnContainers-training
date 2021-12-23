@@ -6,11 +6,8 @@ public class PaginatedDto<T> : Pagination
 
     public long Count { get; set; }
 
-    public PaginatedDto(IReadOnlyCollection<T> items, long count, int pageIndex, int pageSize) : base()
+    public PaginatedDto(IReadOnlyCollection<T> items)
     {
         Items = items;
-        Count = count;
-        PageIndex = pageIndex;
-        PageSize = pageSize;
     }
 }
