@@ -64,7 +64,8 @@ public class CatalogDbContext : ICatalogDbContext
         return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
     }
 
-    private async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindCatalogItemsAsync(int page,
+    private async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindCatalogItemsAsync(
+        int page,
         int size,
         Expression<Func<CatalogItem, bool>> filter,
         CancellationToken cancellationToken)
