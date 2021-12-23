@@ -148,8 +148,6 @@ public class CatalogItemsControllerTests
     [Fact]
     public async Task GetCatalogItemsByTypeAndBrandAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkObjectResult()
     {
-        var typeIdStub = Guid.NewGuid();
-        var brandIdStub = Guid.NewGuid();
         var validQueryStub = CatalogItemFakes.GetByTypeAndBrandFake(Guid.NewGuid(), Guid.NewGuid());
         var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
         var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
