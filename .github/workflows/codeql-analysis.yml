@@ -3,11 +3,19 @@ name: CodeQL
 on:
   workflow_dispatch:
 
+  push:
+    branches: [main]
+    paths:
+      - "**.cs"
+      - "**.csproj"
+      - .github/workflows/codeql-analysis.yml
+
   pull_request:
     branches: [main]
     paths:
       - "**.cs"
       - "**.csproj"
+      - .github/workflows/codeql-analysis.yml
 
   schedule:
     - cron: "22 3 * * 0"
