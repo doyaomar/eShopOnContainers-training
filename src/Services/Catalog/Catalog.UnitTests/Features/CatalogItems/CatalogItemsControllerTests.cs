@@ -176,4 +176,21 @@ public class CatalogItemsControllerTests
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
     }
+
+    // GetCatalogItemsByNameAsync Tests
+
+    [Fact]
+    public async Task GetCatalogItemsByNameAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkObjectResult()
+    {
+        var validQueryStub = CatalogItemFakes.GetByNameQueryFake("name");
+        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
+        var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
+        _mediatorStub.Setup(mediator => mediator.Send(validQueryStub, CancellationToken.None)).ReturnsAsync(paginatedDtoStub);
+
+        var actual = await _catalogItemsController.GetCatalogItemsByNameAsync(validQueryStub, CancellationToken.None);
+
+        actual.Result.Should().BeOfType<OkObjectResult>();
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+    }
 }

@@ -41,48 +41,55 @@ public class CatalogDbContext : ICatalogDbContext
 
     public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindAllAsync(
         IEnumerable<Guid> ids,
-        int page,
-        int size,
+        int pageIndex,
+        int pageSize,
         CancellationToken cancellationToken = default)
     {
         Expression<Func<CatalogItem, bool>> filter = ids.Any() ? x => ids.Contains(x.Id) : _ => true;
 
-        return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
+        return await FindCatalogItemsAsync(pageIndex, pageSize, filter, cancellationToken);
     }
 
     public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindByTypeAndBrandAsync(
         Guid typeId,
         Guid? brandId,
-        int page,
-        int size,
+        int pageIndex,
+        int pageSize,
         CancellationToken cancellationToken = default)
     {
         Expression<Func<CatalogItem, bool>> filter = brandId is null
         ? x => x.CatalogType.Id == typeId
         : x => x.CatalogType.Id == typeId && x.CatalogBrand.Id == brandId;
 
-        return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
+        return await FindCatalogItemsAsync(pageIndex, pageSize, filter, cancellationToken);
     }
 
     public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindByBrandAsync(
         Guid brandId,
-        int page,
-        int size,
+        int pageIndex,
+        int pageSize,
         CancellationToken cancellationToken = default)
-        => await FindCatalogItemsAsync(page, size, x => x.CatalogBrand.Id == brandId, cancellationToken);
+        => await FindCatalogItemsAsync(pageIndex, pageSize, x => x.CatalogBrand.Id == brandId, cancellationToken);
+
+    public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindByNameAsync(
+        string name,
+        int pageIndex,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+        => await FindCatalogItemsAsync(pageIndex, pageSize, x => x.Name.StartsWith(name), cancellationToken);
 
     private async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindCatalogItemsAsync(
-        int page,
-        int size,
-        Expression<Func<CatalogItem, bool>> filter,
-        CancellationToken cancellationToken)
+        int pageIndex,
+        int pageSize,
+        Expression<Func<CatalogItem, bool>> filterExpression,
+        CancellationToken cancellationToken = default)
     {
-        var items = CatalogItems.Find(filter)
+        var items = CatalogItems.Find(filterExpression)
                                 .SortBy(x => x.Name)
-                                .Skip(page * size)
-                                .Limit(size)
+                                .Skip(pageIndex * pageSize)
+                                .Limit(pageSize)
                                 .ToListAsync(cancellationToken);
-        var count = CatalogItems.CountDocumentsAsync(filter, null, cancellationToken);
+        var count = CatalogItems.CountDocumentsAsync(filterExpression, null, cancellationToken);
 
         return (await items, await count);
     }
