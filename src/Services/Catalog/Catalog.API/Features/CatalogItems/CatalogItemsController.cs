@@ -100,4 +100,13 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsByBrandAsync([FromRoute] GetByBrand.Query query, CancellationToken cancellationToken)
     => Ok(await _mediator.Send(query, cancellationToken));
+
+    // GET api/v1/[controller]/items/name/cup?PageIndex=0&PageSize=10
+    [HttpGet("items/name/{Name}")]
+    [ActionName(nameof(GetCatalogItemsByNameAsync))]
+    [ProducesResponseType(typeof(PaginatedDto<CatalogItemDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsByNameAsync([FromRoute] GetByName.Query query, CancellationToken cancellationToken)
+    => Ok(await _mediator.Send(query, cancellationToken));
 }
