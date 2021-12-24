@@ -217,4 +217,21 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(7);
     }
+    // GetCatalogItemsByNameAsync Tests
+
+    [Fact]
+    public async Task GetCatalogItemsByNameAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkStatusCode()
+    {
+        var url =
+        "api/v1/catalog/items/name/.NET";
+
+        var actual = await _client.GetAsync(url);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringContent = await actual.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        paginatedItems!.Count.Should().Be(5);
+    }
 }
