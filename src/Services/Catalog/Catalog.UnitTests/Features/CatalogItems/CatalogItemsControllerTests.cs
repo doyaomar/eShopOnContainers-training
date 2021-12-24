@@ -148,12 +148,29 @@ public class CatalogItemsControllerTests
     [Fact]
     public async Task GetCatalogItemsByTypeAndBrandAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkObjectResult()
     {
-        var validQueryStub = CatalogItemFakes.GetByTypeAndBrandFake(Guid.NewGuid(), Guid.NewGuid());
+        var validQueryStub = CatalogItemFakes.GetByTypeAndBrandQueryFake(Guid.NewGuid(), Guid.NewGuid());
         var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
         var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
         _mediatorStub.Setup(mediator => mediator.Send(validQueryStub, CancellationToken.None)).ReturnsAsync(paginatedDtoStub);
 
         var actual = await _catalogItemsController.GetCatalogItemsByTypeAndBrandAsync(validQueryStub, CancellationToken.None);
+
+        actual.Result.Should().BeOfType<OkObjectResult>();
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+    }
+
+    // GetCatalogItemsByBrandAsync Tests
+
+    [Fact]
+    public async Task GetCatalogItemsByBrandAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkObjectResult()
+    {
+        var validQueryStub = CatalogItemFakes.GetByBrandQueryFake(Guid.NewGuid());
+        var itemsMock = CatalogItemFakes.GetCatalogItemDtosFake(new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
+        var paginatedDtoStub = CatalogItemFakes.GetPaginatedDtoFake(itemsMock);
+        _mediatorStub.Setup(mediator => mediator.Send(validQueryStub, CancellationToken.None)).ReturnsAsync(paginatedDtoStub);
+
+        var actual = await _catalogItemsController.GetCatalogItemsByBrandAsync(validQueryStub, CancellationToken.None);
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);

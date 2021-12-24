@@ -199,4 +199,22 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(2);
     }
+
+    // GetCatalogItemsByBrandAsync Tests
+
+    [Fact]
+    public async Task GetCatalogItemsByBrandAsync_WhenQueryIsValidAndProductsExist_ThenReturnsOkStatusCode()
+    {
+        var url =
+        "api/v1/catalog/items/brand/5f9516ec-1533-4b7b-adf3-876d8bd5c085?PageIndex=0&PageSize=5";
+
+        var actual = await _client.GetAsync(url);
+
+        actual.Should().NotBeNull();
+        actual.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringContent = await actual.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        paginatedItems!.Count.Should().Be(7);
+    }
 }
