@@ -83,9 +83,16 @@ internal static class CatalogItemFakes
         PageSize = 8
     };
 
-    internal static GetByTypeAndBrand.Query GetByTypeAndBrandFake(Guid typeId, Guid brandId) => new()
+    internal static GetByTypeAndBrand.Query GetByTypeAndBrandQueryFake(Guid typeId, Guid brandId) => new()
     {
         CatalogTypeId = typeId,
+        CatalogBrandId = brandId,
+        PageIndex = 0,
+        PageSize = 8
+    };
+
+    internal static GetByBrand.Query GetByBrandQueryFake(Guid brandId) => new()
+    {
         CatalogBrandId = brandId,
         PageIndex = 0,
         PageSize = 8

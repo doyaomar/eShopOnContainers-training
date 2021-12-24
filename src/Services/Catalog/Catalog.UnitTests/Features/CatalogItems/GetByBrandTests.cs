@@ -1,12 +1,12 @@
 namespace Catalog.UnitTests.Features.CatalogItems;
 
-public class GetByTypeAndBrandTests
+public class GetByBrandTests
 {
     readonly Mock<ICatalogDbContext> _dbStub;
     readonly Mock<IMapper> _mapperStub;
-    readonly GetByTypeAndBrand.Handler _handler;
+    readonly GetByBrand.Handler _handler;
 
-    public GetByTypeAndBrandTests()
+    public GetByBrandTests()
     {
         _mapperStub = new();
         _dbStub = new();
@@ -17,12 +17,11 @@ public class GetByTypeAndBrandTests
     public async Task Handle_WhenQueryIsValid_ThenReturnsPaginatedDto()
     {
         var idsStub = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
-        var validQueryStub = CatalogItemFakes.GetByTypeAndBrandQueryFake(Guid.NewGuid(), Guid.NewGuid());
+        var validQueryStub = CatalogItemFakes.GetByBrandQueryFake(Guid.NewGuid());
         var itemsStub = CatalogItemFakes.GetCatalogItemsFake(idsStub);
         var itemsDtoMock = CatalogItemFakes.GetCatalogItemDtosFake(idsStub);
-        _dbStub.Setup(db => db.FindByTypeAndBrandAsync(
+        _dbStub.Setup(db => db.FindByBrandAsync(
             It.IsAny<Guid>(),
-            It.IsAny<Guid?>(),
             It.IsAny<int>(),
             It.IsAny<int>(),
             CancellationToken.None)).ReturnsAsync((itemsStub, 2));
