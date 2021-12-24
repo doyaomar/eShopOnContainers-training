@@ -64,6 +64,13 @@ public class CatalogDbContext : ICatalogDbContext
         return await FindCatalogItemsAsync(page, size, filter, cancellationToken);
     }
 
+    public async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindByBrandAsync(
+        Guid brandId,
+        int page,
+        int size,
+        CancellationToken cancellationToken = default)
+        => await FindCatalogItemsAsync(page, size, x => x.CatalogBrand.Id == brandId, cancellationToken);
+
     private async Task<(IReadOnlyCollection<CatalogItem> Items, long Count)> FindCatalogItemsAsync(
         int page,
         int size,
@@ -71,7 +78,7 @@ public class CatalogDbContext : ICatalogDbContext
         CancellationToken cancellationToken)
     {
         var items = CatalogItems.Find(filter)
-                                .SortByDescending(x => x.Name)
+                                .SortBy(x => x.Name)
                                 .Skip(page * size)
                                 .Limit(size)
                                 .ToListAsync(cancellationToken);
