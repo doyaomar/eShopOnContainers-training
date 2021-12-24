@@ -98,6 +98,13 @@ internal static class CatalogItemFakes
         PageSize = 8
     };
 
+    internal static GetByName.Query GetByNameQueryFake(string name) => new()
+    {
+        Name = name,
+        PageIndex = 0,
+        PageSize = 8
+    };
+
     internal static PaginatedDto<T> GetPaginatedDtoFake<T>(IReadOnlyCollection<T> items)
     => new PaginatedDto<T>(items) { Count = 2, PageIndex = 0, PageSize = 8 };
 }
