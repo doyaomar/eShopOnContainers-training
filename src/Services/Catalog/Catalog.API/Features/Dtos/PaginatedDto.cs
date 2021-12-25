@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.CatalogItems.Dtos;
+namespace Catalog.API.Features.Dtos;
 
 public class PaginatedDto<T> : Pagination
 {
