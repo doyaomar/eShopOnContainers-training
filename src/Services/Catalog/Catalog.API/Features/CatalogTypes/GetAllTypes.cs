@@ -1,6 +1,6 @@
 namespace Catalog.API.Features.CatalogTypes;
 
-public class GetAll
+public class GetAllTypes
 {
     public record Query() : IRequest<IReadOnlyCollection<CatalogTypeDto>>;
 

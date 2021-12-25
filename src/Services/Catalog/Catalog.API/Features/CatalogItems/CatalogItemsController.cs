@@ -78,7 +78,7 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(typeof(PaginatedDto<CatalogItemDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsAsync([FromQuery] Features.CatalogItems.GetAll.Query query, CancellationToken cancellationToken)
+    public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsAsync([FromQuery] GetAll.Query query, CancellationToken cancellationToken)
     => Ok(await _mediator.Send(query, cancellationToken));
 
     // GET api/v1/[controller]/items/type/32488b09-fdfc-4fa0-affc-daee7d017818/brand/96c7905b-7a9b-4b7e-b479-6b307ab0d5fa?PageIndex=0&PageSize=10

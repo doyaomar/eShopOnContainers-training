@@ -21,5 +21,5 @@ public class CatalogTypesController : ControllerBase
     [ProducesResponseType(typeof(IReadOnlyCollection<CatalogTypeDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<IReadOnlyCollection<CatalogTypeDto>>> GetCatalogTypesAsync(CancellationToken cancellationToken)
-    => Ok(await _mediator.Send(new Features.CatalogTypes.GetAll.Query(), cancellationToken));
+    => Ok(await _mediator.Send(new GetAllTypes.Query(), cancellationToken));
 }

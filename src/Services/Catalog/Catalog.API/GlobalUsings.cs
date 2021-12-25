@@ -5,6 +5,7 @@ global using Catalog.API.Data;
 global using Catalog.API.Data.Configurations;
 global using Catalog.API.Extensions;
 global using Catalog.API.Features.CatalogItems;
+global using Catalog.API.Features.CatalogTypes;
 global using Catalog.API.Features.Dtos;
 global using Catalog.API.Infrastructure;
 global using Catalog.API.Infrastructure.Services;
