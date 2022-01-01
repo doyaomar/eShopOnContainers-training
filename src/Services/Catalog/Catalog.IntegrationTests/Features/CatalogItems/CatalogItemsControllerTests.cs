@@ -8,7 +8,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
     public CatalogItemsControllerTests(WebApplicationFactory factory)
     {
         _factory = factory;
-        _client = factory.CreateClient();
+        _client = _factory.CreateClient();
     }
 
     // GetCatalogItemAsync Tests

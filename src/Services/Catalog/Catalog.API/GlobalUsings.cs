@@ -2,7 +2,7 @@ global using System.Linq.Expressions;
 global using System.Reflection;
 global using AutoMapper;
 global using Catalog.API.Data;
-global using Catalog.API.Data.Configurations;
+global using Catalog.API.Data.Serialization;
 global using Catalog.API.Extensions;
 global using Catalog.API.Features.CatalogItems;
 global using Catalog.API.Features.CatalogTypes;

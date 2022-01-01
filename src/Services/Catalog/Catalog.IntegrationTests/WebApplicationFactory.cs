@@ -1,6 +1,6 @@
 namespace Catalog.IntegrationTests;
 
-public class WebApplicationFactory : WebApplicationFactory<Program>
+public class WebApplicationFactory : WebApplicationFactory<Program>, IDisposable
 {
 
     private MongoDbRunner _runner = default!;
@@ -9,19 +9,19 @@ public class WebApplicationFactory : WebApplicationFactory<Program>
     {
         _runner = MongoDbRunner.Start();
         Debug.WriteLine($"MongoDbRunner.ConnectionString ::: {_runner.ConnectionString}");
-        string[] paths = { "Data", "catalogItems.json" };
-        _runner.Import("CatalogDb", "catalogItems", Path.Combine(paths), true);
+        _runner.Import("CatalogDb", "catalogItems", Path.Combine("Data", "catalogItems.json"), true);
+        _runner.Import("CatalogDb", "catalogTypes", Path.Combine("Data", "catalogTypes.json"), true);
 
         builder
-        .ConfigureTestServices(services =>
+        .ConfigureServices(services =>
         {
             services.AddSingleton<IMongoClient>(_ => new MongoClient(_runner.ConnectionString));
         });
     }
 
-    public override ValueTask DisposeAsync()
+    void IDisposable.Dispose()
     {
         _runner.Dispose();
-        return base.DisposeAsync();
+        base.Dispose();
     }
 }
