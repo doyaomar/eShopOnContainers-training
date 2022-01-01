@@ -7,6 +7,8 @@ public static class ServicesConfiguration
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var executingAssembly = Assembly.GetExecutingAssembly();
+
         MongoDbBsonSerialization.RegisterConventionRegistry();
         MongoDbBsonSerialization.RegisterSerialization();
 
@@ -17,18 +19,19 @@ public static class ServicesConfiguration
 
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(executingAssembly);
 
-        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(executingAssembly));
 
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(executingAssembly);
 
         return services;
     }
 
     public static IServiceCollection AddApplicationHealhtChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks()
+        services
+        .AddHealthChecks()
         .AddCheck(_selfName, () => HealthCheckResult.Healthy())
         .AddMongoDb(configuration.GetConnectionString(_catalogDbConnectionString));
 
