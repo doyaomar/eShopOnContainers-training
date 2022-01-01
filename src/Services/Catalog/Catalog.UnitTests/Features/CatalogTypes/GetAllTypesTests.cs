@@ -19,7 +19,7 @@ public class GetAllTypesTests
         var idsStub = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
         var catalogTypeDtosMock = CatalogTypeFakes.GetCatalogTypeDtosFake(idsStub);
         var catalogTypesStub = CatalogTypeFakes.GetCatalogTypesFake(idsStub);
-        _dbStub.Setup(db => db.FindAllCatalogTypesAsync(CancellationToken.None)).ReturnsAsync(catalogTypesStub);
+        _dbStub.Setup(db => db.FindAllTypesAsync(CancellationToken.None)).ReturnsAsync(catalogTypesStub);
         _mapperStub.Setup(mapper => mapper.Map<IReadOnlyCollection<CatalogTypeDto>>(catalogTypesStub)).Returns(catalogTypeDtosMock);
 
         var actual = await _handler.Handle(new GetAllTypes.Query(), CancellationToken.None);

@@ -35,5 +35,5 @@ public interface ICatalogDbContext
         int pageSize,
         CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyCollection<CatalogType>> FindAllCatalogTypesAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<CatalogType>> FindAllTypesAsync(CancellationToken cancellationToken = default);
 }

@@ -24,6 +24,5 @@ public static class MongoDbBsonSerialization
         BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3; // obsolete: will be removed in later release of mongo driver
 #pragma warning restore CS0618
         BsonSerializer.RegisterSerializationProvider(new MongoDbBsonSerializationProvider());
-
     }
 }

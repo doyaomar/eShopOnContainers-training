@@ -17,7 +17,7 @@ public class GetAllTypes
 
         public async Task<IReadOnlyCollection<CatalogTypeDto>> Handle(Query query, CancellationToken cancellationToken)
         {
-            var types = await _db.FindAllCatalogTypesAsync(cancellationToken);
+            var types = await _db.FindAllTypesAsync(cancellationToken);
 
             return _mapper.Map<IReadOnlyCollection<CatalogTypeDto>>(types);
         }
