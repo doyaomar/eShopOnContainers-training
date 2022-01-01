@@ -14,7 +14,7 @@ public class GetAllTypesTests
     }
 
     [Fact]
-    public async Task Handle_WhenQueryIsValid_ThenReturnsCatalogTypeDto()
+    public async Task Handle_WhenQueryIsValid_ThenReturnsCatalogTypeDtos()
     {
         var idsStub = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
         var catalogTypeDtosMock = CatalogTypeFakes.GetCatalogTypeDtosFake(idsStub);
