@@ -2,8 +2,8 @@ namespace Catalog.API.Infrastructure;
 
 public static class ServicesConfiguration
 {
-    private const string _catalogDbConnectionString = "CatalogDb";
-    private const string _selfName = "self";
+    private const string CatalogDbConnectionString = "CatalogDb";
+    private const string SelfName = "self";
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
@@ -15,7 +15,7 @@ public static class ServicesConfiguration
         services
         .AddScoped<IGuidService, GuidService>()
         .AddScoped<ICatalogDbContext, CatalogDbContext>()
-        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(_catalogDbConnectionString)));
+        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
 
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
 
@@ -32,8 +32,8 @@ public static class ServicesConfiguration
     {
         services
         .AddHealthChecks()
-        .AddCheck(_selfName, () => HealthCheckResult.Healthy())
-        .AddMongoDb(configuration.GetConnectionString(_catalogDbConnectionString));
+        .AddCheck(SelfName, () => HealthCheckResult.Healthy())
+        .AddMongoDb(configuration.GetConnectionString(CatalogDbConnectionString));
 
         return services;
     }
