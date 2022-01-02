@@ -5,6 +5,7 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using AutoMapper;
 global using Catalog.API.Controllers;
+global using Catalog.API.Features.CatalogBrands;
 global using Catalog.API.Features.CatalogItems;
 global using Catalog.API.Features.CatalogTypes;
 global using Catalog.API.Features.Dtos;

@@ -1,0 +1,18 @@
+{
+    "_id": {
+        "$binary": {
+            "base64": "X5UW7BUzS3ut84dti9XAhQ==",
+            "subType": "04"
+        }
+    },
+    "name": ".NET"
+}
+{
+    "_id": {
+        "$binary": {
+            "base64": "lseQW3qbS360eWswerDV+g==",
+            "subType": "04"
+        }
+    },
+    "name": "Other"
+}

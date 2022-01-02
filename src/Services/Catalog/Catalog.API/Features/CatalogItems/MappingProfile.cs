@@ -6,9 +6,6 @@ class MappingProfile : Profile
     {
         CreateMap<Create.Command, CatalogItem>();
         CreateMap<Update.Command, CatalogItem>();
-
         CreateMap<CatalogItem, CatalogItemDto>();
-        CreateMap<CatalogType, CatalogTypeDto>().ReverseMap();
-        CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
     }
 }

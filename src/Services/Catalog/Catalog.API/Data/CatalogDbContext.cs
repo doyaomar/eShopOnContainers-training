@@ -96,4 +96,7 @@ public class CatalogDbContext : ICatalogDbContext
 
     public async Task<IReadOnlyCollection<CatalogType>> FindAllTypesAsync(CancellationToken cancellationToken = default)
     => await CatalogTypes.Find(_ => true).ToListAsync(cancellationToken);
+
+    public async Task<IReadOnlyCollection<CatalogBrand>> FindAllBrandsAsync(CancellationToken cancellationToken = default)
+    => await CatalogBrands.Find(_ => true).ToListAsync(cancellationToken);
 }
