@@ -36,4 +36,6 @@ public interface ICatalogDbContext
         CancellationToken cancellationToken = default);
 
     Task<IReadOnlyCollection<CatalogType>> FindAllTypesAsync(CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<CatalogBrand>> FindAllBrandsAsync(CancellationToken cancellationToken = default);
 }
