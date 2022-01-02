@@ -1,0 +1,27 @@
+{
+    "_id": {
+        "$binary": {
+            "base64": "HK1WUYJzS7WONqpqvxvNRg==",
+            "subType": "04"
+        }
+    },
+    "name": "Mug"
+}
+{
+    "_id": {
+        "$binary": {
+            "base64": "b2p+44HfT8KLAe2svQOiXA==",
+            "subType": "04"
+        }
+    },
+    "name": "T-Shirt"
+}
+{
+    "_id": {
+        "$binary": {
+            "base64": "MkiLCf38T6Cv/NrufQF4GA==",
+            "subType": "04"
+        }
+    },
+    "name": "Pin"
+}

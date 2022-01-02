@@ -31,7 +31,6 @@ public class GetAllTests
 
         actual.Should().NotBeNull();
         actual.Count.Should().Be(2);
-        actual.Items.Should().NotBeNullOrEmpty();
-        actual.Items.Should().Equal(itemsDtoMock);
+        actual.Items.Should().NotBeNullOrEmpty().And.Equal(itemsDtoMock);
     }
 }

@@ -1,5 +1,3 @@
-using Catalog.API.Features.CatalogItems;
-
 namespace Catalog.API.Controllers;
 
 [ApiController]

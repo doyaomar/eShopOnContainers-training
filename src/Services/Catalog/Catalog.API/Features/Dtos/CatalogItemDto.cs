@@ -1,9 +1,9 @@
-namespace Catalog.API.Features.CatalogItems.Dtos;
+namespace Catalog.API.Features.Dtos;
 
 public class CatalogItemDto
 {
     public Guid Id { get; set; }
-    
+
     public string Name { get; init; } = default!;
 
     public string Description { get; init; } = default!;

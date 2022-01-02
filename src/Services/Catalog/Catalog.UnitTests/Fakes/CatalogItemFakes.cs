@@ -53,7 +53,7 @@ internal static class CatalogItemFakes
     => ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id)).ToList();
 
     internal static List<CatalogItemDto> GetCatalogItemDtosFake(List<Guid> ids)
-    => ids.Select(id => CatalogItemFakes.GetCatalogItemDtoFake(id)).ToList();
+    => ids.Select(CatalogItemFakes.GetCatalogItemDtoFake).ToList();
 
     internal static CatalogItem GetCatalogItemFake(Guid? id = null)
     {

@@ -2,7 +2,7 @@ namespace Catalog.API.Extensions;
 
 public static class CatalogItemsExtensions
 {
-    private const char SEPARATOR = ';';
+    private const char Separator = ';';
 
     internal static IEnumerable<Guid> ToGuidList(this string ids)
     => string.IsNullOrWhiteSpace(ids)
@@ -10,7 +10,7 @@ public static class CatalogItemsExtensions
     : ToStringList(ids).Select(Guid.Parse);
 
     internal static IEnumerable<string> ToStringList(this string ids)
-    => ids?.Split(SEPARATOR) ?? Enumerable.Empty<string>();
+    => ids?.Split(Separator) ?? Enumerable.Empty<string>();
 
     internal static PaginatedDto<CatalogItemDto> ToPaginatedDto(
         this IMapper mapper,

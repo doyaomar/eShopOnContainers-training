@@ -2,34 +2,38 @@ namespace Catalog.API.Infrastructure;
 
 public static class ServicesConfiguration
 {
-    private const string catalogDbConnectionString = "CatalogDb";
-    private const string checkName = "self";
+    private const string CatalogDbConnectionString = "CatalogDb";
+    private const string SelfName = "self";
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var executingAssembly = Assembly.GetExecutingAssembly();
+
+        MongoDbBsonSerialization.RegisterConventionRegistry();
+        MongoDbBsonSerialization.RegisterSerialization();
+
         services
         .AddScoped<IGuidService, GuidService>()
         .AddScoped<ICatalogDbContext, CatalogDbContext>()
-        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(catalogDbConnectionString)));
+        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
 
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
 
-        MongoDbSerialization.AddSerializationRules();
+        services.AddAutoMapper(executingAssembly);
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(executingAssembly));
 
-        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
-
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(executingAssembly);
 
         return services;
     }
 
     public static IServiceCollection AddApplicationHealhtChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks()
-        .AddCheck(checkName, () => HealthCheckResult.Healthy())
-        .AddMongoDb(configuration.GetConnectionString(catalogDbConnectionString));
+        services
+        .AddHealthChecks()
+        .AddCheck(SelfName, () => HealthCheckResult.Healthy())
+        .AddMongoDb(configuration.GetConnectionString(CatalogDbConnectionString));
 
         return services;
     }

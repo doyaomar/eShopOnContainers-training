@@ -140,7 +140,7 @@ public class CatalogItemsControllerTests
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
-        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().Equal(itemsMock);
     }
 
     // GetCatalogItemsByTypeAndBrandAsync Tests
@@ -157,7 +157,7 @@ public class CatalogItemsControllerTests
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
-        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().Equal(itemsMock);
     }
 
     // GetCatalogItemsByBrandAsync Tests
@@ -174,7 +174,7 @@ public class CatalogItemsControllerTests
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
-        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().Equal(itemsMock);
     }
 
     // GetCatalogItemsByNameAsync Tests
@@ -191,6 +191,6 @@ public class CatalogItemsControllerTests
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Count.Should().Be(2);
-        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().BeEquivalentTo(itemsMock);
+        ((actual.Result as OkObjectResult)!.Value as PaginatedDto<CatalogItemDto>)!.Items.Should().Equal(itemsMock);
     }
 }
