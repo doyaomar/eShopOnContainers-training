@@ -1,4 +1,4 @@
-namespace Catalog.IntegrationTests.Features.CatalogItems;
+namespace Catalog.IntegrationTests.Features.CatalogTypes;
 
 public class CatalogTypesControllerTests : IClassFixture<WebApplicationFactory>
 {

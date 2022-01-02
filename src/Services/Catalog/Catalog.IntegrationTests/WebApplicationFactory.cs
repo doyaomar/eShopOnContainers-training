@@ -11,6 +11,7 @@ public class WebApplicationFactory : WebApplicationFactory<Program>, IDisposable
         Debug.WriteLine($"MongoDbRunner.ConnectionString ::: {_runner.ConnectionString}");
         _runner.Import("CatalogDb", "catalogItems", Path.Combine("Data", "catalogItems.json"), true);
         _runner.Import("CatalogDb", "catalogTypes", Path.Combine("Data", "catalogTypes.json"), true);
+        _runner.Import("CatalogDb", "catalogBrands", Path.Combine("Data", "catalogBrands.json"), true);
 
         builder
         .ConfigureServices(services =>
