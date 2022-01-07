@@ -22,4 +22,12 @@ public static class CatalogItemsExtensions
             PageIndex = pageIndex,
             PageSize = pageSize
         };
+
+    internal static bool HasValidExtension(this string pictureFileName)
+    {
+        string[] permittedExtensions = { ".png", ".gif", ".jpg", ".jpeg", ".bmp", ".tiff", ".wmf", ".jp2", ".svg" };
+        var ext = Path.GetExtension(pictureFileName).ToLowerInvariant();
+
+        return permittedExtensions.Contains(ext);
+    }
 }

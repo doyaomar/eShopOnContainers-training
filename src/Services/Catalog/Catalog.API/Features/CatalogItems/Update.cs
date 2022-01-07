@@ -38,9 +38,10 @@ public class Update
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(Command command, CancellationToken cancellationToken)
         {
-            var item = _mapper.Map<CatalogItem>(request);
+            var item = _mapper.Map<CatalogItem>(command);
+            item.GeneratePictureFileName();
             CatalogItem? updatedItem = await _db.FindOneAndReplaceAsync(item, cancellationToken);
 
             return updatedItem is not null;

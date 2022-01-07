@@ -17,6 +17,7 @@ public static class ServicesConfiguration
         .AddScoped<ICatalogDbContext, CatalogDbContext>()
         .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
 
+        services.Configure<CatalogSettings>(configuration);
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
 
         services.AddAutoMapper(executingAssembly);

@@ -38,10 +38,11 @@ public class Create
             _guidService = guidService ?? throw new ArgumentNullException(nameof(guidService));
         }
 
-        public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(Command command, CancellationToken cancellationToken)
         {
-            var item = _mapper.Map<CatalogItem>(request);
+            var item = _mapper.Map<CatalogItem>(command);
             item.SetId(_guidService.GetNewGuid());
+            item.GeneratePictureFileName();
 
             return await _db.InsertOneAsync(item, cancellationToken);
         }
