@@ -13,6 +13,7 @@ global using FluentValidation;
 global using FluentValidation.AspNetCore;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.StaticFiles;
 global using Microsoft.Extensions.Diagnostics.HealthChecks;
 global using Microsoft.Extensions.Options;
 global using Microsoft.OpenApi.Models;
