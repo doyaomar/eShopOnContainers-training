@@ -22,5 +22,5 @@ public class CatalogItem : Entity<Guid>
 
     public bool IsOnReorder { get; init; }
 
-    public void GeneratePictureFileName() => PictureFileName = $"CatalogItem_{Id}{Path.GetExtension(PictureFileName).ToLowerInvariant()}";
+    public void GeneratePictureFileName(string extension) => PictureFileName = $"CatalogItem_{Id}{extension}";
 }

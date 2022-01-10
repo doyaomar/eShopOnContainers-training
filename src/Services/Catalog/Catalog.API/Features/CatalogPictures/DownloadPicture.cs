@@ -1,6 +1,6 @@
-namespace Catalog.API.Features.CatalogItems;
+namespace Catalog.API.Features.CatalogPictures;
 
-public class GetPicture
+public class DownloadPicture
 {
     public record Query(Guid id) : IRequest<PictureFile?>;
 
@@ -11,12 +11,14 @@ public class GetPicture
         private readonly ICatalogDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IContentTypeProvider _contentTypeProvider;
+        private readonly IFileService _fileService;
 
-        public Handler(ICatalogDbContext context, IContentTypeProvider contentTypeProvider, IWebHostEnvironment webHostEnvironment)
+        public Handler(ICatalogDbContext context, IContentTypeProvider contentTypeProvider, IWebHostEnvironment webHostEnvironment, IFileService fileService)
         {
             _db = context ?? throw new ArgumentNullException(nameof(context));
             _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
             _contentTypeProvider = contentTypeProvider ?? throw new ArgumentNullException(nameof(contentTypeProvider));
+            _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         }
 
         public async Task<PictureFile?> Handle(Query query, CancellationToken cancellationToken)
@@ -29,14 +31,19 @@ public class GetPicture
                 return null;
             }
 
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, ImagesPath, item.PictureFileName);
+            string path = _fileService.PathCombine(_webHostEnvironment.WebRootPath, ImagesPath, item.PictureFileName);
+
+            if (!_fileService.FileExists(path))
+            {
+                return null;
+            }
 
             if (!_contentTypeProvider.TryGetContentType(path, out string? contentType))
             {
                 contentType = DefaultContenType;
             }
 
-            var buffer = await File.ReadAllBytesAsync(path, cancellationToken);
+            var buffer = await _fileService.FileReadAllBytesAsync(path, cancellationToken);
 
             return new PictureFile
             {

@@ -31,17 +31,19 @@ public class Update
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
+        private readonly IFileService _fileService;
 
-        public Handler(ICatalogDbContext context, IMapper mapper)
+        public Handler(ICatalogDbContext context, IMapper mapper, IFileService fileService)
         {
             _db = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         }
 
         public async Task<bool> Handle(Command command, CancellationToken cancellationToken)
         {
             var item = _mapper.Map<CatalogItem>(command);
-            item.GeneratePictureFileName();
+            item.GeneratePictureFileName(_fileService.PathGetExtension(item.PictureFileName));
             CatalogItem? updatedItem = await _db.FindOneAndReplaceAsync(item, cancellationToken);
 
             return updatedItem is not null;

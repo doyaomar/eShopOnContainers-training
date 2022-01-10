@@ -107,17 +107,4 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<PaginatedDto<CatalogItemDto>>> GetCatalogItemsByNameAsync([FromRoute] GetByName.Query query, CancellationToken cancellationToken)
     => Ok(await _mediator.Send(query, cancellationToken));
-
-    [HttpGet("items/{id:Guid}/picture")]
-    [ActionName(nameof(GetCatalogItemPictureAsync))]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetCatalogItemPictureAsync([FromRoute] GetPicture.Query query, CancellationToken cancellationToken)
-    {
-        var picture = await _mediator.Send(query, cancellationToken);
-
-        return picture is null ? NotFound() : File(picture.Buffer, picture.ContentType);
-    }
 }
