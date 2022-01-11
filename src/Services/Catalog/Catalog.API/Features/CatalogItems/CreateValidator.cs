@@ -9,7 +9,7 @@ public class CreateValidator : AbstractValidator<Create.Command>
         RuleFor(cmd => cmd.Description).NotEmpty();
         RuleFor(cmd => cmd.Name).NotEmpty();
         RuleFor(cmd => cmd.PictureFileName).NotEmpty().Must(pic => pic.HasValidExtension())
-        .WithMessage("'{PropertyName}' must contain a valid picture file extension.");
+        .WithMessage("'{PropertyName}' must end with a valid picture file extension.");
         RuleFor(cmd => cmd.Price).GreaterThan(default(decimal));
         RuleFor(cmd => cmd.CatalogBrand).NotNull();
         RuleFor(cmd => cmd.CatalogType).NotNull();
