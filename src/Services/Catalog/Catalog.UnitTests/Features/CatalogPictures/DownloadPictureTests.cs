@@ -19,7 +19,10 @@ public class DownloadPictureTests
         _contentTypeProviderStub = new();
         _fileServiceStub = new();
 
-        _catalogSettingsStub.SetReturnsDefault(new CatalogSettings { WebRootImagesPath = "images" });
+        _catalogSettingsStub.SetReturnsDefault(new CatalogSettings
+        {
+            WebRootImagesPath = "images"
+        });
 
         _handler = new(_dbStub.Object, _contentTypeProviderStub.Object, _webHostEnvironmentStub.Object, _fileServiceStub.Object, _catalogSettingsStub.Object);
     }

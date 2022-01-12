@@ -71,6 +71,7 @@ internal static class CatalogItemFakes
                 Name = "catalogTypeName"
             }
         };
+        item.GeneratePictureFileName(".png");
 
         if (id is not null)
             item.SetId(Guid.NewGuid());

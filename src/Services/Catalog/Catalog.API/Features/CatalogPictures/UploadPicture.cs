@@ -46,11 +46,8 @@ public class UploadPicture
             }
 
             var path = _fileService.PathCombine(_webHostEnvironment.WebRootPath, _catalogSettings.WebRootImagesPath, item.PictureFileName);
-
-            using (var stream = _fileService.FileCreate(path))
-            {
-                await command.PictureFile.CopyToAsync(stream);
-            }
+            using var stream = _fileService.FileCreate(path);
+            await command.PictureFile.CopyToAsync(stream, cancellationToken);
 
             return true;
         }
