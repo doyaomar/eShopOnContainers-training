@@ -33,7 +33,7 @@ public class UploadPictureTests
         var validProductIdStub = Guid.NewGuid();
         var validCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(validProductIdStub);
         var pathStub = "path.png";
-        var fileStreamStub = new Mock<FileStream>(pathStub, FileMode.Open);
+        var fileStreamStub = new Mock<FileStream>(pathStub, FileMode.OpenOrCreate);
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
         _dbStub.Setup(db => db.FindAsync(validProductIdStub, CancellationToken.None)).ReturnsAsync(catalogItemStub);
         _fileServiceStub.Setup(svc => svc.PathGetExtension(It.IsAny<string>())).Returns(".png");
