@@ -10,6 +10,7 @@ global using Catalog.API.Features.CatalogItems;
 global using Catalog.API.Features.CatalogPictures;
 global using Catalog.API.Features.CatalogTypes;
 global using Catalog.API.Features.Dtos;
+global using Catalog.API.Features.Models;
 global using Catalog.API.Infrastructure;
 global using Catalog.API.Interfaces;
 global using Catalog.API.Models;

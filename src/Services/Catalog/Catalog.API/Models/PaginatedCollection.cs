@@ -1,4 +1,4 @@
-namespace Catalog.API.Features.Dtos;
+namespace Catalog.API.Features.Models;
 
 public class PaginatedCollection<T> : Pagination
 {
@@ -6,8 +6,5 @@ public class PaginatedCollection<T> : Pagination
 
     public long Count { get; set; }
 
-    public PaginatedCollection(IReadOnlyCollection<T> items)
-    {
-        Items = items;
-    }
+    public PaginatedCollection(IReadOnlyCollection<T> items) => Items = items;
 }
