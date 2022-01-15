@@ -7,6 +7,7 @@ global using System.Text;
 global using System.Text.Json;
 global using System.Threading.Tasks;
 global using Catalog.API.Features.Dtos;
+global using Catalog.API.Features.Models;
 global using FluentAssertions;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Mvc.Testing;

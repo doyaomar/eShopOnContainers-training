@@ -13,7 +13,7 @@ public class GetAllValidator : AbstractValidator<GetAll.Query>
     }
 
     private static IEnumerable<Guid> StringToGuidList(string value)
-    => value.ToStringList().Any(x => !Guid.TryParse(x, out _))
+    => value.ToStringArray().Any(x => !Guid.TryParse(x, out _))
         ? Enumerable.Empty<Guid>()
         : value.ToGuidList();
 }

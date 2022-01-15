@@ -20,7 +20,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Add app services
-builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddApplicationConfigurations(builder.Configuration);
+builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationHealhtChecks(builder.Configuration);
 
 var app = builder.Build();

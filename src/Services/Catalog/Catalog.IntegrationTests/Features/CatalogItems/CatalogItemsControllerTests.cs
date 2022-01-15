@@ -178,7 +178,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringContent = await actual.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedCollection<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(2);
     }
 
@@ -196,7 +196,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringContent = await actual.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedCollection<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(2);
     }
 
@@ -214,7 +214,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringContent = await actual.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedCollection<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(7);
     }
     // GetCatalogItemsByNameAsync Tests
@@ -231,7 +231,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
         actual.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringContent = await actual.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        var paginatedItems = JsonSerializer.Deserialize<PaginatedDto<CatalogItemDto>>(stringContent, options);
+        var paginatedItems = JsonSerializer.Deserialize<PaginatedCollection<CatalogItemDto>>(stringContent, options);
         paginatedItems!.Count.Should().Be(5);
     }
 }

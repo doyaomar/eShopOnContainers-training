@@ -5,29 +5,40 @@ public static class ServicesConfiguration
     private const string CatalogDbConnectionString = "CatalogDb";
     private const string SelfName = "self";
 
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        var executingAssembly = Assembly.GetExecutingAssembly();
-
-        MongoDbBsonSerialization.RegisterConventionRegistry();
-        MongoDbBsonSerialization.RegisterSerialization();
-
         services
         .AddScoped<IGuidService, GuidService>()
         .AddScoped<IFileService, FileService>()
-        .AddScoped<ICatalogDbContext, CatalogDbContext>()
-        .AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>()
-        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
+        .AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>();
 
-        services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
-        services.Configure<CatalogSettings>(configuration);
-        services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
-
+        var executingAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(executingAssembly);
 
         services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(executingAssembly));
 
         services.AddMediatR(executingAssembly);
+
+        return services;
+    }
+
+    public static IServiceCollection AddApplicationConfigurations(this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+        .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true)
+        .Configure<CatalogSettings>(configuration)
+        .Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
+
+        return services;
+    }
+
+    public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        MongoDbBsonSerialization.RegisterConventionRegistry();
+        MongoDbBsonSerialization.RegisterSerialization();
+        services
+        .AddScoped<ICatalogDbContext, CatalogDbContext>()
+        .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
 
         return services;
     }

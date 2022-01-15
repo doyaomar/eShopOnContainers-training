@@ -2,7 +2,7 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class GetAll
 {
-    public class Query : Pagination, IRequest<PaginatedDto<CatalogItemDto>>
+    public class Query : Pagination, IRequest<PaginatedCollection<CatalogItemDto>>
     {
         /// <summary>
         /// string of guids sepratated by ';'
@@ -10,7 +10,7 @@ public class GetAll
         public string Ids { get; set; } = string.Empty;
     }
 
-    public class Handler : IRequestHandler<GetAll.Query, PaginatedDto<CatalogItemDto>>
+    public class Handler : IRequestHandler<GetAll.Query, PaginatedCollection<CatalogItemDto>>
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ public class GetAll
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<PaginatedDto<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
+        public async Task<PaginatedCollection<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
             IEnumerable<Guid> ids = query.Ids.ToGuidList();

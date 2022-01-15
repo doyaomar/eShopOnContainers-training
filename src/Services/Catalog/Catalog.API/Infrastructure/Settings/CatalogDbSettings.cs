@@ -1,4 +1,4 @@
-namespace Catalog.API.Infrastructure;
+namespace Catalog.API.Infrastructure.Settings;
 
 public class CatalogDbSettings
 {
