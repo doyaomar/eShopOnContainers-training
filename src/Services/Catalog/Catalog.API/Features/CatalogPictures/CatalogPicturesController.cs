@@ -15,6 +15,7 @@ public class CatalogPicturesController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
+    // GET api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6/picture
     [HttpGet("items/{id:Guid}/picture")]
     [ActionName(nameof(DownloadCatalogItemPictureAsync))]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -28,6 +29,7 @@ public class CatalogPicturesController : ControllerBase
         return picture is null ? NotFound() : File(picture.Buffer, picture.ContentType);
     }
 
+    // POST api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6/picture
     [HttpPost("items/{id:Guid}/picture")]
     [ActionName(nameof(UploadCatalogItemPictureAsync))]
     [ProducesResponseType(StatusCodes.Status201Created)]

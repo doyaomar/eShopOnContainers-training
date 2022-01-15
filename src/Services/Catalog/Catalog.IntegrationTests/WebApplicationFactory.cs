@@ -2,7 +2,6 @@ namespace Catalog.IntegrationTests;
 
 public class WebApplicationFactory : WebApplicationFactory<Program>, IDisposable
 {
-
     private MongoDbRunner _runner = default!;
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
