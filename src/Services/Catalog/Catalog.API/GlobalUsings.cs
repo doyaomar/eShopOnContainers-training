@@ -8,6 +8,7 @@ global using Catalog.API.Features.Dtos;
 global using Catalog.API.Features.Models;
 global using Catalog.API.Infrastructure;
 global using Catalog.API.Infrastructure.Services;
+global using Catalog.API.Infrastructure.Settings;
 global using Catalog.API.Interfaces;
 global using Catalog.API.Models;
 global using FluentValidation;
@@ -23,5 +24,4 @@ global using MongoDB.Bson.Serialization;
 global using MongoDB.Bson.Serialization.Conventions;
 global using MongoDB.Bson.Serialization.Serializers;
 global using MongoDB.Driver;
-
 

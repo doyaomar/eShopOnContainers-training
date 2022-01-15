@@ -11,7 +11,7 @@ global using Catalog.API.Features.CatalogPictures;
 global using Catalog.API.Features.CatalogTypes;
 global using Catalog.API.Features.Dtos;
 global using Catalog.API.Features.Models;
-global using Catalog.API.Infrastructure;
+global using Catalog.API.Infrastructure.Settings;
 global using Catalog.API.Interfaces;
 global using Catalog.API.Models;
 global using Catalog.UnitTests.Fakes;
@@ -25,3 +25,4 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
 global using Moq;
 global using Xunit;
+
