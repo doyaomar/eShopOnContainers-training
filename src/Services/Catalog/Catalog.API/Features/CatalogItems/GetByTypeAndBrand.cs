@@ -2,14 +2,14 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class GetByTypeAndBrand
 {
-    public class Query : Pagination, IRequest<PaginatedDto<CatalogItemDto>>
+    public class Query : Pagination, IRequest<PaginatedCollection<CatalogItemDto>>
     {
         public Guid CatalogTypeId { get; set; }
 
         public Guid? CatalogBrandId { get; set; } = default;
     }
 
-    public class Handler : IRequestHandler<Query, PaginatedDto<CatalogItemDto>>
+    public class Handler : IRequestHandler<Query, PaginatedCollection<CatalogItemDto>>
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ public class GetByTypeAndBrand
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<PaginatedDto<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
+        public async Task<PaginatedCollection<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
             (IReadOnlyCollection<CatalogItem> Items, long Count) paginatedItems = await _db.FindByTypeAndBrandAsync(

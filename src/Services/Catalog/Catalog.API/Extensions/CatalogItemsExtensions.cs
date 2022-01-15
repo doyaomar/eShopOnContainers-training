@@ -12,11 +12,11 @@ internal static class CatalogItemsExtensions
     internal static IEnumerable<string> ToStringList(this string ids)
     => ids?.Split(Separator) ?? Enumerable.Empty<string>();
 
-    internal static PaginatedDto<CatalogItemDto> ToPaginatedDto(
+    internal static PaginatedCollection<CatalogItemDto> ToPaginatedDto(
         this IMapper mapper,
         (IReadOnlyCollection<CatalogItem> Items, long Count) paginatedItems,
         int pageIndex,
-        int pageSize) => new PaginatedDto<CatalogItemDto>(mapper.Map<IReadOnlyCollection<CatalogItemDto>>(paginatedItems.Items))
+        int pageSize) => new PaginatedCollection<CatalogItemDto>(mapper.Map<IReadOnlyCollection<CatalogItemDto>>(paginatedItems.Items))
         {
             Count = paginatedItems.Count,
             PageIndex = pageIndex,

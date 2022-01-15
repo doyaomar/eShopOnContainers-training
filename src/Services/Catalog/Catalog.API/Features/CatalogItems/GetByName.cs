@@ -2,12 +2,12 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class GetByName
 {
-    public class Query : Pagination, IRequest<PaginatedDto<CatalogItemDto>>
+    public class Query : Pagination, IRequest<PaginatedCollection<CatalogItemDto>>
     {
         public string Name { get; set; } = default!;
     }
 
-    public class Handler : IRequestHandler<Query, PaginatedDto<CatalogItemDto>>
+    public class Handler : IRequestHandler<Query, PaginatedCollection<CatalogItemDto>>
     {
         private readonly ICatalogDbContext _db;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ public class GetByName
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<PaginatedDto<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
+        public async Task<PaginatedCollection<CatalogItemDto>> Handle(Query query, CancellationToken cancellationToken)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
             (IReadOnlyCollection<CatalogItem> Items, long Count) paginatedItems = await _db.FindByNameAsync(
