@@ -6,6 +6,7 @@ class MappingProfile : Profile
     {
         CreateMap<Create.Command, CatalogItem>();
         CreateMap<Update.Command, CatalogItem>();
-        CreateMap<CatalogItem, CatalogItemDto>();
+        CreateMap<CatalogItem, CatalogItemDto>()
+        .ForMember(dest => dest.PictureUri, opt => opt.MapFrom<PictureUriResolver>());
     }
 }

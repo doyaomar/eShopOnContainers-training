@@ -70,7 +70,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
             name = "name",
             description = "description",
             price = 10,
-            pictureFileName = "fileName",
+            pictureFileName = "fileName.png",
             catalogBrand = new
             {
                 id = Guid.NewGuid(),
@@ -106,7 +106,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
             name = "name",
             description = "description",
             price = 10,
-            pictureFileName = "fileName",
+            pictureFileName = "fileName.png",
             catalogBrand = new
             {
                 id = Guid.NewGuid(),
@@ -140,7 +140,7 @@ public class CatalogItemsControllerTests : IClassFixture<WebApplicationFactory>
             name = "name",
             description = "description",
             price = 10,
-            pictureFileName = "fileName",
+            pictureFileName = "fileName.png",
             catalogBrand = new
             {
                 id = Guid.NewGuid(),

@@ -1,6 +1,6 @@
 namespace Catalog.API.Extensions;
 
-public static class CatalogItemsExtensions
+internal static class CatalogItemsExtensions
 {
     private const char Separator = ';';
 

@@ -14,9 +14,13 @@ public static class ServicesConfiguration
 
         services
         .AddScoped<IGuidService, GuidService>()
+        .AddScoped<IFileService, FileService>()
         .AddScoped<ICatalogDbContext, CatalogDbContext>()
+        .AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>()
         .AddSingleton<IMongoClient>(_ => new MongoClient(configuration.GetConnectionString(CatalogDbConnectionString)));
 
+        services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+        services.Configure<CatalogSettings>(configuration);
         services.Configure<CatalogDbSettings>(configuration.GetSection(nameof(CatalogDbSettings)));
 
         services.AddAutoMapper(executingAssembly);

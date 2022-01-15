@@ -10,7 +10,7 @@
     "price": {
         "$numberDecimal": "8.5"
     },
-    "pictureFileName": "2.png",
+    "pictureFileName": "CatalogItem_6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -46,7 +46,7 @@
     "price": {
         "$numberDecimal": "8.5"
     },
-    "pictureFileName": "13.png",
+    "pictureFileName": "CatalogItem_8781d5ba-071b-4ab7-b6f6-1bc732594b31.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -82,7 +82,7 @@
     "price": {
         "$numberDecimal": "19.5"
     },
-    "pictureFileName": "1.png",
+    "pictureFileName": "CatalogItem_db02c55c-ea48-419e-86c6-d370f318836a.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -118,7 +118,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "4.png",
+    "pictureFileName": "CatalogItem_6bca9cf2-25dc-447d-bf8e-fb4323ae865d.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -154,7 +154,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "6.png",
+    "pictureFileName": "CatalogItem_de840c29-78d0-4c63-a1c6-108adfe26fa7.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -190,7 +190,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "10.png",
+    "pictureFileName": "CatalogItem_92ae4058-6728-4f28-89ee-e9a4d58e9812.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -226,7 +226,7 @@
     "price": {
         "$numberDecimal": "8.5"
     },
-    "pictureFileName": "11.png",
+    "pictureFileName": "CatalogItem_a5dbe612-4e58-4019-a5dd-2b2b3f38394d.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -262,7 +262,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "9.png",
+    "pictureFileName": "CatalogItem_46202c09-3dd5-4928-a728-f43ac4d3ee32.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -298,7 +298,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "14.png",
+    "pictureFileName": "CatalogItem_3e44cdcb-02c3-4112-a89b-f69e9b343680.png",
     "catalogType": {
         "_id": {
             "$binary": {
@@ -334,7 +334,7 @@
     "price": {
         "$numberDecimal": "12"
     },
-    "pictureFileName": "3.png",
+    "pictureFileName": "CatalogItem_e7b0d68d-e70b-4105-83db-9a1a663d1891.png",
     "catalogType": {
         "_id": {
             "$binary": {

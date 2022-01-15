@@ -4,16 +4,18 @@ public class CreateValidator : AbstractValidator<Create.Command>
 {
     public CreateValidator()
     {
-        RuleFor(command => command).NotNull();
-        RuleFor(command => command.AvailableStock).GreaterThan(default(int));
-        RuleFor(command => command.Description).NotNull().NotEmpty();
-        RuleFor(command => command.Name).NotNull().NotEmpty();
-        RuleFor(command => command.Price).GreaterThan(default(decimal));
-        RuleFor(command => command.CatalogBrand).NotNull();
-        RuleFor(command => command.CatalogType).NotNull();
-        RuleFor(command => command.CatalogBrand!.Id).NotEmpty().When(command => command.CatalogBrand is not null);
-        RuleFor(command => command.CatalogType!.Id).NotEmpty().When(command => command.CatalogType is not null);
-        RuleFor(command => command.CatalogBrand!.Name).NotNull().NotEmpty().When(command => command.CatalogBrand is not null);
-        RuleFor(command => command.CatalogType!.Name).NotNull().NotEmpty().When(command => command.CatalogType is not null);
+        RuleFor(cmd => cmd).NotNull();
+        RuleFor(cmd => cmd.AvailableStock).GreaterThan(default(int));
+        RuleFor(cmd => cmd.Description).NotEmpty();
+        RuleFor(cmd => cmd.Name).NotEmpty();
+        RuleFor(cmd => cmd.PictureFileName).NotEmpty().Must(pic => pic.HasValidExtension())
+        .WithMessage("'{PropertyName}' must end with a valid picture file extension.");
+        RuleFor(cmd => cmd.Price).GreaterThan(default(decimal));
+        RuleFor(cmd => cmd.CatalogBrand).NotNull();
+        RuleFor(cmd => cmd.CatalogType).NotNull();
+        RuleFor(cmd => cmd.CatalogBrand!.Id).NotEmpty().When(cmd => cmd.CatalogBrand is not null);
+        RuleFor(cmd => cmd.CatalogBrand!.Name).NotEmpty().When(cmd => cmd.CatalogBrand is not null);
+        RuleFor(cmd => cmd.CatalogType!.Id).NotEmpty().When(cmd => cmd.CatalogType is not null);
+        RuleFor(cmd => cmd.CatalogType!.Name).NotEmpty().When(cmd => cmd.CatalogType is not null);
     }
 }

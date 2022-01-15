@@ -6,7 +6,7 @@ db.catalogItems.insertMany([
         "name": ".NET Black & White Mug",
         "description": ".NET Black & White Mug",
         "price": Decimal128("8.5"),
-        "pictureFileName": "2.png",
+        "pictureFileName": "CatalogItem_6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a.png",
         "catalogType": {
             "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
             "name": "Mug"
@@ -25,7 +25,7 @@ db.catalogItems.insertMany([
         "name": "Modern .NET Black & White Mug",
         "description": "Modern .NET Black & White Mug",
         "price": Decimal128("8.5"),
-        "pictureFileName": "13.png",
+        "pictureFileName": "CatalogItem_8781d5ba-071b-4ab7-b6f6-1bc732594b31.png",
         "catalogType": {
             "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
             "name": "Mug"
@@ -44,7 +44,7 @@ db.catalogItems.insertMany([
         "name": ".NET Bot Black Hoodie",
         "description": ".NET Bot Black Hoodie, and more",
         "price": Decimal128("19.5"),
-        "pictureFileName": "1.png",
+        "pictureFileName": "CatalogItem_db02c55c-ea48-419e-86c6-d370f318836a.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -63,7 +63,7 @@ db.catalogItems.insertMany([
         "name": ".NET Foundation T-shirt",
         "description": ".NET Foundation T-shirt",
         "price": Decimal128("12"),
-        "pictureFileName": "4.png",
+        "pictureFileName": "CatalogItem_6bca9cf2-25dc-447d-bf8e-fb4323ae865d.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -82,7 +82,7 @@ db.catalogItems.insertMany([
         "name": ".NET Blue Hoodie",
         "description": ".NET Blue Hoodie",
         "price": Decimal128("12"),
-        "pictureFileName": "6.png",
+        "pictureFileName": "CatalogItem_de840c29-78d0-4c63-a1c6-108adfe26fa7.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -101,7 +101,7 @@ db.catalogItems.insertMany([
         "name": ".NET Foundation Pin",
         "description": ".NET Foundation Pin",
         "price": Decimal128("12"),
-        "pictureFileName": "10.png",
+        "pictureFileName": "CatalogItem_92ae4058-6728-4f28-89ee-e9a4d58e9812.png",
         "catalogType": {
             "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
             "name": "Pin"
@@ -120,7 +120,7 @@ db.catalogItems.insertMany([
         "name": "Cup<T> Pin",
         "description": "Cup<T> Pin",
         "price": Decimal128("8.5"),
-        "pictureFileName": "11.png",
+        "pictureFileName": "CatalogItem_a5dbe612-4e58-4019-a5dd-2b2b3f38394d.png",
         "catalogType": {
             "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
             "name": "Pin"
@@ -139,7 +139,7 @@ db.catalogItems.insertMany([
         "name": "Cup<T> White Mug",
         "description": "Cup<T> White Mug",
         "price": Decimal128("12"),
-        "pictureFileName": "9.png",
+        "pictureFileName": "CatalogItem_46202c09-3dd5-4928-a728-f43ac4d3ee32.png",
         "catalogType": {
             "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
             "name": "Mug"
@@ -158,7 +158,7 @@ db.catalogItems.insertMany([
         "name": "Modern Cup<T> White Mug",
         "description": "Modern Cup<T> White Mug",
         "price": Decimal128("12"),
-        "pictureFileName": "14.png",
+        "pictureFileName": "CatalogItem_3e44cdcb-02c3-4112-a89b-f69e9b343680.png",
         "catalogType": {
             "_id": UUID("1cad5651-8273-4bb5-8e36-aa6abf1bcd46"),
             "name": "Mug"
@@ -177,7 +177,7 @@ db.catalogItems.insertMany([
         "name": "Prism White T-Shirt",
         "description": "Prism White T-Shirt",
         "price": Decimal128("12"),
-        "pictureFileName": "3.png",
+        "pictureFileName": "CatalogItem_e7b0d68d-e70b-4105-83db-9a1a663d1891.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -196,7 +196,7 @@ db.catalogItems.insertMany([
         "name": "Roslyn Red T-Shirt",
         "description": "Roslyn Red T-Shirt",
         "price": Decimal128("12"),
-        "pictureFileName": "7.png",
+        "pictureFileName": "CatalogItem_6f6fc428-63ca-458d-a4c7-4fab7e906b90.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -215,7 +215,7 @@ db.catalogItems.insertMany([
         "name": "Kudu Purple Hoodie",
         "description": "Kudu Purple Hoodie",
         "price": Decimal128("8.5"),
-        "pictureFileName": "8.png",
+        "pictureFileName": "CatalogItem_ce92ecf5-15ec-403e-b379-75ee5509e9d1.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -234,7 +234,7 @@ db.catalogItems.insertMany([
         "name": "Prism White TShirt",
         "description": "Prism White TShirt",
         "price": Decimal128("12"),
-        "pictureFileName": "12.png",
+        "pictureFileName": "CatalogItem_73a16dde-2987-438a-a7e7-4c5d3fe9fe67.png",
         "catalogType": {
             "_id": UUID("6f6a7ee3-81df-4fc2-8b01-edacbd03a25c"),
             "name": "T-Shirt"
@@ -253,7 +253,7 @@ db.catalogItems.insertMany([
         "name": "Roslyn Red Pin",
         "description": "Roslyn Red Pin",
         "price": Decimal128("8.5"),
-        "pictureFileName": "5.png",
+        "pictureFileName": "CatalogItem_1119bf13-851f-47a1-a759-44d3fec805b6.png",
         "catalogType": {
             "_id": UUID("32488b09-fdfc-4fa0-affc-daee7d017818"),
             "name": "Pin"

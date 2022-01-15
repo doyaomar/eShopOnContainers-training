@@ -1,4 +1,4 @@
-namespace Catalog.API.Controllers;
+namespace Catalog.API.Features.CatalogTypes;
 
 [ApiController]
 [ApiVersion("1.0")]
