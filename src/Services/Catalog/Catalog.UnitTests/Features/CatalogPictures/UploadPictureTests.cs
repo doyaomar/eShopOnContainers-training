@@ -36,8 +36,9 @@ public class UploadPictureTests
         var fileStreamStub = new Mock<FileStream>(pathStub, FileMode.Open);
         var catalogItemStub = CatalogItemFakes.GetCatalogItemFake();
         _dbStub.Setup(db => db.FindAsync(validProductIdStub, CancellationToken.None)).ReturnsAsync(catalogItemStub);
-        _fileServiceStub.Setup(svc => svc.PathCombine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(pathStub);
         _fileServiceStub.Setup(svc => svc.PathGetExtension(It.IsAny<string>())).Returns(".png");
+        _fileServiceStub.Setup(svc => svc.PathGetExtension(It.IsAny<string>())).Returns(".png");
+        _fileServiceStub.Setup(svc => svc.PathCombine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(pathStub);
         _fileServiceStub.Setup(svc => svc.FileCreate(It.IsAny<string>())).Returns(fileStreamStub.Object);
 
         var actual = await _handler.Handle(validCommandStub, CancellationToken.None);
