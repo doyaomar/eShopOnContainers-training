@@ -11,6 +11,7 @@ public class DeleteTests
         _handler = new(_dbStub.Object);
     }
 
+    [Fact]
     public async Task Handle_WhenRequestIsValidAndProductExists_ThenReturnsTrue()
     {
         var validProductIdMock = Guid.NewGuid();
@@ -24,6 +25,7 @@ public class DeleteTests
         actual.Should().BeTrue();
     }
 
+    [Fact]
     public async Task Handle_WhenRequestIsValidAndProductDoesntExist_ThenReturnsFalse()
     {
         var validProductIdMock = Guid.NewGuid();
