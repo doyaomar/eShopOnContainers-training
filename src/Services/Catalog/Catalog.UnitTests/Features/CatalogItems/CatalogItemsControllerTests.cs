@@ -15,54 +15,65 @@ public class CatalogItemsControllerTests
     // CreateProductAsync Tests
 
     [Fact]
-    public async Task CreateProductAsync_WhenCreateRequestIsValidAndProductExists_ThenReturnsCreatedAtActionResult()
+    public async Task CreateProductAsync_WhenCreateCommandtIsValidAndProductExists_ThenReturnsCreatedAtActionResult()
     {
-        var validRequestStub = CatalogItemFakes.GetCreateCommandFake();
+        var validCommandtStub = CatalogItemFakes.GetCreateCommandFake();
         var validProductIdMock = Guid.NewGuid();
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(validProductIdMock);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(validProductIdMock);
 
-        var actual = await _catalogItemsController.CreateCatalogItemAsync(validRequestStub);
+        var actual = await _catalogItemsController.CreateCatalogItemAsync(validCommandtStub);
 
         actual.Should().BeOfType<CreatedAtActionResult>();
         (actual as CreatedAtActionResult)!.ActionName.Should().Be("GetCatalogItemAsync");
         (actual as CreatedAtActionResult)!.RouteValues!.Values.Should().Contain(validProductIdMock);
     }
 
+    [Fact]
+    public async Task CreateProductAsync_WhenCreateCommandtIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidCommandtStub = CatalogItemFakes.GetCreateCommandInvalidFake();
+        _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).Throws(new ValidationException("Validation Error"));
+
+        var actual = await _catalogItemsController.CreateCatalogItemAsync(invalidCommandtStub);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
+    }
+
     // UpdateCatalogItemAsync Tests
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateRequestIsValidAndProductExists_ThenReturnsNoContentResult()
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsValidAndProductExists_ThenReturnsNoContentResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
+        var validCommandtStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
         var updatedStub = true;
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(updatedStub);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(updatedStub);
 
-        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, validRequestStub);
+        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, validCommandtStub);
 
         actual.Should().BeOfType<NoContentResult>();
     }
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateRequestIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
+        var validCommandtStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
         var updatedStub = false;
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(updatedStub);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(updatedStub);
 
-        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, validRequestStub);
+        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, validCommandtStub);
 
         actual.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateRequestIsNotValid_ThenReturnsBadRequestResult()
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsNotValid_ThenReturnsBadRequestResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var invalidRequestStub = CatalogItemFakes.GetUpdateCommandFake(Guid.NewGuid());
+        var invalidCommandtStub = CatalogItemFakes.GetUpdateCommandFake(Guid.NewGuid());
 
-        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, invalidRequestStub);
+        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, invalidCommandtStub);
 
         actual.Should().BeOfType<BadRequestResult>();
     }
@@ -70,27 +81,27 @@ public class CatalogItemsControllerTests
     // DeleteCatalogItemAsync Tests
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteRequestIsValidAndProductExists_ThenReturnsNoContentResult()
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsValidAndProductExists_ThenReturnsNoContentResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = new Delete.Command(validProductIdStub);
+        var validCommandtStub = new Delete.Command(validProductIdStub);
         var deletedStub = true;
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(deletedStub);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(deletedStub);
 
-        var actual = await _catalogItemsController.DeleteCatalogItemAsync(validRequestStub);
+        var actual = await _catalogItemsController.DeleteCatalogItemAsync(validCommandtStub);
 
         actual.Should().BeOfType<NoContentResult>();
     }
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteRequestIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = new Delete.Command(validProductIdStub);
+        var validCommandtStub = new Delete.Command(validProductIdStub);
         var deletedStub = false;
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(deletedStub);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(deletedStub);
 
-        var actual = await _catalogItemsController.DeleteCatalogItemAsync(validRequestStub);
+        var actual = await _catalogItemsController.DeleteCatalogItemAsync(validCommandtStub);
 
         actual.Should().BeOfType<NotFoundResult>();
     }
@@ -101,11 +112,11 @@ public class CatalogItemsControllerTests
     public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductExists_ThenReturnsOkObjectResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = new GetById.Query(validProductIdStub);
+        var validCommandtStub = new GetById.Query(validProductIdStub);
         var catalogItemDtoMock = CatalogItemFakes.GetCatalogItemDtoFake(validProductIdStub);
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(catalogItemDtoMock);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(catalogItemDtoMock);
 
-        var actual = await _catalogItemsController.GetCatalogItemAsync(validRequestStub, CancellationToken.None);
+        var actual = await _catalogItemsController.GetCatalogItemAsync(validCommandtStub, CancellationToken.None);
 
         actual.Result.Should().BeOfType<OkObjectResult>();
         ((actual.Result as OkObjectResult)!.Value as CatalogItemDto)!.Id.Should().Be(catalogItemDtoMock.Id);
@@ -116,11 +127,11 @@ public class CatalogItemsControllerTests
     public async Task GetCatalogItemAsync_WhenQueryIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
-        var validRequestStub = new GetById.Query(validProductIdStub);
+        var validCommandtStub = new GetById.Query(validProductIdStub);
         CatalogItemDto invalidCatalogItemDtoStub = null!;
-        _mediatorStub.Setup(mediator => mediator.Send(validRequestStub, CancellationToken.None)).ReturnsAsync(invalidCatalogItemDtoStub);
+        _mediatorStub.Setup(mediator => mediator.Send(validCommandtStub, CancellationToken.None)).ReturnsAsync(invalidCatalogItemDtoStub);
 
-        var actual = await _catalogItemsController.GetCatalogItemAsync(validRequestStub, CancellationToken.None);
+        var actual = await _catalogItemsController.GetCatalogItemAsync(validCommandtStub, CancellationToken.None);
 
         actual.Result.Should().BeOfType<NotFoundResult>();
     }
