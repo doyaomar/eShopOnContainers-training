@@ -6,7 +6,6 @@ public class CreateValidator : AbstractValidator<Create.Command>
 
     public CreateValidator()
     {
-        RuleFor(cmd => cmd).NotNull();
         RuleFor(cmd => cmd.AvailableStock).GreaterThan(default(int));
         RuleFor(cmd => cmd.Description).NotEmpty();
         RuleFor(cmd => cmd.Name).NotEmpty();

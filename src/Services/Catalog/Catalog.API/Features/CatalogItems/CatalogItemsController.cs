@@ -28,7 +28,7 @@ public class CatalogItemsController : ControllerBase
         {
             id = await _mediator.Send(command);
         }
-        catch (ValidationException ex)
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
         {
             return BadRequest(ex.Message);
         }
@@ -62,7 +62,16 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteCatalogItemAsync([FromRoute] Delete.Command command)
     {
-        bool deleted = await _mediator.Send(command);
+        bool deleted;
+
+        try
+        {
+            deleted = await _mediator.Send(command);
+        }
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
 
         return deleted ? NoContent() : NotFound();
     }

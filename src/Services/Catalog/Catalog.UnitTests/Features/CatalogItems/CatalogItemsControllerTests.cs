@@ -2,8 +2,8 @@ namespace Catalog.UnitTests.Features.CatalogItems;
 
 public class CatalogItemsControllerTests
 {
-    readonly CatalogItemsController _catalogItemsController;
-    readonly Mock<IMediator> _mediatorStub;
+    private readonly CatalogItemsController _catalogItemsController;
+    private readonly Mock<IMediator> _mediatorStub;
 
     public CatalogItemsControllerTests()
     {
@@ -91,6 +91,30 @@ public class CatalogItemsControllerTests
         var actual = await _catalogItemsController.DeleteCatalogItemAsync(validCommandtStub);
 
         actual.Should().BeOfType<NoContentResult>();
+    }
+
+    [Fact]
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidProductIdStub = Guid.Empty;
+        var invalidCommandtStub = new Delete.Command(invalidProductIdStub);
+        _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).Throws(new ValidationException("Validation Error"));
+
+        var actual = await _catalogItemsController.DeleteCatalogItemAsync(invalidCommandtStub);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
+    }
+
+    [Fact]
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsNull_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidProductIdStub = Guid.Empty;
+        var invalidCommandtStub = new Delete.Command(invalidProductIdStub);
+        _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).Throws(new ArgumentNullException(nameof(Delete.Command)));
+
+        var actual = await _catalogItemsController.DeleteCatalogItemAsync(invalidCommandtStub);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
     }
 
     [Fact]
