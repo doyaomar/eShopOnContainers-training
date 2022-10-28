@@ -5,12 +5,14 @@ public class GetAllTests
     readonly Mock<ICatalogDbContext> _dbStub;
     readonly Mock<IMapper> _mapperStub;
     readonly GetAll.Handler _handler;
+    private readonly IValidator<GetAll.Query> _validator;
 
     public GetAllTests()
     {
         _mapperStub = new();
         _dbStub = new();
-        _handler = new(_dbStub.Object, _mapperStub.Object);
+        _validator = new GetAllValidator();
+        _handler = new(_dbStub.Object, _mapperStub.Object, _validator);
     }
 
     [Fact]

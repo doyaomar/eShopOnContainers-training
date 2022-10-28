@@ -2,13 +2,16 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class GetAllValidator : AbstractValidator<GetAll.Query>
 {
+    private const string IdsErrorMessage = "'{PropertyName}' must contain valid Guids separated by ';'.";
+    private const string IdErrorMessage = "'{PropertyName}' must contain valid Guids separated by ';'.";
+
     public GetAllValidator()
     {
         RuleFor(query => query.PageIndex).GreaterThanOrEqualTo(default(int));
         RuleFor(query => query.PageSize).GreaterThan(default(int));
         Transform(query => query.Ids, StringToGuidList)
-            .NotEmpty().WithMessage("'{PropertyName}' must contain valid Guids separated by ';'.")
-            .ForEach(id => id.NotEmpty().WithMessage("'{PropertyName}' must contain valid Guids separated by ';'."))
+            .NotEmpty().WithMessage(IdsErrorMessage)
+            .ForEach(id => id.NotEmpty().WithMessage(IdErrorMessage))
             .When(query => !string.IsNullOrWhiteSpace(query.Ids));
     }
 
