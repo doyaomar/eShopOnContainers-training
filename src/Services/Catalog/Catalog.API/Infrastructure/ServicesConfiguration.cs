@@ -3,7 +3,7 @@ namespace Catalog.API.Infrastructure;
 public static class ServicesConfiguration
 {
     private const string CatalogDbConnectionString = "CatalogDb";
-    private const string SelfName = "self";
+    private const string DefaultHealthCheck = "self";
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
@@ -12,17 +12,20 @@ public static class ServicesConfiguration
         .AddScoped<IFileService, FileService>()
         .AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddLibraries(this IServiceCollection services)
+    {
         var executingAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(executingAssembly);
-
-        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
+        services.AddValidatorsFromAssembly(executingAssembly);
         services.AddMediatR(executingAssembly);
 
         return services;
     }
 
-    public static IServiceCollection AddApplicationConfigurations(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services
         .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true)
@@ -47,7 +50,7 @@ public static class ServicesConfiguration
     {
         services
         .AddHealthChecks()
-        .AddCheck(SelfName, () => HealthCheckResult.Healthy())
+        .AddCheck(DefaultHealthCheck, () => HealthCheckResult.Healthy())
         .AddMongoDb(configuration.GetConnectionString(CatalogDbConnectionString));
 
         return services;
