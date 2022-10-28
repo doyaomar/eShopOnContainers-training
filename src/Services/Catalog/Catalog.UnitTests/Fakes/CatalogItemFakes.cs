@@ -6,6 +6,25 @@ internal static class CatalogItemFakes
     {
         Name = "name",
         PictureFileName = "pic.png",
+        AvailableStock = 1,
+        Description = "description",
+        Price = 1,
+        CatalogBrand = new CatalogBrandDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogBrandName"
+        },
+        CatalogType = new CatalogTypeDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogTypeName"
+        }
+    };
+
+    internal static Create.Command GetCreateCommandInvalidFake() => new()
+    {
+        Name = "name",
+        PictureFileName = "pic.png",
         CatalogBrand = new CatalogBrandDto
         {
             Id = Guid.NewGuid(),

@@ -22,7 +22,16 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateCatalogItemAsync([FromBody] Create.Command command)
     {
-        Guid id = await _mediator.Send(command);
+        Guid id;
+
+        try
+        {
+            id = await _mediator.Send(command);
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
         return CreatedAtAction(nameof(GetCatalogItemAsync), new { id = id }, null);
     }

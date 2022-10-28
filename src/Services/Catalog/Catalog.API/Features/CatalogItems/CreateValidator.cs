@@ -2,6 +2,8 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class CreateValidator : AbstractValidator<Create.Command>
 {
+    private const string PictureFileNameErrorMessage = "'{PropertyName}' must end with a valid picture file extension.";
+
     public CreateValidator()
     {
         RuleFor(cmd => cmd).NotNull();
@@ -9,7 +11,7 @@ public class CreateValidator : AbstractValidator<Create.Command>
         RuleFor(cmd => cmd.Description).NotEmpty();
         RuleFor(cmd => cmd.Name).NotEmpty();
         RuleFor(cmd => cmd.PictureFileName).NotEmpty().Must(pic => pic.HasValidExtension())
-        .WithMessage("'{PropertyName}' must end with a valid picture file extension.");
+        .WithMessage(PictureFileNameErrorMessage);
         RuleFor(cmd => cmd.Price).GreaterThan(default(decimal));
         RuleFor(cmd => cmd.CatalogBrand).NotNull();
         RuleFor(cmd => cmd.CatalogType).NotNull();
