@@ -36,6 +36,17 @@ public class CatalogPicturesControllerTests
         actual.Should().BeOfType<NotFoundResult>();
     }
 
+    [Fact]
+    public async Task DownloadCatalogItemPictureAsync_WhenQueryIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidQueryStub = new DownloadPicture.Query(Guid.Empty);
+        _mediatorStub.Setup(m => m.Send(invalidQueryStub, CancellationToken.None)).ThrowsAsync(new ValidationException("invalid error"));
+
+        var actual = await _catalogPicturesController.DownloadCatalogItemPictureAsync(invalidQueryStub, CancellationToken.None);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
+    }
+
     // UploadCatalogItemPictureAsync Tests
 
     [Fact]
@@ -44,7 +55,7 @@ public class CatalogPicturesControllerTests
         var validCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(Guid.NewGuid());
         _mediatorStub.Setup(m => m.Send(validCommandStub, CancellationToken.None)).ReturnsAsync(true);
 
-        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub, CancellationToken.None);
+        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub);
 
         actual.Should().BeOfType<CreatedAtActionResult>();
     }
@@ -55,7 +66,7 @@ public class CatalogPicturesControllerTests
         var validCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(Guid.NewGuid());
         _mediatorStub.Setup(m => m.Send(validCommandStub, CancellationToken.None)).ReturnsAsync(false);
 
-        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub, CancellationToken.None);
+        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub);
 
         actual.Should().BeOfType<NotFoundResult>();
     }

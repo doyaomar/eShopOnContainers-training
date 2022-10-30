@@ -24,9 +24,16 @@ public class CatalogPicturesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DownloadCatalogItemPictureAsync([FromRoute] DownloadPicture.Query query, CancellationToken cancellationToken)
     {
-        var picture = await _mediator.Send(query, cancellationToken);
+        try
+        {
+            PictureFile? picture = await _mediator.Send(query, cancellationToken);
 
-        return picture is null ? NotFound() : File(picture.Buffer, picture.ContentType);
+            return picture is null ? NotFound() : File(picture.Buffer, picture.ContentType);
+        }
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // POST api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6/picture
@@ -36,9 +43,9 @@ public class CatalogPicturesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UploadCatalogItemPictureAsync(UploadPicture.Command command, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadCatalogItemPictureAsync(UploadPicture.Command command)
     {
-        var uploaded = await _mediator.Send(command, cancellationToken);
+        var uploaded = await _mediator.Send(command);
 
         return uploaded ? CreatedAtAction(nameof(DownloadCatalogItemPictureAsync), new { id = command.Id }, null) : NotFound();
     }

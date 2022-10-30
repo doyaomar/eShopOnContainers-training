@@ -118,18 +118,6 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsNull_ThenReturnsBadRequestObjectResult()
-    {
-        var invalidProductIdStub = Guid.Empty;
-        var invalidCommandtStub = new Delete.Command(invalidProductIdStub);
-        _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).Throws(new ArgumentNullException(nameof(Delete.Command)));
-
-        var actual = await _catalogItemsController.DeleteCatalogItemAsync(invalidCommandtStub);
-
-        actual.Should().BeOfType<BadRequestObjectResult>();
-    }
-
-    [Fact]
     public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
