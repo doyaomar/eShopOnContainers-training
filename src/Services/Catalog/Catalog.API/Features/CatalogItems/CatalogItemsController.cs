@@ -22,18 +22,16 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateCatalogItemAsync([FromBody] Create.Command command)
     {
-        Guid id;
-
         try
         {
-            id = await _mediator.Send(command);
+            Guid id = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetCatalogItemAsync), new { id = id }, null);
         }
         catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
         {
             return BadRequest(ex.Message);
         }
-
-        return CreatedAtAction(nameof(GetCatalogItemAsync), new { id = id }, null);
     }
 
     // PUT api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -62,18 +60,16 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteCatalogItemAsync([FromRoute] Delete.Command command)
     {
-        bool deleted;
-
         try
         {
-            deleted = await _mediator.Send(command);
+            bool deleted = await _mediator.Send(command);
+
+            return deleted ? NoContent() : NotFound();
         }
         catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
         {
             return BadRequest(ex.Message);
         }
-
-        return deleted ? NoContent() : NotFound();
     }
 
     // GET api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -85,9 +81,16 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<CatalogItemDto>> GetCatalogItemAsync([FromRoute] GetById.Query query, CancellationToken cancellationToken)
     {
-        CatalogItemDto? item = await _mediator.Send(query, cancellationToken);
+        try
+        {
+            CatalogItemDto? item = await _mediator.Send(query, cancellationToken);
 
-        return item is null ? NotFound() : Ok(item);
+            return item is null ? NotFound() : Ok(item);
+        }
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // GET api/v1/[controller]/items?Ids=6f11c1cc-42ff-4bfc-904d-2c5c7e5b546a%3B8781d5ba-071b-4ab7-b6f6-1bc732594b31&PageIndex=0&PageSize=10
