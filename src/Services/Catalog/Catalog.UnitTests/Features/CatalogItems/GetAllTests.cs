@@ -2,9 +2,9 @@ namespace Catalog.UnitTests.Features.CatalogItems;
 
 public class GetAllTests
 {
-    readonly Mock<ICatalogDbContext> _dbStub;
-    readonly Mock<IMapper> _mapperStub;
-    readonly GetAll.Handler _handler;
+    private readonly Mock<ICatalogDbContext> _dbStub;
+    private readonly Mock<IMapper> _mapperStub;
+    private readonly GetAll.Handler _handler;
     private readonly IValidator<GetAll.Query> _validator;
 
     public GetAllTests()
@@ -34,5 +34,16 @@ public class GetAllTests
         actual.Should().NotBeNull();
         actual.Count.Should().Be(2);
         actual.Items.Should().NotBeNullOrEmpty().And.Equal(itemsDtoMock);
+    }
+
+    [Fact]
+    public async Task Handle_WhenQueryIsNotValid_ThenThrowsValidationException()
+    {
+        var idsStub = new List<Guid> { Guid.NewGuid(), Guid.Empty };
+        var invalidQueryStub = CatalogItemFakes.GetGetAllQueryFake(string.Join(';', idsStub));
+
+        Func<Task> actual = async () => await _handler.Handle(invalidQueryStub, CancellationToken.None);
+
+        await actual.Should().ThrowAsync<ValidationException>();
     }
 }
