@@ -7,6 +7,6 @@ public class GetByTypeAndBrandValidator : AbstractValidator<GetByTypeAndBrand.Qu
         RuleFor(query => query.PageIndex).GreaterThanOrEqualTo(default(int));
         RuleFor(query => query.PageSize).GreaterThan(default(int));
         RuleFor(query => query.CatalogTypeId).NotEmpty();
-        RuleFor(query => query.CatalogBrandId).NotEqual(Guid.Empty).When(query => query.CatalogBrandId.HasValue);
+        RuleFor(query => query.CatalogBrandId).NotEmpty().When(query => query.CatalogBrandId.HasValue);
     }
 }

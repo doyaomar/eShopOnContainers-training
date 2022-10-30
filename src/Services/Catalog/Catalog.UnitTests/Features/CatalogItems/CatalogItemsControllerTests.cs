@@ -219,6 +219,17 @@ public class CatalogItemsControllerTests
         ((actual.Result as OkObjectResult)!.Value as PaginatedCollection<CatalogItemDto>)!.Items.Should().Equal(itemsMock);
     }
 
+    [Fact]
+    public async Task GetCatalogItemsByTypeAndBrandAsync_WhenQueryIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidQueryStub = CatalogItemFakes.GetByTypeAndBrandQueryFake(Guid.Empty, Guid.Empty);
+        _mediatorStub.Setup(mediator => mediator.Send(invalidQueryStub, CancellationToken.None)).ThrowsAsync(new ValidationException("invalid error"));
+
+        var actual = await _catalogItemsController.GetCatalogItemsByTypeAndBrandAsync(invalidQueryStub, CancellationToken.None);
+
+        actual.Result.Should().BeOfType<BadRequestObjectResult>();
+    }
+
     // GetCatalogItemsByBrandAsync Tests
 
     [Fact]
