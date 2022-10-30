@@ -145,5 +145,14 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<PaginatedCollection<CatalogItemDto>>> GetCatalogItemsByNameAsync([FromRoute] GetByName.Query query, CancellationToken cancellationToken)
-    => Ok(await _mediator.Send(query, cancellationToken));
+    {
+        try
+        {
+            return Ok(await _mediator.Send(query, cancellationToken));
+        }
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
