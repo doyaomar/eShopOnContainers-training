@@ -6,6 +6,7 @@ namespace Catalog.API.Features.CatalogItems;
 [Route("api/v{version:apiVersion}/catalog")]
 public class CatalogItemsController : ControllerBase
 {
+    private const string IdErrorMessage = "'{{{0}}}' must be valid and equal to the command id.";
     private readonly ILogger<CatalogItemsController> _logger;
     private readonly IMediator _mediator;
 
@@ -42,14 +43,21 @@ public class CatalogItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateCatalogItemAsync([FromRoute] Guid id, [FromBody] Update.Command command)
     {
-        if (id.Equals(Guid.Empty) || !id.Equals(command?.Id))
+        try
         {
-            return BadRequest();
+            if (id.Equals(Guid.Empty) || !id.Equals(command?.Id))
+            {
+                throw new ValidationException(string.Format(IdErrorMessage, nameof(id)));
+            }
+
+            bool Updated = await _mediator.Send(command);
+
+            return Updated ? NoContent() : NotFound();
         }
-
-        bool Updated = await _mediator.Send(command);
-
-        return Updated ? NoContent() : NotFound();
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // DELETE api/v1/[controller]/items/3fa85f64-5717-4562-b3fc-2c963f66afa6

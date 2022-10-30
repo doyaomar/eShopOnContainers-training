@@ -15,7 +15,7 @@ public class CatalogItemsControllerTests
     // CreateProductAsync Tests
 
     [Fact]
-    public async Task CreateProductAsync_WhenCreateCommandtIsValidAndProductExists_ThenReturnsCreatedAtActionResult()
+    public async Task CreateProductAsync_WhenCreateCommandIsValidAndProductExists_ThenReturnsCreatedAtActionResult()
     {
         var validCommandtStub = CatalogItemFakes.GetCreateCommandFake();
         var validProductIdMock = Guid.NewGuid();
@@ -29,7 +29,7 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task CreateProductAsync_WhenCreateCommandtIsNotValid_ThenReturnsBadRequestObjectResult()
+    public async Task CreateProductAsync_WhenCreateCommandIsNotValid_ThenReturnsBadRequestObjectResult()
     {
         var invalidCommandtStub = CatalogItemFakes.GetCreateCommandInvalidFake();
         _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).Throws(new ValidationException("Validation Error"));
@@ -42,7 +42,7 @@ public class CatalogItemsControllerTests
     // UpdateCatalogItemAsync Tests
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsValidAndProductExists_ThenReturnsNoContentResult()
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandIsValidAndProductExists_ThenReturnsNoContentResult()
     {
         var validProductIdStub = Guid.NewGuid();
         var validCommandtStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
@@ -55,7 +55,7 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
         var validCommandtStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
@@ -68,20 +68,32 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task UpdateCatalogItemAsync_WhenUpdateCommandtIsNotValid_ThenReturnsBadRequestResult()
+    public async Task UpdateCatalogItemAsync_WhenIdsAreNotEqual_ThenReturnsBadRequestObjectResult()
     {
         var validProductIdStub = Guid.NewGuid();
         var invalidCommandtStub = CatalogItemFakes.GetUpdateCommandFake(Guid.NewGuid());
 
         var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, invalidCommandtStub);
 
-        actual.Should().BeOfType<BadRequestResult>();
+        actual.Should().BeOfType<BadRequestObjectResult>();
+    }
+
+    [Fact]
+    public async Task UpdateCatalogItemAsync_WhenUpdateCommandIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var validProductIdStub = Guid.NewGuid();
+        var invalidCommandtStub = CatalogItemFakes.GetUpdateCommandFake(validProductIdStub);
+        _mediatorStub.Setup(mediator => mediator.Send(invalidCommandtStub, CancellationToken.None)).ThrowsAsync(new ValidationException("invalid error"));
+
+        var actual = await _catalogItemsController.UpdateCatalogItemAsync(validProductIdStub, invalidCommandtStub);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
     }
 
     // DeleteCatalogItemAsync Tests
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsValidAndProductExists_ThenReturnsNoContentResult()
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsValidAndProductExists_ThenReturnsNoContentResult()
     {
         var validProductIdStub = Guid.NewGuid();
         var validCommandtStub = new Delete.Command(validProductIdStub);
@@ -94,7 +106,7 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsNotValid_ThenReturnsBadRequestObjectResult()
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsNotValid_ThenReturnsBadRequestObjectResult()
     {
         var invalidProductIdStub = Guid.Empty;
         var invalidCommandtStub = new Delete.Command(invalidProductIdStub);
@@ -118,7 +130,7 @@ public class CatalogItemsControllerTests
     }
 
     [Fact]
-    public async Task DeleteCatalogItemAsync_WhenDeleteCommandtIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
+    public async Task DeleteCatalogItemAsync_WhenDeleteCommandIsValidAndProductDoesntExist_ThenReturnsNotFoundResult()
     {
         var validProductIdStub = Guid.NewGuid();
         var validCommandtStub = new Delete.Command(validProductIdStub);
