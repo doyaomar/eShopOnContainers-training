@@ -1,6 +1,6 @@
 namespace Catalog.API.Features.CatalogPictures;
 
-public class UploadPicture
+public static class UploadPicture
 {
     public class Command : IRequest<bool>
     {
@@ -13,31 +13,30 @@ public class UploadPicture
 
     public class Handler : IRequestHandler<Command, bool>
     {
-        private const string DefaultContenType = "application/octet-stream";
         private readonly CatalogSettings _catalogSettings;
         private readonly ICatalogDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IContentTypeProvider _contentTypeProvider;
         private readonly IFileService _fileService;
+        private readonly IValidator<Command> _validator;
 
         public Handler(
             ICatalogDbContext context,
-            IContentTypeProvider contentTypeProvider,
             IWebHostEnvironment webHostEnvironment,
             IFileService fileService,
-            IOptions<CatalogSettings> settings)
+            IOptions<CatalogSettings> settings,
+            IValidator<Command> validator)
         {
             _db = context ?? throw new ArgumentNullException(nameof(context));
             _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
-            _contentTypeProvider = contentTypeProvider ?? throw new ArgumentNullException(nameof(contentTypeProvider));
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
             _catalogSettings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
+            _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public async Task<bool> Handle(Command command, CancellationToken cancellationToken)
         {
-            _ = command ?? throw new ArgumentNullException(nameof(command));
-            var item = await _db.FindAsync(command.Id, cancellationToken);
+            _validator.ValidateAndThrow(command);
+            CatalogItem? item = await _db.FindAsync(command.Id, cancellationToken);
 
             if (item is null
             || !string.Equals(_fileService.PathGetExtension(item.PictureFileName), _fileService.PathGetExtension(command.PictureFile.FileName)))
@@ -45,8 +44,8 @@ public class UploadPicture
                 return false;
             }
 
-            var path = _fileService.PathCombine(_webHostEnvironment.WebRootPath, _catalogSettings.WebRootImagesPath, item.PictureFileName);
-            using var stream = _fileService.FileCreate(path);
+            string path = _fileService.PathCombine(_webHostEnvironment.WebRootPath, _catalogSettings.WebRootImagesPath, item.PictureFileName);
+            using FileStream stream = _fileService.FileCreate(path);
             await command.PictureFile.CopyToAsync(stream, cancellationToken);
 
             return true;

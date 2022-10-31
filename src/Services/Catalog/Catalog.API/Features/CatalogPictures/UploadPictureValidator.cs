@@ -13,7 +13,8 @@ public class UploadPictureValidator : AbstractValidator<UploadPicture.Command>
 
         RuleFor(command => command.Id).NotEmpty();
         RuleFor(Command => Command.PictureFile)
-            .NotNull()
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
             .Must(pic => pic.HasValidSizeLimit(_catalogSettings.CatalogItemPictureSizeLimit))
             .WithMessage(string.Format(ValidSizeLimitErrorMessage, _catalogSettings.CatalogItemPictureSizeLimit / Mb))
             .Must(pic => pic.HasValidExtension() && pic.HasValidSignature())

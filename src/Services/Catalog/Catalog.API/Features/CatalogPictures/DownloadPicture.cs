@@ -1,6 +1,6 @@
 namespace Catalog.API.Features.CatalogPictures;
 
-public class DownloadPicture
+public static class DownloadPicture
 {
     public record Query(Guid id) : IRequest<PictureFile?>;
 

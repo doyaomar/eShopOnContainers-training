@@ -45,8 +45,15 @@ public class CatalogPicturesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UploadCatalogItemPictureAsync(UploadPicture.Command command)
     {
-        var uploaded = await _mediator.Send(command);
+        try
+        {
+            var uploaded = await _mediator.Send(command);
 
-        return uploaded ? CreatedAtAction(nameof(DownloadCatalogItemPictureAsync), new { id = command.Id }, null) : NotFound();
+            return uploaded ? CreatedAtAction(nameof(DownloadCatalogItemPictureAsync), new { id = command.Id }, null) : NotFound();
+        }
+        catch (Exception ex) when (ex is ValidationException or ArgumentNullException)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
