@@ -1,7 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 // Add versioning
@@ -21,7 +20,8 @@ builder.Services.AddSwaggerGen(options =>
 
 // Add app services
 builder.Services.AddApplicationServices();
-builder.Services.AddApplicationConfigurations(builder.Configuration);
+builder.Services.AddLibraries();
+builder.Services.AddApplicationSettings(builder.Configuration);
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationHealhtChecks(builder.Configuration);
 

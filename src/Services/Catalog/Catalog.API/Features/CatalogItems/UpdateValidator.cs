@@ -2,15 +2,19 @@ namespace Catalog.API.Features.CatalogItems;
 
 public class UpdateValidator : AbstractValidator<Update.Command>
 {
+    private const string PictureFileNameErrorMessage = "'{PropertyName}' must end with a valid picture file extension.";
+
     public UpdateValidator()
     {
-        RuleFor(cmd => cmd).NotNull();
         RuleFor(cmd => cmd.Id).NotEmpty();
         RuleFor(cmd => cmd.AvailableStock).GreaterThan(default(int));
         RuleFor(cmd => cmd.Description).NotEmpty();
         RuleFor(cmd => cmd.Name).NotEmpty();
-        RuleFor(cmd => cmd.PictureFileName).NotEmpty().Must(pic => pic.HasValidExtension())
-        .WithMessage("'{PropertyName}' must end with a valid picture file extension.");
+        RuleFor(cmd => cmd.PictureFileName)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .Must(pic => pic.HasValidExtension())
+            .WithMessage(PictureFileNameErrorMessage);
         RuleFor(cmd => cmd.Price).GreaterThan(default(decimal));
         RuleFor(cmd => cmd.CatalogBrand).NotNull();
         RuleFor(cmd => cmd.CatalogType).NotNull();

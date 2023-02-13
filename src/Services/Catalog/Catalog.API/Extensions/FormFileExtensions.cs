@@ -2,19 +2,19 @@ namespace Catalog.API.Extensions;
 
 internal static class FormFileExtensions
 {
-    internal static bool HasValidExtension(this IFormFile formFile) => formFile.FileName.HasValidExtension();
+    internal static bool HasValidExtension(this IFormFile file) => file.FileName.HasValidExtension();
 
-    internal static bool HasValidExtension(this string pictureFileName)
+    internal static bool HasValidExtension(this string fileName)
     {
         string[] permittedExtensions = { ".png", ".gif", ".jpg", ".jpeg", ".bmp", ".tiff", ".wmf", ".jp2" };
-        var ext = Path.GetExtension(pictureFileName).ToLowerInvariant();
+        string? extension = Path.GetExtension(fileName)?.ToLowerInvariant();
 
-        return !string.IsNullOrEmpty(ext) && permittedExtensions.Contains(ext);
+        return !string.IsNullOrEmpty(extension) && permittedExtensions.Contains(extension);
     }
 
-    internal static bool HasValidSizeLimit(this IFormFile formFile, long sizeLimit) => formFile.Length < sizeLimit;
+    internal static bool HasValidSizeLimit(this IFormFile file, long sizeLimit) => file.Length < sizeLimit;
 
-    internal static bool HasValidSignature(this IFormFile formFile)
+    internal static bool HasValidSignature(this IFormFile file)
     {
         var fileSignature = new Dictionary<string, List<byte[]>>
         {
@@ -46,10 +46,10 @@ internal static class FormFileExtensions
                 }
             }
         };
-        var ext = Path.GetExtension(formFile.FileName).ToLowerInvariant();
+        string ext = Path.GetExtension(file.FileName).ToLowerInvariant();
         var signatures = fileSignature[ext];
-        using var reader = new BinaryReader(formFile.OpenReadStream());
-        var headerBytes = reader.ReadBytes(signatures.Max(m => m.Length));
+        using var reader = new BinaryReader(file.OpenReadStream());
+        byte[] headerBytes = reader.ReadBytes(signatures.Max(m => m.Length));
 
         return signatures.Any(signature => headerBytes.Take(signature.Length).SequenceEqual(signature));
     }

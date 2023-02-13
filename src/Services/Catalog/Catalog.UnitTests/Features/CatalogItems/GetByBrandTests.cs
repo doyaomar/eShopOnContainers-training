@@ -2,15 +2,17 @@ namespace Catalog.UnitTests.Features.CatalogItems;
 
 public class GetByBrandTests
 {
-    readonly Mock<ICatalogDbContext> _dbStub;
-    readonly Mock<IMapper> _mapperStub;
-    readonly GetByBrand.Handler _handler;
+    private readonly Mock<ICatalogDbContext> _dbStub;
+    private readonly Mock<IMapper> _mapperStub;
+    private readonly GetByBrand.Handler _handler;
+    private readonly IValidator<GetByBrand.Query> _validator;
 
     public GetByBrandTests()
     {
         _mapperStub = new();
         _dbStub = new();
-        _handler = new(_dbStub.Object, _mapperStub.Object);
+        _validator = new GetByBrandValidator();
+        _handler = new(_dbStub.Object, _mapperStub.Object, _validator);
     }
 
     [Fact]
@@ -33,5 +35,15 @@ public class GetByBrandTests
         actual.Count.Should().Be(2);
         actual.Items.Should().NotBeNullOrEmpty();
         actual.Items.Should().Equal(itemsDtoMock);
+    }
+
+    [Fact]
+    public async Task Handle_WhenQueryIsNotValid_ThenThrowsValidationException()
+    {
+        var validQueryStub = CatalogItemFakes.GetByBrandQueryFake(Guid.Empty);
+
+        Func<Task> actual = async () => await _handler.Handle(validQueryStub, CancellationToken.None);
+
+        await actual.Should().ThrowAsync<ValidationException>();
     }
 }

@@ -2,11 +2,12 @@ namespace Catalog.UnitTests.Features.CatalogItems;
 
 public class CreateTests
 {
-    readonly Mock<ICatalogDbContext> _dbStub;
-    readonly Mock<IMapper> _mapperStub;
-    readonly Mock<IGuidService> _guidServiceStub;
-    readonly Mock<IFileService> _fileServiceStub;
-    readonly Create.Handler _handler;
+    private readonly Mock<ICatalogDbContext> _dbStub;
+    private readonly Mock<IMapper> _mapperStub;
+    private readonly Mock<IGuidService> _guidServiceStub;
+    private readonly Mock<IFileService> _fileServiceStub;
+    private readonly Create.Handler _handler;
+    private readonly IValidator<Create.Command> _validator;
 
     public CreateTests()
     {
@@ -14,11 +15,12 @@ public class CreateTests
         _mapperStub = new();
         _guidServiceStub = new();
         _fileServiceStub = new();
-        _handler = new(_dbStub.Object, _mapperStub.Object, _guidServiceStub.Object, _fileServiceStub.Object);
+        _validator = new CreateValidator();
+        _handler = new(_dbStub.Object, _mapperStub.Object, _guidServiceStub.Object, _fileServiceStub.Object, _validator);
     }
 
     [Fact]
-    public async Task Handle_WhenRequestIsValid_ThenReturnsNewId()
+    public async Task Handle_WhenCommandIsValid_ThenReturnsNewId()
     {
         var validRequestStub = CatalogItemFakes.GetCreateCommandFake();
         var validProductIdMock = Guid.NewGuid();
@@ -31,5 +33,15 @@ public class CreateTests
         var actual = await _handler.Handle(validRequestStub, CancellationToken.None);
 
         actual.Should().Be(validProductIdMock);
+    }
+
+    [Fact]
+    public async Task Handle_WhenCommandIsNotValidValid_ThenThrowsValidationException()
+    {
+        var validRequestStub = CatalogItemFakes.GetCreateCommandInvalidFake();
+
+        Func<Task> actual = async () => await _handler.Handle(validRequestStub, CancellationToken.None);
+
+        await actual.Should().ThrowAsync<ValidationException>();
     }
 }

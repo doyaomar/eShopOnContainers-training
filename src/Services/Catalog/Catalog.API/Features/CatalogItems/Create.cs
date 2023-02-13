@@ -31,17 +31,20 @@ public class Create
         private readonly IMapper _mapper;
         private readonly IGuidService _guidService;
         private readonly IFileService _fileService;
+        private readonly IValidator<Command> _validator;
 
-        public Handler(ICatalogDbContext context, IMapper mapper, IGuidService guidService, IFileService fileService)
+        public Handler(ICatalogDbContext context, IMapper mapper, IGuidService guidService, IFileService fileService, IValidator<Command> validator)
         {
             _db = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _guidService = guidService ?? throw new ArgumentNullException(nameof(guidService));
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+            _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public async Task<Guid> Handle(Command command, CancellationToken cancellationToken)
         {
+            _validator.ValidateAndThrow(command);
             var item = _mapper.Map<CatalogItem>(command);
             item.SetId(_guidService.GetNewGuid());
             item.GeneratePictureFileName(_fileService.PathGetExtension(item.PictureFileName));

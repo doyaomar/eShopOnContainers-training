@@ -6,6 +6,25 @@ internal static class CatalogItemFakes
     {
         Name = "name",
         PictureFileName = "pic.png",
+        AvailableStock = 1,
+        Description = "description",
+        Price = 1,
+        CatalogBrand = new CatalogBrandDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogBrandName"
+        },
+        CatalogType = new CatalogTypeDto
+        {
+            Id = Guid.NewGuid(),
+            Name = "catalogTypeName"
+        }
+    };
+
+    internal static Create.Command GetCreateCommandInvalidFake() => new()
+    {
+        Name = "name",
+        PictureFileName = "pic.png",
         CatalogBrand = new CatalogBrandDto
         {
             Id = Guid.NewGuid(),
@@ -23,6 +42,9 @@ internal static class CatalogItemFakes
         Id = id,
         Name = "name",
         PictureFileName = "pic.png",
+        Description = "description",
+        AvailableStock = 1,
+        Price = 1,
         CatalogBrand = new CatalogBrandDto
         {
             Id = Guid.NewGuid(),
@@ -52,10 +74,10 @@ internal static class CatalogItemFakes
     };
 
     internal static List<CatalogItem> GetCatalogItemsFake(List<Guid> ids)
-    => ids.Select(id => CatalogItemFakes.GetCatalogItemFake(id)).ToList();
+    => ids.Select(id => GetCatalogItemFake(id)).ToList();
 
     internal static List<CatalogItemDto> GetCatalogItemDtosFake(List<Guid> ids)
-    => ids.Select(CatalogItemFakes.GetCatalogItemDtoFake).ToList();
+    => ids.Select(GetCatalogItemDtoFake).ToList();
 
     internal static CatalogItem GetCatalogItemFake(Guid? id = null)
     {

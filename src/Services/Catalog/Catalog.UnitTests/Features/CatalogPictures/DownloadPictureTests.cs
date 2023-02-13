@@ -2,13 +2,14 @@ namespace Catalog.UnitTests.Features.CatalogPictures;
 
 public class DownloadPictureTests
 {
-    readonly Mock<ICatalogDbContext> _dbStub;
-    readonly Mock<IMapper> _mapperStub;
+    private readonly Mock<ICatalogDbContext> _dbStub;
+    private readonly Mock<IMapper> _mapperStub;
     private readonly Mock<IOptions<CatalogSettings>> _catalogSettingsStub;
     private readonly Mock<IWebHostEnvironment> _webHostEnvironmentStub;
     private readonly Mock<IContentTypeProvider> _contentTypeProviderStub;
     private readonly Mock<IFileService> _fileServiceStub;
-    readonly DownloadPicture.Handler _handler;
+    private readonly DownloadPicture.Handler _handler;
+    private readonly IValidator<DownloadPicture.Query> _validator;
 
     public DownloadPictureTests()
     {
@@ -18,19 +19,24 @@ public class DownloadPictureTests
         _webHostEnvironmentStub = new();
         _contentTypeProviderStub = new();
         _fileServiceStub = new();
-
+        _validator = new DownloadPictureValidator();
         _catalogSettingsStub.SetReturnsDefault(new CatalogSettings
         {
             WebRootImagesPath = "images"
         });
 
-        _handler = new(_dbStub.Object, _contentTypeProviderStub.Object, _webHostEnvironmentStub.Object, _fileServiceStub.Object, _catalogSettingsStub.Object);
+        _handler = new(
+            _dbStub.Object,
+            _contentTypeProviderStub.Object,
+            _webHostEnvironmentStub.Object,
+            _fileServiceStub.Object,
+            _catalogSettingsStub.Object,
+            _validator);
     }
 
     [Fact]
     public async Task Handle_WhenQueryIsValidAndPictureExists_ThenReturnsPictureFile()
     {
-        var validPictureFileMock = CatalogPictureFakes.GetPictureFileFake();
         var validProductIdStub = Guid.NewGuid();
         var contentTypeMock = "image/png";
         var bufferMock = new byte[] { 0x00, 0x01, 0x02, 0x03 };
@@ -74,5 +80,15 @@ public class DownloadPictureTests
         var actual = await _handler.Handle(validQueryStub, CancellationToken.None);
 
         actual.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Handle_WhenQueryIsNull_ThenThrowsArgumentNullException()
+    {
+        DownloadPicture.Query invalidQueryStub = null!;
+
+        Func<Task> actual = async () => await _handler.Handle(invalidQueryStub, CancellationToken.None);
+
+        await actual.Should().ThrowAsync<ArgumentNullException>();
     }
 }

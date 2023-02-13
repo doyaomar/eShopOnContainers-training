@@ -36,27 +36,49 @@ public class CatalogPicturesControllerTests
         actual.Should().BeOfType<NotFoundResult>();
     }
 
+    [Fact]
+    public async Task DownloadCatalogItemPictureAsync_WhenQueryIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidQueryStub = new DownloadPicture.Query(Guid.Empty);
+        _mediatorStub.Setup(m => m.Send(invalidQueryStub, CancellationToken.None)).ThrowsAsync(new ValidationException("invalid error"));
+
+        var actual = await _catalogPicturesController.DownloadCatalogItemPictureAsync(invalidQueryStub, CancellationToken.None);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
+    }
+
     // UploadCatalogItemPictureAsync Tests
 
     [Fact]
-    public async Task UploadCatalogItemPictureAsync_WhenQueryIsValid_ThenReturnsCreatedAtActionResult()
+    public async Task UploadCatalogItemPictureAsync_WhenCommandIsValid_ThenReturnsCreatedAtActionResult()
     {
         var validCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(Guid.NewGuid());
         _mediatorStub.Setup(m => m.Send(validCommandStub, CancellationToken.None)).ReturnsAsync(true);
 
-        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub, CancellationToken.None);
+        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub);
 
         actual.Should().BeOfType<CreatedAtActionResult>();
     }
 
     [Fact]
-    public async Task UploadCatalogItemPictureAsync_WhenQueryIsValidAndPictureDoesntExist_ThenReturnsNotFoundResult()
+    public async Task UploadCatalogItemPictureAsync_WhenCommandIsValidAndPictureDoesntExist_ThenReturnsNotFoundResult()
     {
         var validCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(Guid.NewGuid());
         _mediatorStub.Setup(m => m.Send(validCommandStub, CancellationToken.None)).ReturnsAsync(false);
 
-        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub, CancellationToken.None);
+        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(validCommandStub);
 
         actual.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Fact]
+    public async Task UploadCatalogItemPictureAsync_WhenCommandIsNotValid_ThenReturnsBadRequestObjectResult()
+    {
+        var invalidCommandStub = CatalogPictureFakes.GetUploadPictureCommandFake(Guid.Empty);
+        _mediatorStub.Setup(m => m.Send(invalidCommandStub, CancellationToken.None)).ThrowsAsync(new ValidationException("invalid error"));
+
+        var actual = await _catalogPicturesController.UploadCatalogItemPictureAsync(invalidCommandStub);
+
+        actual.Should().BeOfType<BadRequestObjectResult>();
     }
 }

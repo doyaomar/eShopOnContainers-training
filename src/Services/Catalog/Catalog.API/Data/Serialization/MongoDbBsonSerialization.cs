@@ -2,18 +2,22 @@ namespace Catalog.API.Data.Serialization;
 
 public static class MongoDbBsonSerialization
 {
+    private const string CamelCaseName = "CamelCase";
+    private const string IgnoreIfNullName = "IgnoreIfNull";
+    private const string EnumToStringName = "EnumToString";
+
     public static void RegisterConventionRegistry()
     {
         ConventionRegistry.Register(
-            "CamelCase",
+            CamelCaseName,
             new ConventionPack { new CamelCaseElementNameConvention() },
             _ => true);
         ConventionRegistry.Register(
-            "IgnoreIfNull",
+            IgnoreIfNullName,
             new ConventionPack { new IgnoreIfNullConvention(true) },
             _ => true);
         ConventionRegistry.Register(
-            "EnumToString",
+            EnumToStringName,
             new ConventionPack { new EnumRepresentationConvention(BsonType.String) },
             _ => true);
     }
